@@ -6,12 +6,15 @@
 #include "game.hpp"
 #include "draw/tile_manager.hpp"
 #include "entities/tile.hpp"
+#include "entities/object.hpp"
 
 
 class Map{
 public:
     Map(int mapWidth, int mapHeight);
     ~Map();
+
+    std::vector< Object > objectList; // array of objects on the map;
 
     int mapWidth = 20; // map size
     int mapHeight = 20;
@@ -32,6 +35,9 @@ private:
     SDL_Rect src, dest;
     SDL_Texture* codepage;
     std::vector< std::vector< Tile > > tileMap;// array of tiles on map
+
+    int tileHeight = 10; //tile resolution (pixels)
+    int tileWidth = 10;
 };
 
 #endif

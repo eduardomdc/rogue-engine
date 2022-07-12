@@ -22,8 +22,8 @@ typedef struct color {
 
 namespace colors {
     const color white =					{140, 140, 140, 100, 100, 100, 0, false};
-    const color red =					{155,   0,   0, 100,   0,	0, 0, false};
-	const color blue =					{60,	 0,	   180, 	0,		0,			0,			0,		false};
+    const color red =					{185,   0,   0, 70,   0,	0, 0, false};
+	const color blue =					{60,	 0,	   180, 	50,		50,			50,			0,		false};
 	const color black = 				{0,		 0,	   	 0, 	0,		0,			0,			0,		false};
 }
 
