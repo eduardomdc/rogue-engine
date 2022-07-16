@@ -1,13 +1,16 @@
 #include "entity.hpp"
 #include "tile.hpp"
-
+#include <iostream>
 #include "../draw/tile_manager.hpp"
+#include "../game.hpp"
+#include "../map.hpp"
 
 Entity::Entity(){};
 
 Entity::~Entity(){};
 
-void Entity::render(Map* map){
+void Entity::render(){
+    Map* map = game->map;
     if ((this->posY>=0 && this->posY< map->mapHeight) && (this->posX>=0 && this->posX<map->mapWidth)){
         if ( (this->posY >= map->topSide && this->posY < map->bottomSide) && (this->posX >= map->leftSide && this->posX < map->rightSide)){
             *map->tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
@@ -27,3 +30,9 @@ void Entity::render(Map* map){
         map->tileHeight, 
         map->tileWidth, 16, 16);
 };
+
+void Entity::update(){
+    if (this->ai){
+        this->ai->update(this);
+    }
+}

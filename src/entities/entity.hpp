@@ -4,13 +4,16 @@
 
 #include "../colors.hpp"
 #include "object.hpp"
+#include "ai.hpp"
+#include <SDL2/SDL.h>
 #include <string>
 
 class Entity {
 public:
     int posX;
     int posY;
-    //Object * object = NULL; // entity is object
+    Object * object = NULL; // entity is object
+    Ai* ai = NULL;
     color foreRgb;//foreground color
     color backRgb;//background color
     bool walkable = false;// can walk on it
@@ -19,8 +22,9 @@ public:
     const char* ch; // should characters be constant? need to change this
     Entity();
     ~Entity();
+    void update();
 
-    void render(class Map* map);
+    void render();
 private:
 };
 

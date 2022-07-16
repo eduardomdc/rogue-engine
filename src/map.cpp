@@ -47,3 +47,12 @@ void Map::drawMap(){
         }
     }
 }
+
+void Map::moveCamera(int x, int y){
+    this->mapPositionX = x;
+    this->mapPositionY = y;
+    this->leftSide = this->mapPositionX-((this->mapRenderWidth-1)/2);
+    this->rightSide = this->mapPositionX+((this->mapRenderWidth-1)/2);
+    this->topSide = this->mapPositionY-((this->mapRenderHeight-1)/2);
+    this->bottomSide = this->mapPositionY+((this->mapRenderHeight-1)/2);
+}

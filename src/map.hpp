@@ -43,6 +43,8 @@ public:
 
     int tileHeight = 10; //tile resolution (pixels)
     int tileWidth = 10;
+
+    void moveCamera(int x, int y);
 private:
 };
 

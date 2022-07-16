@@ -6,7 +6,9 @@ Game::Game(){}
 
 Game::~Game(){}
 
-Map* map;
+Map* Game::map;
+
+SDL_Event Game::currentEvent;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
     int flags = 0;
@@ -43,25 +45,22 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     player = new Entity();
     player->ch = "@";
-    player->foreRgb = colors::blue;
+    player->foreRgb = colors::white;
     player->posX = 10;
     player->posY = 13;
+    player->ai = new PlayerAi();
     entityList.push_back(player);
 }
 
 void Game::handleEvents(){
-    SDL_Event event;
-    SDL_PollEvent(&event);
-    switch (event.type){
+    SDL_PollEvent(&currentEvent);
+    switch (currentEvent.type){
     case SDL_QUIT:
         std::cout << "quit pressed" << std::endl;
         isRunning = false;
         break;
     case SDL_KEYDOWN:
-        switch( event.key.keysym.sym ){
-            case SDLK_LEFT:
-                    player->posX-=1;    
-        }
+        player->ai->update(player);
         break;
     default:
         break;
@@ -69,6 +68,7 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
+    
 }
 
 void Game::render(){
@@ -76,7 +76,7 @@ void Game::render(){
     map->drawMap();
     // draw entities
     for (Entity* ent : entityList){
-        ent->render(map);
+        ent->render();
     }
     SDL_RenderPresent(renderer);
 }

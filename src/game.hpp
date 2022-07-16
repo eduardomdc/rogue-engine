@@ -6,6 +6,7 @@
 #include <vector>
 #include "map.hpp"
 #include "entities/entity.hpp"
+#include "event_manager.hpp"
 
 class Game {
 public:
@@ -16,6 +17,10 @@ public:
     std::vector< Entity* > entityList; // list of entities
     
     static SDL_Renderer *renderer;
+
+    static Map* map;
+
+    static SDL_Event currentEvent;
 
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     
@@ -31,5 +36,7 @@ private:
     bool isRunning;
     SDL_Window *window;
 };
+
+extern Game* game;
 
 #endif /* game_hpp */
