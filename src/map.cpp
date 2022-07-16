@@ -12,15 +12,10 @@ Map::Map(int mapWidth, int mapHeight){
     for (int i = 0; i<this->mapHeight; i++){
         tileMap.push_back( std:: vector< Tile >() );
         for (int j = 0; j<this->mapWidth; j++){
-            Tile* floorInstance = new Tile((const char*)".", colors::white, colors::black, true, true); // how to use tile from tile_factory?
+            Tile* floorInstance = new Tile((const char*)".", colors::white, colors::blue, true, true); // how to use tile from tile_factory?
             tileMap[i].push_back(*floorInstance);
         }
     }
-
-    // add some objects for testing
-    //Object Anvil("T", colors::red, true, true, 5, 3);
-    //objectList.push_back(Anvil);
-    
 }
 
 void Map::loadMap(){
@@ -51,24 +46,4 @@ void Map::drawMap(){
             }
         }
     }
-
-    // draw entities
-    /*
-    for (int i = 0; i < (int)this->entityList.size(); i++){
-        outOfMap = false;
-        Entity entity = entityList[i];
-        if ((entity.posY>=0 && entity.posY<this->mapHeight) && (entity.posX>=0 && entity.posX<this->mapWidth)){
-            *tile = this->tileMap[entity.posX][entity.posY]; // get tile at entity location for background color matching
-        } else { // out of the map
-            outOfMap = true;
-        }
-        if (!outOfMap){
-            int screenPosX = entity.posX-leftSide+this->mapOffsetX;
-            int screenPosY = entity.posY-topSide+this->mapOffsetY;
-            dest.x = screenPosX * tileWidth;
-            dest.y = screenPosY * tileHeight;
-
-            TileManager::drawAscii(codepage, src, dest, entity.ch, entity.foreRgb, tile->backRgb, this->tileHeight, this->tileWidth, 16, 16);
-        }
-    }*/
 }

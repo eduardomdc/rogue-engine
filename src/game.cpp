@@ -60,7 +60,7 @@ void Game::handleEvents(){
     case SDL_KEYDOWN:
         switch( event.key.keysym.sym ){
             case SDLK_LEFT:
-                    player->posX-=1;
+                    player->posX-=1;    
         }
         break;
     default:

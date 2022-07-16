@@ -15,11 +15,11 @@ public:
 
     std::vector< Entity > entityList; // array of entities on the map;
 
-    int mapWidth = 20; // map size
-    int mapHeight = 20;
+    int mapWidth = 50; // map size
+    int mapHeight = 50;
 
-    int mapRenderWidth = 31; // width of map window rendering (odd)
-    int mapRenderHeight = 31;
+    int mapRenderWidth = 11; // width of map window rendering (odd)
+    int mapRenderHeight = 11;
 
     int mapOffsetX = 4; // where on the screen the map will be rendered
     int mapOffsetY = 4;
