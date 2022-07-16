@@ -16,6 +16,7 @@ public:
     Ai* ai = NULL;
     color foreRgb;//foreground color
     color backRgb;//background color
+    color origRgb;//initial color for randomizing on (for things that dance)
     bool walkable = false;// can walk on it
     bool transparent = true; // can see through it
     std::string name; // name

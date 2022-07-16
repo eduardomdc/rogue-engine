@@ -3,7 +3,6 @@
 
 #pragma once
 #include "entity.hpp"
-#include <time.h>
 #include <iostream>
 
 class Tile : public Entity{

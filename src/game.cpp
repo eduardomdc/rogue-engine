@@ -33,17 +33,27 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(20,20);
+    map = new Map(50,50);
 
     Entity * anvil = new Entity();
     anvil->ch = "π";
     anvil->foreRgb = colors::red;
+    anvil->origRgb = colors::red;
     anvil->posX = 5;
     anvil->posY = 13;
     entityList.push_back(anvil);
 
+    Entity * fire = new Entity();
+    fire->ch = "*";
+    fire->origRgb = colors::fire;
+    fire->foreRgb = colors::fire;
+    fire->posX = 5;
+    fire->posY = 12;
+    entityList.push_back(fire);
+
     player = new Entity();
     player->ch = "@";
+    player->origRgb = colors::white;
     player->foreRgb = colors::white;
     player->posX = 10;
     player->posY = 10;
@@ -68,7 +78,11 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-    
+    for (Entity* ent : entityList){
+        if (ent->foreRgb.colorDances == true){
+            ent->foreRgb = colorManager::randomize(ent->origRgb);
+        }
+    }
 }
 
 void Game::render(){

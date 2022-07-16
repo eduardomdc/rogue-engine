@@ -6,13 +6,13 @@ Map::Map(int mapWidth, int mapHeight){
     this->mapHeight = mapHeight;
 
     // set tileset used
-    codepage = TileManager::LoadTexture("assets/cp437.png");
+    codepage = TileManager::LoadTexture("assets/20x20cp437.png");
 
     // add floor tiles
     for (int i = 0; i<this->mapHeight; i++){
         tileMap.push_back( std:: vector< Tile >() );
         for (int j = 0; j<this->mapWidth; j++){
-            Tile* floorInstance = new Tile((const char*)".", colors::white, colors::blue, true, true); // how to use tile from tile_factory?
+            Tile* floorInstance = new Tile((const char*)".", colors::blue, colors::dark, true, true); // how to use tile from tile_factory?
             tileMap[i].push_back(*floorInstance);
         }
     }
