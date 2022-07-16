@@ -2,21 +2,13 @@
 #define OBJECT_HPP
 
 #pragma once
-#include "entity.hpp"
 #include <time.h>
 #include <string.h>
 #include <iostream>
 
-class Object : public Entity{
+class Object {
 public:
-    int posX;
-    int posY;
-    bool walkable;
-    bool transparent;
-    std::string name;
-    
-    Object(const char* ch, const color foreRgb, bool walkable, bool transparent, int posX, int posY);
-
+    Object();
 private:
 };
 

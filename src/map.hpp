@@ -3,18 +3,17 @@
 
 #pragma once
 #include <vector>
-#include "game.hpp"
 #include "draw/tile_manager.hpp"
 #include "entities/tile.hpp"
-#include "entities/object.hpp"
-
+//#include "entities/object.hpp"
+//#include "entities/entity.hpp"
 
 class Map{
 public:
     Map(int mapWidth, int mapHeight);
     ~Map();
 
-    std::vector< Object > objectList; // array of objects on the map;
+    std::vector< Entity > entityList; // array of entities on the map;
 
     int mapWidth = 20; // map size
     int mapHeight = 20;
@@ -28,16 +27,23 @@ public:
     int mapPositionX = 10; // what map position is being rendered (centered)
     int mapPositionY = 10;
 
+    int leftSide = this->mapPositionX-((this->mapRenderWidth-1)/2);
+    int rightSide = this->mapPositionX+((this->mapRenderWidth-1)/2);
+    int topSide = this->mapPositionY-((this->mapRenderHeight-1)/2);
+    int bottomSide = this->mapPositionY+((this->mapRenderHeight-1)/2);
+
     void loadMap();
     void drawMap();
 
-private:
     SDL_Rect src, dest;
     SDL_Texture* codepage;
     std::vector< std::vector< Tile > > tileMap;// array of tiles on map
 
+    Tile* tile = new Tile((const char*)"0", colors::white, colors::black, true, true); //temp variable tile for operations
+
     int tileHeight = 10; //tile resolution (pixels)
     int tileWidth = 10;
+private:
 };
 
 #endif

@@ -1,14 +1,12 @@
 #include "game.hpp"
-#include "draw/tile_manager.hpp"
-#include "map.hpp"
-
-Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game(){}
 
 Game::~Game(){}
+
+Map* map;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
     int flags = 0;
@@ -30,10 +28,25 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
         isRunning = true;
     } else {
+        std::cout << "SDL_INIT error" << std::endl;
         isRunning = false;
     }
 
     map = new Map(20,20);
+
+    Entity * anvil = new Entity();
+    anvil->ch = "π";
+    anvil->foreRgb = colors::red;
+    anvil->posX = 5;
+    anvil->posY = 13;
+    entityList.push_back(anvil);
+
+    player = new Entity();
+    player->ch = "@";
+    player->foreRgb = colors::blue;
+    player->posX = 10;
+    player->posY = 13;
+    entityList.push_back(player);
 }
 
 void Game::handleEvents(){
@@ -41,7 +54,14 @@ void Game::handleEvents(){
     SDL_PollEvent(&event);
     switch (event.type){
     case SDL_QUIT:
+        std::cout << "quit pressed" << std::endl;
         isRunning = false;
+        break;
+    case SDL_KEYDOWN:
+        switch( event.key.keysym.sym ){
+            case SDLK_LEFT:
+                    player->posX-=1;
+        }
         break;
     default:
         break;
@@ -54,6 +74,10 @@ void Game::update(){
 void Game::render(){
     SDL_RenderClear(renderer);
     map->drawMap();
+    // draw entities
+    for (Entity* ent : entityList){
+        ent->render(map);
+    }
     SDL_RenderPresent(renderer);
 }
 

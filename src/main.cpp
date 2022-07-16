@@ -1,8 +1,7 @@
 #include <SDL2/SDL.h>
+#include "main.hpp"
 
-#include "game.hpp"
-
-Game *game = nullptr;
+Game* game;
 
 int main(int argc, char *argv[]){
     // get random seed
