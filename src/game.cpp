@@ -53,17 +53,18 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::handleEvents(){
-    SDL_PollEvent(&currentEvent);
-    switch (currentEvent.type){
-    case SDL_QUIT:
-        std::cout << "quit pressed" << std::endl;
-        isRunning = false;
-        break;
-    case SDL_KEYDOWN:
-        player->ai->update(player);
-        break;
-    default:
-        break;
+    while(SDL_PollEvent(&currentEvent)){
+        switch (currentEvent.type){
+        case SDL_QUIT:
+            std::cout << "quit pressed" << std::endl;
+            isRunning = false;
+            break;
+        case SDL_KEYDOWN:
+            player->ai->update(player);
+            break;
+        default:
+            break;
+        }
     }
 }
 
