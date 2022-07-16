@@ -37,8 +37,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     Entity * anvil = new Entity();
     anvil->ch = "π";
-    anvil->foreRgb = colors::red;
-    anvil->origRgb = colors::red;
+    anvil->foreRgb = colors::rusty;
+    anvil->origRgb = colors::rusty;
     anvil->posX = 5;
     anvil->posY = 13;
     entityList.push_back(anvil);
@@ -79,7 +79,7 @@ void Game::handleEvents(){
 
 void Game::update(){
     for (Entity* ent : entityList){
-        if (ent->foreRgb.colorDances == true){
+        if (ent->foreRgb.colorDances == true){ // to do: only randomize entities that are currently being drawn
             ent->foreRgb = colorManager::randomize(ent->origRgb);
         }
     }

@@ -28,6 +28,7 @@ namespace colors {
 	const color pearly =				{155, 155, 155, 100, 100, 100, 0, false};
 	const color fire = 					{255,   0,   0, 0,   220,	0, 0, true};
 	const color dark =					{25, 25, 25, 0, 0, 10, 0, false};
+	const color rusty = 				{85,   30,   30, 50,   0,	0, 0, false};
 }
 
 class colorManager {

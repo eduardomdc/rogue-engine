@@ -12,8 +12,8 @@ Map::Map(int mapWidth, int mapHeight){
     for (int i = 0; i<this->mapHeight; i++){
         tileMap.push_back( std:: vector< Tile >() );
         for (int j = 0; j<this->mapWidth; j++){
-            Tile* floorInstance = new Tile((const char*)".", colors::blue, colors::dark, true, true); // how to use tile from tile_factory?
-            tileMap[i].push_back(*floorInstance);
+            tile = tileFactory::caveFloor();
+            tileMap[i].push_back(*tile);
         }
     }
 }

@@ -3,9 +3,10 @@
 
 #include "tile.hpp"
 
-namespace tiles{
-    Tile floor((const char*)"░", colors::white, colors::blue, true, true);
-    Tile wall((const char*)"#", colors::red, colors::white, false, false);
-}
+class tileFactory {
+public:
+    static Tile* caveFloor();
+};
+
 
 #endif
