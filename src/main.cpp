@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "main.hpp"
+#include "map.hpp"
 
 Game* game;
 

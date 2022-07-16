@@ -4,7 +4,6 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <vector>
-#include "map.hpp"
 #include "entities/entity.hpp"
 #include "event_manager.hpp"
 
@@ -18,7 +17,7 @@ public:
     
     static SDL_Renderer *renderer;
 
-    static Map* map;
+    class Map* map;
 
     static SDL_Event currentEvent;
 

@@ -1,12 +1,11 @@
 #include "game.hpp"
+#include "map.hpp"
 
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game(){}
 
 Game::~Game(){}
-
-Map* Game::map;
 
 SDL_Event Game::currentEvent;
 
@@ -47,7 +46,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ch = "@";
     player->foreRgb = colors::white;
     player->posX = 10;
-    player->posY = 13;
+    player->posY = 10;
     player->ai = new PlayerAi();
     entityList.push_back(player);
 }
