@@ -51,6 +51,16 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     fire->posY = 12;
     entityList.push_back(fire);
 
+    
+    Entity* rat = new Entity();
+    rat->ch = "r";
+    rat->origRgb = colors::grey;
+    rat->foreRgb = colors::grey;
+    rat->posX = 12;
+    rat->posY = 12;
+    rat->ai = new CritterAi();
+    entityList.push_back(rat);
+
     player = new Entity();
     player->ch = "@";
     player->origRgb = colors::white;
@@ -62,7 +72,13 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 }
 
 void Game::handleEvents(){
+    /** to do turns system: when player takes action change game->turns to turns used,
+     * then increment those turns into each monsters' AIs so they can do things
+     * with the turns they had + the ones they have now**/
+
     while(SDL_PollEvent(&currentEvent)){
+        this->turns = 0; //after every event turns taken are set to 0 again
+
         switch (currentEvent.type){
         case SDL_QUIT:
             std::cout << "quit pressed" << std::endl;
@@ -71,8 +87,20 @@ void Game::handleEvents(){
         case SDL_KEYDOWN:
             player->ai->update(player);
             break;
-        default:
+        default: // with menus this will be alot more complicated
             break;
+        }
+
+        if (this->turns){//if player took action
+            for (Entity* ent : entityList){
+                if (ent != player){
+                    if (ent->ai){
+                        //increment turns
+                        ent->ai->turns += this->turns;
+                        ent->ai->update(ent);
+                    }
+                }
+            }
         }
     }
 }

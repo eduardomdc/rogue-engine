@@ -13,6 +13,7 @@ public:
     ~Game();
 
     Entity* player;
+    int turns = 0; // turns used by the player
     std::vector< Entity* > entityList; // list of entities
     
     static SDL_Renderer *renderer;

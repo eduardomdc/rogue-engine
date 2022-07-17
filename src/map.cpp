@@ -20,7 +20,7 @@ Map::Map(int mapWidth, int mapHeight){
     // add some walls for testing
     for (int i = 0; i<this->mapHeight; i++){
         for (int j = 0; j<this->mapWidth; j++){
-            if (rand()%10 == 1){
+            if (rand()%5 == 1){
                 tileMap[i][j] = *tileFactory::caveWall();
             }
         }

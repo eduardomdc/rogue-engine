@@ -13,7 +13,7 @@ public:
     int posX;
     int posY;
     Object * object = NULL; // entity is object
-    Ai* ai = NULL;
+    Ai* ai = NULL; // entity can do things
     color foreRgb;//foreground color
     color backRgb;//background color
     color origRgb;//initial color for randomizing on (for things that dance)
