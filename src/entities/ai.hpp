@@ -9,6 +9,7 @@ class Ai {
 public:
     int turns = 0;
     virtual void update(Entity *owner);
+    virtual ~Ai();
 };
 
 class CritterAi : public Ai {

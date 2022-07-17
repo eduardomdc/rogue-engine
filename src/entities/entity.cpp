@@ -36,3 +36,16 @@ void Entity::update(){
         this->ai->update(this);
     }
 }
+
+void Entity::destroy(){
+    this->ch = this->chDestroyed;
+    this->foreRgb = this->foreRgbDestroyed;
+    if (this->creature){
+        delete this->creature;
+        this->creature = NULL; // if is creature, it isn't anymore;
+        if (this->ai){
+            delete this->ai;
+            this->ai = NULL;
+        }
+    }
+}

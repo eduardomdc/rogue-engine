@@ -3,6 +3,7 @@
 #include "../map.hpp"
 #include "../game.hpp"
 
+Ai::~Ai(){};
 
 void Ai::update(Entity* owner){};
 
@@ -67,6 +68,13 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
             turns = 100;
             owner->posX = targetX;
             owner->posY = targetY;
+            if (owner->creature){
+                if (owner->creature->needsFood){
+                    // if is a creature consume food
+                    int food = owner->creature->getFood();
+                    owner->creature->setFood(owner, food - 1);
+                } 
+            }
         }//if there is entity attackable attack it else:
     }
     this->turns -= turns;

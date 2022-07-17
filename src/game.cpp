@@ -33,7 +33,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(50,50);
+    map = new Map(20,20);
 
     Entity * anvil = new Entity();
     anvil->ch = "π";
@@ -56,6 +56,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     rat->ch = "r";
     rat->origRgb = colors::grey;
     rat->foreRgb = colors::grey;
+    rat->chDestroyed = "%";
+    rat->foreRgbDestroyed = colors::rusty;
+    rat->creature = new Creature();
+    rat->creature->setWeight(300);
+    rat->creature->setFood(rat, 300);
     rat->posX = 12;
     rat->posY = 12;
     rat->ai = new CritterAi();
