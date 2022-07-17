@@ -14,20 +14,17 @@ void PlayerAi::update(Entity* owner){
     case SDL_KEYDOWN:
         switch( ev.key.keysym.sym ){
             case SDLK_LEFT:
-                    game->player->posX -=1;
-                    game->map->moveCamera(game->map->mapPositionX-1, game->map->mapPositionY);
+                    PlayerAi::moveOrAttack(game->player, game->player->posX-1, game->player->posY);
                     break;
             case SDLK_RIGHT:
-                    game->player->posX +=1;
-                    game->map->moveCamera(game->map->mapPositionX+1, game->map->mapPositionY);
+                    PlayerAi::moveOrAttack(game->player, game->player->posX+1, game->player->posY);
                     break;
             case SDLK_UP:
-                    game->player->posY -=1;
-                    game->map->moveCamera(game->map->mapPositionX, game->map->mapPositionY-1);
+                    PlayerAi::moveOrAttack(game->player, game->player->posX, game->player->posY-1);
                     break;
             case SDLK_DOWN:
-                    game->player->posY +=1;
-                    game->map->moveCamera(game->map->mapPositionX, game->map->mapPositionY+1);
+                    PlayerAi::moveOrAttack(game->player, game->player->posX, game->player->posY+1);
+                    
                     break;
         }
         break;
@@ -35,3 +32,19 @@ void PlayerAi::update(Entity* owner){
         break;
     }
 };
+
+bool PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
+        // to do: return units of time wasted, implement granular time rounds
+        bool turned = false;// true if player has taken an action
+        if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){// if target is inside map
+            if (game->map->tileMap[targetX][targetY].walkable){// if target is walkable floor
+                turned = true;
+                //if there is entity destructable attack it else:
+                owner->posX = targetX;
+                owner->posY = targetY;
+                game->map->moveCamera(targetX, targetY);
+            }
+        }
+
+        return turned;
+}

@@ -6,6 +6,7 @@
 class tileFactory {
 public:
     static Tile* caveFloor();
+    static Tile* caveWall();
 };
 
 
