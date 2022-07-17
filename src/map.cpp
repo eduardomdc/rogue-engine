@@ -16,6 +16,15 @@ Map::Map(int mapWidth, int mapHeight){
             tileMap[i].push_back(*tile);
         }
     }
+
+    // add some walls for testing
+    for (int i = 0; i<this->mapHeight; i++){
+        for (int j = 0; j<this->mapWidth; j++){
+            if (rand()%10 == 1){
+                tileMap[i][j] = *tileFactory::caveWall();
+            }
+        }
+    }
 }
 
 void Map::loadMap(){
