@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
+#include <vector>
 #include "../colors.hpp"
 
 class Animation{
@@ -23,13 +24,13 @@ public:
 
     Animation();
 
-    void setFrames(const char* framesASCII);
+    void setFrames(std::vector<std::string> framesASCII);
 
     void nextFrame();
     void render();
 
 private:
-    std::string ch;
+    std::vector<std::string> chFrames;
 };
 
 #endif

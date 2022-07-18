@@ -78,7 +78,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
-    arrow->setFrames(".*");
+    arrow->setFrames({".","*","☺"});
     arrow->posX = 5;
     arrow->posY = 5;
     animationList.push_back(arrow);

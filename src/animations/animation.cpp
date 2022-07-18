@@ -9,10 +9,9 @@ Animation::Animation(){
     currentFrame = 0;
 }
 
-void Animation::setFrames(const char* framesASCII){
-    ch = framesASCII;
-    frames = ch.length();
-    std::cout << frames << std::endl;
+void Animation::setFrames(std::vector<std::string> framesASCII){
+    chFrames = framesASCII;
+    frames = framesASCII.size();
 }
 
 void Animation::nextFrame(){
@@ -26,8 +25,7 @@ void Animation::nextFrame(){
 void Animation::render(){
     dest.x = posX * tileWidth;
     dest.y = posY * tileHeight;
-    std::string passString = ch.substr(currentFrame, 1);
-    const char* passCh = passString.c_str(); // extended ascii not supported
+    std::string passCh = chFrames[currentFrame];
     TileManager::drawAscii(codepage, src, dest, passCh, foreRgb, tileWidth, tileHeight, 16, 16);
     if (frames > 0) this->nextFrame();
 }
