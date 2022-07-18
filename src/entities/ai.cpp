@@ -53,7 +53,7 @@ void PlayerAi::rest(Entity* owner){
 }
 
 void CritterAi::update(Entity* owner){
-    while ( this->turns >= 100 ){
+    while ( this->turns >= 200 ){
         //if (has_path){
             int dx = rand()%3-1;
             int dy = rand()%3-1;
@@ -64,8 +64,9 @@ void CritterAi::update(Entity* owner){
 void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
     int turns = 0;
     if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){
-        if (game->map->tileMap[targetX][targetY].walkable){
-            turns = 100;
+        if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
+            //tile is walkable and is different from current
+            turns = 200;
             owner->posX = targetX;
             owner->posY = targetY;
             if (owner->creature){

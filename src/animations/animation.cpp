@@ -28,6 +28,6 @@ void Animation::render(){
     dest.y = posY * tileHeight;
     std::string passString = ch.substr(currentFrame, 1);
     const char* passCh = passString.c_str(); // extended ascii not supported
-    TileManager::drawAscii(codepage, src, dest, passCh, foreRgb, backRgb, tileWidth, tileHeight, 16, 16);
+    TileManager::drawAscii(codepage, src, dest, passCh, foreRgb, tileWidth, tileHeight, 16, 16);
     if (frames > 0) this->nextFrame();
 }

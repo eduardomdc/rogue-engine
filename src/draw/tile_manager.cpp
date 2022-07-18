@@ -284,10 +284,15 @@ std::map<std::string, int> UNI_TO_ASCII {
     {" ", 255},
 };
 
-void TileManager::drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, const char* id, color foreRgb, color backRgb, int tileHeight, int tileWidth, int setHeight, int setWidth){
+void TileManager::drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, color backRgb, int tileHeight, int tileWidth, int setHeight, int setWidth){
     // turn char* to string and lookup unicode to ascii table, this will return the position index in codepage 437
-    std::string ch = id;
-    int idInt = UNI_TO_ASCII[ch];
+    int idInt = UNI_TO_ASCII[id];
     TileManager::DrawTile(tileset, src, dest, 219, backRgb, tileHeight, tileWidth, setHeight, setWidth); // first print background of tile with color
+    TileManager::DrawTile(tileset, src, dest, idInt, foreRgb, tileHeight, tileWidth, setHeight, setWidth); // then print character with color
+}
+
+// overload, render ascii with transparent background
+void TileManager::drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, int tileHeight, int tileWidth, int setHeight, int setWidth){
+    int idInt = UNI_TO_ASCII[id];
     TileManager::DrawTile(tileset, src, dest, idInt, foreRgb, tileHeight, tileWidth, setHeight, setWidth); // then print character with color
 }
