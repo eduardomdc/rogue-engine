@@ -42,7 +42,7 @@ void Entity::destroy(){
     this->foreRgb = this->foreRgbDestroyed;
     if (this->creature){
         delete this->creature;
-        this->creature = NULL; // if is creature, it isn't anymore;
+        this->creature = NULL; // death...;
         if (this->ai){
             delete this->ai;
             this->ai = NULL;

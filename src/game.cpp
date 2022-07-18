@@ -74,6 +74,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posY = 10;
     player->ai = new PlayerAi();
     entityList.push_back(player);
+
+    Animation* arrow = new Animation();
+    arrow->foreRgb = colors::red;
+    arrow->backRgb = colors::blue;
+    arrow->setFrames("░x");
+    arrow->posX = 5;
+    arrow->posY = 5;
+    animationList.push_back(arrow);
 }
 
 void Game::handleEvents(){
@@ -124,6 +132,9 @@ void Game::render(){
     // draw entities
     for (Entity* ent : entityList){
         ent->render();
+    }
+    for (Animation* animation : animationList){
+        animation->render();
     }
     SDL_RenderPresent(renderer);
 }

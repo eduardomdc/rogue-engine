@@ -6,6 +6,6 @@ Tile* tileFactory::caveFloor(){
 }
 
 Tile* tileFactory::caveWall(){
-    Tile* tile = new Tile((const char*)"#", colors::dark, colors::rocky, false, false);
+    Tile* tile = new Tile((const char*)"░", colors::dark, colors::rocky, false, false);
     return tile;
 }

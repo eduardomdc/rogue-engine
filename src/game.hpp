@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "entities/entity.hpp"
+#include "animations/animation.hpp"
 #include "event_manager.hpp"
 
 class Game {
@@ -14,7 +15,10 @@ public:
 
     Entity* player;
     int turns = 0; // turns used by the player
+
     std::vector< Entity* > entityList; // list of entities
+
+    std::vector < Animation* > animationList;
     
     static SDL_Renderer *renderer;
 
