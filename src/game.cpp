@@ -1,5 +1,7 @@
 #include "game.hpp"
 #include "map.hpp"
+#include "entities/monster_factory.hpp"
+#include <iostream>
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -52,8 +54,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     entityList.push_back(fire);
 
     
-    Entity* rat = new Entity();
-    rat->ch = "x";
+    Entity* rat = monsterFactory::makeMonster(RAT, 12, 12);
+    rat->ai = new CritterAi();
+    entityList.push_back(rat);
+    /**
+    rat->ch = "r";
     rat->origRgb = colors::grey;
     rat->foreRgb = colors::grey;
     rat->chDestroyed = "%";
@@ -63,8 +68,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     rat->creature->setFood(rat, 300);
     rat->posX = 12;
     rat->posY = 12;
-    rat->ai = new CritterAi();
-    entityList.push_back(rat);
+    rat->ai = new CritterAi();**/
+    
 
     player = new Entity();
     player->ch = "@";
@@ -80,6 +85,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     arrow->backRgb = colors::blue;
     arrow->setFrames({".","*","☺"});
     arrow->posX = 5;
+    arrow->speed = 1000;
     arrow->posY = 5;
     animationList.push_back(arrow);
 }
@@ -133,8 +139,18 @@ void Game::render(){
     for (Entity* ent : entityList){
         ent->render();
     }
-    for (Animation* animation : animationList){
-        animation->render();
+    std::vector<Animation*>::iterator it;
+
+    it = animationList.begin();
+    while (it != animationList.end()){
+        Animation* anim = *it;
+        anim->render();
+        
+        if (anim->done == true){
+            it = animationList.erase(it);
+        } else {
+            it++;
+        }
     }
     SDL_RenderPresent(renderer);
 }

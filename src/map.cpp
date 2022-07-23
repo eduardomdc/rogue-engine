@@ -1,4 +1,6 @@
 #include "map.hpp"
+#include "entities/tile_factory.hpp"
+
 
 Map::Map(int mapWidth, int mapHeight){
     // set variables
@@ -12,16 +14,16 @@ Map::Map(int mapWidth, int mapHeight){
     for (int i = 0; i<this->mapHeight; i++){
         tileMap.push_back( std:: vector< Tile >() );
         for (int j = 0; j<this->mapWidth; j++){
-            tile = tileFactory::caveFloor();
+            tile = tileFactory::makeTile(CAVE_FLOOR);
             tileMap[i].push_back(*tile);
         }
     }
-
+    
     // add some walls for testing
     for (int i = 0; i<this->mapHeight; i++){
         for (int j = 0; j<this->mapWidth; j++){
             if (rand()%10 == 0){
-                tileMap[i][j] = *tileFactory::caveWall();
+                tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL);
             }
         }
     }

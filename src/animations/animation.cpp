@@ -25,7 +25,10 @@ void Animation::nextFrame(){
 void Animation::render(){
     dest.x = posX * tileWidth;
     dest.y = posY * tileHeight;
+    currentFrame = (SDL_GetTicks()/speed)%frames;
     std::string passCh = chFrames[currentFrame];
     TileManager::drawAscii(codepage, src, dest, passCh, foreRgb, tileWidth, tileHeight, 16, 16);
-    if (frames > 0) this->nextFrame();
+    if (currentFrame == frames - 1) {
+        done = true;
+    }
 }

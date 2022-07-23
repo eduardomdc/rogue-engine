@@ -21,16 +21,16 @@ typedef struct color {
 } color;
 
 namespace colors {
-    const color white =					{255, 255, 255, 0, 0, 0, 0, false};
-    const color red =					{185,   0,   0, 70,   0,	0, 0, false};
-	const color blue =					{30,	 30,	   180, 	50,		50,			50,			0,		false};
-	const color black = 				{0,		 0,	   	 0, 	0,		0,			0,			0,		false};
-	const color grey =					{95, 95, 95, 0, 0, 0, 0, false};
-	const color pearly =				{155, 155, 155, 100, 100, 100, 0, false};
-	const color fire = 					{255,   0,   0, 0,   220,	0, 0, true};
-	const color dark =					{25, 25, 25, 0, 0, 25, 0, false};
-	const color rusty = 				{85,   30,   30, 50,   0,	0, 0, false};
-	const color rocky = 				{55,55,75, 10, 10 , 30, 0, false};
+    extern const color white;
+    extern const color red;
+	extern const color blue;
+	extern const color black;
+	extern const color grey;
+	extern const color pearly;
+	extern const color fire;
+	extern const color dark;
+	extern const color rusty;
+	extern const color rocky;
 }
 
 class colorManager {

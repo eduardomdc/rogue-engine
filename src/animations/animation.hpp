@@ -15,12 +15,15 @@ public:
     SDL_Rect dest;
     
     int currentFrame;
-    int frames;
+    int frames; // amount of frames
+    int speed; // amount of ms between each frame
     SDL_Texture* codepage;
-    int tileWidth;
+    int tileWidth; // resolution of tiles used
     int tileHeight;
     color foreRgb;
     color backRgb;
+
+    bool done = false; // is the animation finished? 
 
     Animation();
 
