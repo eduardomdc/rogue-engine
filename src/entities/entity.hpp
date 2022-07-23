@@ -17,6 +17,7 @@ public:
     Ai* ai = NULL; // entity can do things
     Creature* creature = NULL; // entity is a living creature with needs and organs
     color foreRgb;//foreground color
+    bool hasBackground = false;
     color backRgb;//background color
     color origRgb;//initial color for randomizing on (for things that dance)
     bool walkable = false;// can walk on it
@@ -25,6 +26,8 @@ public:
     const char* ch; // should characters be constant? need to change this
     const char* chDestroyed; // character displayed when entity has been destroyed
     color foreRgbDestroyed;
+
+    lightColor illumination = {255,255,255};
     
     Entity();
     ~Entity();

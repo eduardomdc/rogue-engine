@@ -21,14 +21,36 @@ void Entity::render(){
     map->dest.x = screenPosX * map->tileWidth;
     map->dest.y = screenPosY * map->tileHeight;
 
-    TileManager::drawAscii(map->codepage,
+    // multiply native color by illumination color
+
+    color lightColored = this->foreRgb;
+
+    lightColored.red *= this->illumination.red/255.0;
+    lightColored.blue *= this->illumination.blue/255.0;
+    lightColored.green *= this->illumination.green/255.0;
+
+    if (this->hasBackground){
+        TileManager::drawAscii(
+        map->codepage,
         map->src,
         map->dest,
         this->ch,
-        this->foreRgb, 
+        lightColored,
         map->tile->backRgb, 
         map->tileHeight, 
         map->tileWidth, 16, 16);
+    } else {
+        TileManager::drawAscii(
+        map->codepage,
+        map->src,
+        map->dest,
+        this->ch,
+        lightColored,
+        map->tile->backRgb,
+        map->tileHeight, 
+        map->tileWidth, 16, 16);
+    }
+    
 };
 
 void Entity::update(){

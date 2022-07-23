@@ -1,6 +1,12 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
+typedef struct lightColor {
+	short red;
+	short green;
+	short blue;
+} lightColor;
+
 typedef struct color {
     // from brogue
 	// base RGB components:
@@ -21,6 +27,7 @@ typedef struct color {
 } color;
 
 namespace colors {
+	extern const color null; // for entities with no background
     extern const color white;
     extern const color red;
 	extern const color blue;

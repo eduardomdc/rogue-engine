@@ -35,6 +35,7 @@ void Map::loadMap(){
 
 void Map::drawMap(){
     // draw tiles
+    
     bool outOfMap;
     for (int row = leftSide; row < rightSide; row++){
         for (int col = topSide; col < bottomSide; col++){
@@ -57,6 +58,18 @@ void Map::drawMap(){
             }
         }
     }
+    /**
+    for (std::vector<Tile> tileRow : tileMap){
+        for (Tile tile : tileRow){
+            tile.render();
+        }
+    }
+
+    for (int i = 0; i<this->mapHeight; i++){
+        for (int j = 0; j<this->mapWidth; j++){
+            tileMap[i][j].render();
+        }
+    }**/
 }
 
 void Map::moveCamera(int x, int y){

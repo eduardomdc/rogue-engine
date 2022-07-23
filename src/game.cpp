@@ -55,20 +55,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
     Entity* rat = monsterFactory::makeMonster(RAT, 12, 12);
-    //rat->ai = new CritterAi();
     entityList.push_back(rat);
-    /**
-    rat->ch = "r";
-    rat->origRgb = colors::grey;
-    rat->foreRgb = colors::grey;
-    rat->chDestroyed = "%";
-    rat->foreRgbDestroyed = colors::rusty;
-    rat->creature = new Creature();
-    rat->creature->setWeight(300);
-    rat->creature->setFood(rat, 300);
-    rat->posX = 12;
-    rat->posY = 12;
-    rat->ai = new CritterAi();**/
 
 
     player = new Entity();

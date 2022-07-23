@@ -8,10 +8,11 @@ color colorManager::randomize(color c){
     return c;
 }
 
+const color colors::null =					{1, 2, 3, 0, 0, 0, 0, false};
 const color colors::white =					{255, 255, 255, 0, 0, 0, 0, false};
 const color colors::red =					{185,   0,   0, 70,   0,	0, 0, false};
 const color colors::blue =					{30,	 30,	   180, 	50,		50,			50,			0,		false};
-const color colors::black = 				{0,		 0,	   	 0, 	0,		0,			0,			0,		false};
+const color colors::black = 				{0, 0, 0, 0, 0,			0,			0,		false};
 const color colors::grey =					{95, 95, 95, 0, 0, 0, 0, false};
 const color colors::pearly =				{155, 155, 155, 100, 100, 100, 0, false};
 const color colors::fire = 					{255,   0,   0, 0,   220,	0, 0, true};
