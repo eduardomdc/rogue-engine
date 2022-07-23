@@ -55,7 +55,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
     Entity* rat = monsterFactory::makeMonster(RAT, 12, 12);
-    rat->ai = new CritterAi();
+    //rat->ai = new CritterAi();
     entityList.push_back(rat);
     /**
     rat->ch = "r";
@@ -69,7 +69,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     rat->posX = 12;
     rat->posY = 12;
     rat->ai = new CritterAi();**/
-    
+
 
     player = new Entity();
     player->ch = "@";

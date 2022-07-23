@@ -22,11 +22,11 @@ typedef struct Monster {
     
     const color foreRgbDestroyed;
 
-    //Object * object; // entity is physical object
+    Object * object; // entity is physical object
 
-    //Ai* ai; // entity can do things
+    Ai* ai; // entity can do things
 
-    //Creature* creature; // entity is a living creature with needs and organs
+    Creature* creature; // entity is a living creature with needs and organs
 
 
 } Monster;

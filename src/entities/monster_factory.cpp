@@ -14,13 +14,26 @@ Entity* monsterFactory::makeMonster(int monsterEnum, int posX, int posY){
     monsterObj->foreRgb = monster.foreRgb;
     monsterObj->chDestroyed = monster.chDestroyed;
     monsterObj->foreRgbDestroyed = monster.foreRgbDestroyed;
+
+    monsterObj->ai = monster.ai;
     
     return monsterObj;
 };
 
 Monster monsterCatalog[NUMBER_OF_MONSTERS]={
     {
-        "Rat", "r", "%", colors::grey, colors::black, colors::black, true, true, colors::red
+        "Rat", // name
+        "r", // char
+        "%", // dead char
+        colors::grey, // foreColor
+        colors::black, // backColor
+        colors::black, // origColor
+        true, // walkable
+        true, // transparent
+        colors::red, // foreColorDestroyed
+        nullptr,
+        new CritterAi(),
+        new Creature(),
     }
 };
 

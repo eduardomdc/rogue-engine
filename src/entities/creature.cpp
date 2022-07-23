@@ -2,6 +2,11 @@
 #include "entity.hpp"
 
 
+Creature::Creature(){
+    
+}
+
+/**
 int Creature::getFood(){
     return this->food;
 }
@@ -25,12 +30,13 @@ void Creature::setFood(Entity* owner, int food){
     else {
         //creature is normal
     }
-    /** fix later: since weight is equal to food this means that you 
-     * can't make creatures weightless without them being 
-     * extremely skinny.**/
+    fix later: since weight is equal to food this means that you 
+    can't make creatures weightless without them being 
+    extremely skinny.
 }
 
 void Creature::setWeight(int weight){
     this->weight = weight;
     this->healthyWeight = weight;
 }
+**/

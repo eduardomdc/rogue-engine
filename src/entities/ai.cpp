@@ -70,11 +70,7 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
             owner->posX = targetX;
             owner->posY = targetY;
             if (owner->creature){
-                if (owner->creature->needsFood){
-                    // if is a creature consume food
-                    int food = owner->creature->getFood();
-                    owner->creature->setFood(owner, food - 1);
-                } 
+                //do things for creatures
             }
         }//if there is entity attackable attack it else:
     }
