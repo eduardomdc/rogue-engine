@@ -27,7 +27,7 @@ public:
     const char* chDestroyed; // character displayed when entity has been destroyed
     color foreRgbDestroyed;
 
-    lightColor illumination = {255,255,255};
+    lightColor illumination = {255,155,55};
     
     Entity();
     ~Entity();

@@ -35,7 +35,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(20,20);
+    map = new Map(100,100);
 
     Entity * anvil = new Entity();
     anvil->ch = "π";

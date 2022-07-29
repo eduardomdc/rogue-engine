@@ -11,9 +11,11 @@ Tile* tileFactory::caveWall(){
 }**/
 
 
-Tile* tileFactory::makeTile(int tileEnum){
+Tile* tileFactory::makeTile(int tileEnum, int x, int y){
     TileData tile = tileCatalog[tileEnum]; 
     Tile* tileObj = new Tile(tile.ch, tile.foreRgb, tile.backRgb, tile.walkable, tile.walkable);
+    tileObj->posX = x;
+    tileObj->posY = y;
     return tileObj;
 }
 

@@ -16,7 +16,7 @@ typedef struct TileData{
 class tileFactory {
 public:
     static Tile* caveFloor();
-    static Tile* makeTile(int tileEnum);
+    static Tile* makeTile(int tileEnum, int x, int y);
 };
 
 enum tileType {

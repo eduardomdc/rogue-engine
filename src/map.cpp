@@ -14,7 +14,7 @@ Map::Map(int mapWidth, int mapHeight){
     for (int i = 0; i<this->mapHeight; i++){
         tileMap.push_back( std:: vector< Tile >() );
         for (int j = 0; j<this->mapWidth; j++){
-            tile = tileFactory::makeTile(CAVE_FLOOR);
+            tile = tileFactory::makeTile(CAVE_FLOOR, i, j);
             tileMap[i].push_back(*tile);
         }
     }
@@ -23,8 +23,20 @@ Map::Map(int mapWidth, int mapHeight){
     for (int i = 0; i<this->mapHeight; i++){
         for (int j = 0; j<this->mapWidth; j++){
             if (rand()%10 == 0){
-                tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL);
+                tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
             }
+        }
+    }
+
+    // illumination test
+    int x = 5;
+    int y = 12;
+    int radius = 4;
+    short brightValue = 0;
+    for (int i = -radius; i<=radius; i++){
+        for (int j = -radius; j<=radius; j++){
+            brightValue = 255/((abs(i*i+j*j)/7)+1);
+            tileMap[x+i][y+j].illumination = {brightValue,(short)(brightValue/1.2),(short)(brightValue/2)};
         }
     }
 }
@@ -35,41 +47,11 @@ void Map::loadMap(){
 
 void Map::drawMap(){
     // draw tiles
-    
-    bool outOfMap;
-    for (int row = leftSide; row < rightSide; row++){
-        for (int col = topSide; col < bottomSide; col++){
-            outOfMap = false;
-            if ((col>=0 && col<this->mapHeight) && (row>=0 && row<this->mapWidth)){
-                *tile = this->tileMap[row][col];
-            } else { // out of the map
-                outOfMap = true;
-            }
-            if (!outOfMap){ // if tile is inside map then print it
-                
-
-                // calculate on-screen position of tiles
-                int screenPosX = row-leftSide+this->mapOffsetX;
-                int screenPosY = col-topSide+this->mapOffsetY;
-                dest.x = screenPosX * tileWidth;
-                dest.y = screenPosY * tileHeight;
-                
-                TileManager::drawAscii(codepage, src, dest, tile->ch, tile->foreRgb, tile->backRgb, this->tileHeight, this->tileWidth, 16, 16);
-            }
-        }
-    }
-    /**
     for (std::vector<Tile> tileRow : tileMap){
         for (Tile tile : tileRow){
             tile.render();
         }
     }
-
-    for (int i = 0; i<this->mapHeight; i++){
-        for (int j = 0; j<this->mapWidth; j++){
-            tileMap[i][j].render();
-        }
-    }**/
 }
 
 void Map::moveCamera(int x, int y){

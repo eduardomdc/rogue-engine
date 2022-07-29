@@ -19,11 +19,11 @@ public:
     int mapWidth = 50; // map size
     int mapHeight = 50;
 
-    int mapRenderWidth = 40; // width of map window rendering (odd)
-    int mapRenderHeight = 40;
+    int mapRenderWidth = 30; // width of map window rendering (odd)
+    int mapRenderHeight = 30;
 
-    int mapOffsetX = 2; // where on the screen the map will be rendered
-    int mapOffsetY = 2;
+    int mapOffsetX = 1; // where on the screen the map will be rendered
+    int mapOffsetY = 1;
 
     int mapPositionX = 10; // what map position is being rendered (centered)
     int mapPositionY = 10;

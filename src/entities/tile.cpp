@@ -9,7 +9,7 @@ Tile::Tile(const char* ch, const color foreRgb, const color backRgb,
     this->transparent = transparent;
     this->hasBackground = true;
 
-    this->illumination = {200,200,200};
+    this->illumination = {255,155,55};
     
     // randomize color according to color.redRand, color.greenRand...
     this->foreRgb = colorManager::randomize(foreRgb);

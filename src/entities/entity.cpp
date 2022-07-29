@@ -16,6 +16,7 @@ void Entity::render(){
             *map->tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
         } else return; // out of render area
     } else return; // out of map
+    
     int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
     int screenPosY = this->posY - map->topSide + map->mapOffsetY;
     map->dest.x = screenPosX * map->tileWidth;
@@ -29,16 +30,29 @@ void Entity::render(){
     lightColored.blue *= this->illumination.blue/255.0;
     lightColored.green *= this->illumination.green/255.0;
 
+    
     if (this->hasBackground){
+        color lightColoredBg = this->backRgb;
+
+        lightColoredBg.red *= this->illumination.red/255.0;
+        lightColoredBg.blue *= this->illumination.blue/255.0;
+        lightColoredBg.green *= this->illumination.green/255.0;
+
+        int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
+        int screenPosY = this->posY - map->topSide + map->mapOffsetY;
+        map->dest.x = screenPosX * map->tileWidth;
+        map->dest.y = screenPosY * map->tileHeight;
+
         TileManager::drawAscii(
-        map->codepage,
-        map->src,
-        map->dest,
-        this->ch,
-        lightColored,
-        map->tile->backRgb, 
-        map->tileHeight, 
-        map->tileWidth, 16, 16);
+            map->codepage,
+            map->src,
+            map->dest,
+            this->ch,
+            lightColored,
+            lightColoredBg,
+            map->tileHeight, 
+            map->tileWidth, 16, 16
+        );
     } else {
         TileManager::drawAscii(
         map->codepage,
@@ -46,11 +60,9 @@ void Entity::render(){
         map->dest,
         this->ch,
         lightColored,
-        map->tile->backRgb,
         map->tileHeight, 
         map->tileWidth, 16, 16);
     }
-    
 };
 
 void Entity::update(){
