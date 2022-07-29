@@ -27,18 +27,6 @@ Map::Map(int mapWidth, int mapHeight){
             }
         }
     }
-
-    // illumination test
-    int x = 5;
-    int y = 12;
-    int radius = 4;
-    short brightValue = 0;
-    for (int i = -radius; i<=radius; i++){
-        for (int j = -radius; j<=radius; j++){
-            brightValue = 255/((abs(i*i+j*j)/7)+1);
-            tileMap[x+i][y+j].illumination = {brightValue,(short)(brightValue/1.2),(short)(brightValue/2)};
-        }
-    }
 }
 
 void Map::loadMap(){

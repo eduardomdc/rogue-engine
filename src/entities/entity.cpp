@@ -69,6 +69,11 @@ void Entity::update(){
     if (this->ai){
         this->ai->update(this);
     }
+    
+    if (this->glow == nullptr){
+        // note: colors are overcharging out of short, make setter and getter!
+        this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+    }
 }
 
 void Entity::destroy(){

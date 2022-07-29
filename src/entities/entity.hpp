@@ -6,6 +6,7 @@
 #include "object.hpp"
 #include "ai.hpp"
 #include "creature.hpp"
+#include "glow.hpp"
 #include <SDL2/SDL.h>
 #include <string>
 
@@ -16,6 +17,7 @@ public:
     Object * object = NULL; // entity is physical object
     Ai* ai = NULL; // entity can do things
     Creature* creature = NULL; // entity is a living creature with needs and organs
+    Glow* glow = NULL;
     color foreRgb;//foreground color
     bool hasBackground = false;
     color backRgb;//background color

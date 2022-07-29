@@ -1,8 +1,8 @@
 obj/dep/entities/entity.o: src/entities/entity.cpp \
  src/entities/entity.hpp src/entities/../colors.hpp \
  src/entities/object.hpp src/entities/ai.hpp src/entities/creature.hpp \
- src/entities/tile.hpp src/entities/../draw/tile_manager.hpp \
- src/entities/../draw/../game.hpp \
+ src/entities/glow.hpp src/entities/tile.hpp \
+ src/entities/../draw/tile_manager.hpp src/entities/../draw/../game.hpp \
  src/entities/../draw/../entities/entity.hpp \
  src/entities/../draw/../animations/animation.hpp \
  src/entities/../draw/../animations/../colors.hpp \

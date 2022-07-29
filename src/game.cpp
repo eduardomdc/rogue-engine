@@ -49,8 +49,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     fire->ch = "*";
     fire->origRgb = colors::fire;
     fire->foreRgb = colors::fire;
-    fire->posX = 5;
-    fire->posY = 12;
+    fire->posX = 15;
+    fire->posY = 15;
+    fire->glow = new Glow(fire, colors::red, 4);
     entityList.push_back(fire);
 
     
@@ -116,6 +117,9 @@ void Game::update(){
         if (ent->foreRgb.colorDances == true){ // to do: only randomize entities that are currently being drawn
             ent->foreRgb = colorManager::randomize(ent->origRgb);
         }
+    }
+    for (Entity* ent : entityList){
+        ent->update();
     }
 }
 

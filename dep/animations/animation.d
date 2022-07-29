@@ -7,6 +7,7 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../entities/object.hpp \
  src/animations/../draw/../entities/ai.hpp \
  src/animations/../draw/../entities/creature.hpp \
+ src/animations/../draw/../entities/glow.hpp \
  src/animations/../draw/../animations/animation.hpp \
  src/animations/../draw/../event_manager.hpp \
  src/animations/../draw/../colors.hpp
