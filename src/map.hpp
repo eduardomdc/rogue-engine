@@ -19,8 +19,8 @@ public:
     int mapWidth = 50; // map size
     int mapHeight = 50;
 
-    int mapRenderWidth = 30; // width of map window rendering (odd)
-    int mapRenderHeight = 30;
+    int mapRenderWidth = 40; // width of map window rendering (odd)
+    int mapRenderHeight = 40;
 
     int mapOffsetX = 1; // where on the screen the map will be rendered
     int mapOffsetY = 1;
@@ -35,6 +35,7 @@ public:
 
     void loadMap();
     void drawMap();
+    void update();
 
     SDL_Rect src, dest;
     SDL_Texture* codepage;

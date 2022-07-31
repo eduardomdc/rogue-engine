@@ -22,7 +22,7 @@ Map::Map(int mapWidth, int mapHeight){
     // add some walls for testing
     for (int i = 0; i<this->mapHeight; i++){
         for (int j = 0; j<this->mapWidth; j++){
-            if (rand()%10 == 0){
+            if (rand()%15 == 0){
                 tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
             }
         }
@@ -49,4 +49,12 @@ void Map::moveCamera(int x, int y){
     this->rightSide = this->mapPositionX+((this->mapRenderWidth-1)/2);
     this->topSide = this->mapPositionY-((this->mapRenderHeight-1)/2);
     this->bottomSide = this->mapPositionY+((this->mapRenderHeight-1)/2);
+}
+
+void Map::update(){
+    for (int i = 0; i<this->mapHeight; i++){
+        for (int j = 0; j<this->mapWidth; j++){
+            tileMap[i][j].illumination = {0,0,0};
+        }
+    }
 }

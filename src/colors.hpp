@@ -30,12 +30,16 @@ namespace colors {
 	extern const color null; // for entities with no background
     extern const color white;
     extern const color red;
+	extern const color green;
 	extern const color blue;
+	extern const color yellow;
 	extern const color black;
 	extern const color grey;
 	extern const color pearly;
 	extern const color fire;
+	extern const color fireAverage;
 	extern const color dark;
+	extern const color caveBlue;
 	extern const color rusty;
 	extern const color rocky;
 }

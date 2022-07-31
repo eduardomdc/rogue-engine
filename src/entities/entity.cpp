@@ -1,6 +1,7 @@
 #include "entity.hpp"
 #include "tile.hpp"
 #include <iostream>
+#include <algorithm>
 #include "../draw/tile_manager.hpp"
 #include "../game.hpp"
 #include "../map.hpp"
@@ -21,48 +22,59 @@ void Entity::render(){
     int screenPosY = this->posY - map->topSide + map->mapOffsetY;
     map->dest.x = screenPosX * map->tileWidth;
     map->dest.y = screenPosY * map->tileHeight;
+    if (this->glow == nullptr){
+        // multiply native color by illumination color
 
-    // multiply native color by illumination color
+        color lightColored = this->foreRgb;
 
-    color lightColored = this->foreRgb;
+        lightColored.red *= this->illumination.red/255.0;
+        lightColored.blue *= this->illumination.blue/255.0;
+        lightColored.green *= this->illumination.green/255.0;
 
-    lightColored.red *= this->illumination.red/255.0;
-    lightColored.blue *= this->illumination.blue/255.0;
-    lightColored.green *= this->illumination.green/255.0;
+        
+        if (this->hasBackground){
+            color lightColoredBg = this->backRgb;
 
-    
-    if (this->hasBackground){
-        color lightColoredBg = this->backRgb;
+            lightColoredBg.red *= this->illumination.red/255.0;
+            lightColoredBg.blue *= this->illumination.blue/255.0;
+            lightColoredBg.green *= this->illumination.green/255.0;
 
-        lightColoredBg.red *= this->illumination.red/255.0;
-        lightColoredBg.blue *= this->illumination.blue/255.0;
-        lightColoredBg.green *= this->illumination.green/255.0;
+            int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
+            int screenPosY = this->posY - map->topSide + map->mapOffsetY;
+            map->dest.x = screenPosX * map->tileWidth;
+            map->dest.y = screenPosY * map->tileHeight;
 
-        int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
-        int screenPosY = this->posY - map->topSide + map->mapOffsetY;
-        map->dest.x = screenPosX * map->tileWidth;
-        map->dest.y = screenPosY * map->tileHeight;
-
-        TileManager::drawAscii(
+            TileManager::drawAscii(
+                map->codepage,
+                map->src,
+                map->dest,
+                this->ch,
+                lightColored,
+                lightColoredBg,
+                map->tileHeight, 
+                map->tileWidth, 16, 16
+            );
+        } else {
+            TileManager::drawAscii(
             map->codepage,
             map->src,
             map->dest,
             this->ch,
             lightColored,
-            lightColoredBg,
             map->tileHeight, 
-            map->tileWidth, 16, 16
-        );
+            map->tileWidth, 16, 16);
+        }
     } else {
         TileManager::drawAscii(
-        map->codepage,
-        map->src,
-        map->dest,
-        this->ch,
-        lightColored,
-        map->tileHeight, 
-        map->tileWidth, 16, 16);
+            map->codepage,
+            map->src,
+            map->dest,
+            this->ch,
+            this->foreRgb,
+            map->tileHeight, 
+            map->tileWidth, 16, 16);
     }
+    
 };
 
 void Entity::update(){
@@ -71,9 +83,16 @@ void Entity::update(){
     }
     
     if (this->glow == nullptr){
-        // note: colors are overcharging out of short, make setter and getter!
         this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+    } else {
+        this->glow->update(this);
     }
+}
+
+void Entity::shineLight(short red, short green, short blue){
+    illumination.red = std::min(255, illumination.red+red);
+    illumination.green = std::min(255, illumination.green+green);
+    illumination.blue = std::min(255, illumination.blue+blue);
 }
 
 void Entity::destroy(){

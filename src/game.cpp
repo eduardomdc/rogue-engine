@@ -37,25 +37,54 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     map = new Map(100,100);
 
-    Entity * anvil = new Entity();
-    anvil->ch = "π";
-    anvil->foreRgb = colors::rusty;
-    anvil->origRgb = colors::rusty;
-    anvil->posX = 5;
-    anvil->posY = 13;
-    entityList.push_back(anvil);
 
-    Entity * fire = new Entity();
-    fire->ch = "*";
-    fire->origRgb = colors::fire;
-    fire->foreRgb = colors::fire;
-    fire->posX = 15;
-    fire->posY = 15;
-    fire->glow = new Glow(fire, colors::red, 4);
-    entityList.push_back(fire);
+    Entity * sword = new Entity();
+    sword->ch = "/";
+    sword->foreRgb = colors::yellow;
+    sword->posX = 10;
+    sword->posY = 17;
+    sword->glow = new Glow(sword, colors::yellow, 1);
+    entityList.push_back(sword);
+
+    Entity * sword3 = new Entity();
+    sword3->ch = "/";
+    sword3->origRgb = colors::grey;
+    sword3->foreRgb = colors::grey;
+    sword3->posX = 10;
+    sword3->posY = 15;
+    entityList.push_back(sword3);
+
+    Entity * redFire = new Entity();
+    redFire->ch = "*";
+    redFire->origRgb = colors::fire;
+    redFire->foreRgb = colors::fire;
+    redFire->posX = 15;
+    redFire->posY = 15;
+    redFire->glow = new Glow(redFire, colors::fire, 10);
+    entityList.push_back(redFire);
+
+    Entity * greenFire = new Entity();
+    greenFire->ch = "o";
+    greenFire->origRgb = colors::green;
+    greenFire->foreRgb = colors::green;
+    greenFire->posX = 21;
+    greenFire->posY = 15;
+    greenFire->glow = new Glow(greenFire, colors::green, 1);
+    entityList.push_back(greenFire);
+
+    Entity * blueFire = new Entity();
+    blueFire->ch = "o";
+    blueFire->origRgb = colors::blue;
+    blueFire->foreRgb = colors::blue;
+    blueFire->posX = 17;
+    blueFire->posY = 20;
+    blueFire->glow = new Glow(blueFire, colors::blue, 2);
+    entityList.push_back(blueFire);
 
     
-    Entity* rat = monsterFactory::makeMonster(RAT, 12, 12);
+    Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
+    rat->foreRgb = colors::caveBlue;
+    rat->glow = new Glow(rat, colors::caveBlue, 1);
     entityList.push_back(rat);
 
 
@@ -71,7 +100,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
-    arrow->setFrames({".","*","☺"});
+    arrow->setFrames({"E","D",".","*","☺"});
     arrow->posX = 5;
     arrow->speed = 1000;
     arrow->posY = 5;
@@ -88,7 +117,7 @@ void Game::handleEvents(){
 
         switch (currentEvent.type){
         case SDL_QUIT:
-            std::cout << "quit pressed" << std::endl;
+            std::cout << "Quit Pressed" << std::endl;
             isRunning = false;
             break;
         case SDL_KEYDOWN:
@@ -113,13 +142,29 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
+    map->update();
     for (Entity* ent : entityList){
-        if (ent->foreRgb.colorDances == true){ // to do: only randomize entities that are currently being drawn
-            ent->foreRgb = colorManager::randomize(ent->origRgb);
-        }
+        ent->illumination = {0, 0, 0};
     }
+    // first update all glowing entities
+    for (Entity* ent : entityList){
+        if (ent->glow != nullptr){
+            ent->glow->update(ent);
+        }   
+    }
+    // only then update light-receivers
     for (Entity* ent : entityList){
         ent->update();
+       
+        if (ent->foreRgb.colorDances){
+            if (rand()%5 == 0){
+                ent->foreRgb = colorManager::randomize(ent->origRgb);
+                if (ent->glow->glowColor.colorDances){
+                    ent->glow->glowColor = colorManager::randomize(ent->origRgb);
+                }
+            }
+        }
+        
     }
 }
 
