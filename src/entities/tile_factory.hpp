@@ -23,6 +23,7 @@ enum tileType {
     NOTHING = 0,
     CAVE_FLOOR,
     CAVE_WALL,
+    CAVE_MOSSY_FLOOR,
 
     NUMBER_OF_TILES
 };//thanks brogue!

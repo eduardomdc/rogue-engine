@@ -37,9 +37,12 @@ namespace colors {
 	extern const color grey;
 	extern const color pearly;
 	extern const color fire;
+	extern const color playerFire;
+	extern const color blueMagic;
 	extern const color fireAverage;
 	extern const color dark;
 	extern const color caveBlue;
+	extern const color mossyGreen;
 	extern const color rusty;
 	extern const color rocky;
 }

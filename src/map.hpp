@@ -6,6 +6,7 @@
 #include "draw/tile_manager.hpp"
 #include "entities/tile_factory.hpp"
 #include "entities/tile.hpp"
+#include "algorithms/perlin.hpp"
 //#include "entities/object.hpp"
 //#include "entities/entity.hpp"
 

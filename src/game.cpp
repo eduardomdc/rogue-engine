@@ -54,14 +54,16 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     sword3->posY = 15;
     entityList.push_back(sword3);
 
-    Entity * redFire = new Entity();
+    Entity * redFire;
+    redFire = new Entity();
     redFire->ch = "*";
     redFire->origRgb = colors::fire;
     redFire->foreRgb = colors::fire;
-    redFire->posX = 15;
-    redFire->posY = 15;
-    redFire->glow = new Glow(redFire, colors::fire, 10);
+    redFire->posX = 20;
+    redFire->posY = 20;
+    redFire->glow = new Glow(redFire, colors::fire, 4);
     entityList.push_back(redFire);
+    
 
     Entity * greenFire = new Entity();
     greenFire->ch = "o";
@@ -69,7 +71,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     greenFire->foreRgb = colors::green;
     greenFire->posX = 21;
     greenFire->posY = 15;
-    greenFire->glow = new Glow(greenFire, colors::green, 1);
+    greenFire->glow = new Glow(greenFire, colors::green, 2);
     entityList.push_back(greenFire);
 
     Entity * blueFire = new Entity();
@@ -83,8 +85,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
     Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
-    rat->foreRgb = colors::caveBlue;
-    rat->glow = new Glow(rat, colors::caveBlue, 1);
+    rat->glow = new Glow(rat, colors::blueMagic, 3);
     entityList.push_back(rat);
 
 
@@ -95,6 +96,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posX = 10;
     player->posY = 10;
     player->ai = new PlayerAi();
+    player->glow = new Glow(player, colors::playerFire, 4);
     entityList.push_back(player);
 
     Animation* arrow = new Animation();
@@ -157,10 +159,14 @@ void Game::update(){
         ent->update();
        
         if (ent->foreRgb.colorDances){
-            if (rand()%5 == 0){
+            if (rand()%10 == 0){
                 ent->foreRgb = colorManager::randomize(ent->origRgb);
-                if (ent->glow->glowColor.colorDances){
-                    ent->glow->glowColor = colorManager::randomize(ent->origRgb);
+            }
+        }
+        if (ent->glow){
+            if (ent->glow->glowColor.colorDances){
+                if (rand()%10 == 0) {
+                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
                 }
             }
         }

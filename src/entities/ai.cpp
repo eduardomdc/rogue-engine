@@ -58,6 +58,7 @@ void CritterAi::update(Entity* owner){
             int dx = rand()%3-1;
             int dy = rand()%3-1;
             CritterAi::moveOrAttack(owner, owner->posX + dx, owner->posY + dy);
+            this->turns -= 10; // this needs reworking
     }
 }
 

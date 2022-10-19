@@ -23,4 +23,5 @@ TileData tileCatalog[NUMBER_OF_TILES] = {
     {" ", colors::black, colors::black, false, false}, // the nothing tile *_*
     {".", colors::caveBlue, colors::dark, true, true},
     {"#", colors::dark, colors::rocky, false, false},
+    {",", colors::mossyGreen, colors::dark, true, true},
 };

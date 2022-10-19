@@ -2,6 +2,7 @@
 #include "tile.hpp"
 #include <iostream>
 #include <algorithm>
+#include <list>
 #include "../draw/tile_manager.hpp"
 #include "../game.hpp"
 #include "../map.hpp"
@@ -9,6 +10,18 @@
 Entity::Entity(){};
 
 Entity::~Entity(){};
+
+void Entity::setPos(int x, int y){
+    if (this->glow){
+
+    }
+    this->posX = x;
+    this->posY = y;
+}
+
+std::tuple<int,int> Entity::getPos(){
+    return {this->posX, this->posY};
+}
 
 void Entity::render(){
     Map* map = game->map;
@@ -70,7 +83,7 @@ void Entity::render(){
             map->src,
             map->dest,
             this->ch,
-            this->foreRgb,
+            this->glow->glowColor,
             map->tileHeight, 
             map->tileWidth, 16, 16);
     }
@@ -79,12 +92,23 @@ void Entity::render(){
 
 void Entity::update(){
     if (this->ai){
-        this->ai->update(this);
+        //this->ai->update(this);
     }
     
-    if (this->glow == nullptr){
+    if (!this->glow){
+        // list of light sources of the tile = list of light sources of entity
+        this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
         this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+        // go through light sources and add all contributions
+        /*
+        this->illumination = {0,0,0};
+        std::list<Entity*>::iterator it;
+        for (it=this->lightSources.begin(); it != this->lightSources.end(); it++){
+            Glow* light = (*it)->glow;
+            shineLight(light->glowColor.red, light->glowColor.green, light->glowColor.blue);
+        }*/
     } else {
+        // this->glow->clean(this) old light receivers
         this->glow->update(this);
     }
 }

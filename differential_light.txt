@@ -1,0 +1,4 @@
+1. once a light changes get all tiles on it's range, get all entities with a reference to this* light source.
+2. change light, recalculate los
+2.5. remove this* light source from tiles and entities that are now out of sight or range of light! add new tiles and entities to new los
+3. recalculate all lighting on tiles and entities from step 1.

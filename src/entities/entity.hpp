@@ -9,9 +9,16 @@
 #include "glow.hpp"
 #include <SDL2/SDL.h>
 #include <string>
+#include <list>
+#include <tuple>
 
 class Entity {
 public:
+    Entity();
+    ~Entity();
+
+    void setPos(int x, int y);
+    std::tuple<int, int> getPos();
     int posX;
     int posY;
     Object * object = NULL; // entity is physical object
@@ -30,14 +37,14 @@ public:
     color foreRgbDestroyed;
 
     lightColor illumination = {0,0,0};
+    std::list<Entity*> lightSources; //list of light sources that affect this entity, used for updating
     void shineLight(short red, short green, short blue); // increase illumination values of entity
-    
-    Entity();
-    ~Entity();
 
+    
     void destroy(); // entity is destroyed
     void update();
     void render();
+    
 private:
 };
 
