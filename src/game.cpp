@@ -37,23 +37,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     map = new Map(100,100);
 
-
-    Entity * sword = new Entity();
-    sword->ch = "/";
-    sword->foreRgb = colors::yellow;
-    sword->posX = 10;
-    sword->posY = 17;
-    sword->glow = new Glow(sword, colors::yellow, 1);
-    entityList.push_back(sword);
-
-    Entity * sword3 = new Entity();
-    sword3->ch = "/";
-    sword3->origRgb = colors::grey;
-    sword3->foreRgb = colors::grey;
-    sword3->posX = 10;
-    sword3->posY = 15;
-    entityList.push_back(sword3);
-
     Entity * redFire;
     redFire = new Entity();
     redFire->ch = "*";
@@ -83,7 +66,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->glow = new Glow(blueFire, colors::blue, 2);
     entityList.push_back(blueFire);
 
-    
     Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
     rat->glow = new Glow(rat, colors::blueMagic, 3);
     entityList.push_back(rat);
@@ -96,7 +78,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posX = 10;
     player->posY = 10;
     player->ai = new PlayerAi();
-    player->glow = new Glow(player, colors::playerFire, 4);
+    player->glow = new Glow(player, colors::fire, 10);
     entityList.push_back(player);
 
     Animation* arrow = new Animation();

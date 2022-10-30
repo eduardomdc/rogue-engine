@@ -8,7 +8,7 @@ Map::Map(int mapWidth, int mapHeight){
     this->mapHeight = mapHeight;
 
     // set tileset used
-    codepage = TileManager::LoadTexture("assets/20x20cp437.png");
+    codepage = TileManager::LoadTexture("assets/30x30cp437.png");
 
     //generate perlin map
     Perlin* perlin = new Perlin();

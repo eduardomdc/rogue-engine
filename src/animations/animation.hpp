@@ -13,7 +13,7 @@ public:
     int posY;
     SDL_Rect src;
     SDL_Rect dest;
-    
+    Uint32 frameStart;
     int currentFrame;
     int frames; // amount of frames
     int speed; // amount of ms between each frame
@@ -22,6 +22,9 @@ public:
     int tileHeight;
     color foreRgb;
     color backRgb;
+    lightColor illumination = {0,0,0};
+
+    bool onMap = false; // is the animation on the map or in the UI?
 
     bool done = false; // is the animation finished? 
 

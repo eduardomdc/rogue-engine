@@ -25,7 +25,7 @@ void Glow::update(Entity* owner){
     for (float i = -radius; i<=radius; i++){
         for (float j = -radius; j<=radius; j++){
             if ( x+i >= 0 && x+i < game->map->mapWidth
-             && y+j >= 0 && x+j < game->map->mapHeight){
+             && y+j >= 0 && y+j < game->map->mapHeight){
 
                 if (visible[i+radius][j+radius]){
                     brightValue = std::min(float(1), 1/(abs(1+i*i+j*j)/intensity) );

@@ -39,6 +39,14 @@ void PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
         if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){// if target is inside map
             if (game->map->tileMap[targetX][targetY].walkable){// if target is walkable floor
                 turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
+                Animation* step = new Animation();
+                step->foreRgb = colors::grey;
+                step->setFrames({"#","*","."," "});
+                step->posX = owner->posX;
+                step->speed = 100;
+                step->posY = owner->posY;
+                step->onMap = true;
+                game->animationList.push_back(step);
                 owner->posX = targetX;
                 owner->posY = targetY;
                 game->map->moveCamera(targetX, targetY);

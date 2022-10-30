@@ -10,4 +10,8 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../entities/glow.hpp \
  src/animations/../draw/../animations/animation.hpp \
  src/animations/../draw/../event_manager.hpp \
- src/animations/../draw/../colors.hpp
+ src/animations/../draw/../colors.hpp src/animations/../map.hpp \
+ src/animations/../entities/tile_factory.hpp \
+ src/animations/../entities/tile.hpp \
+ src/animations/../entities/entity.hpp \
+ src/animations/../algorithms/perlin.hpp
