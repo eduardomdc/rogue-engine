@@ -44,8 +44,8 @@ void Animation::render(){
         std::cout << map->leftSide << std::endl;
         int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
         int screenPosY = this->posY - map->topSide + map->mapOffsetY;
-        dest.x = 3 * screenPosX * tileWidth + tileWidth;
-        dest.y = 3 * screenPosY * tileHeight + tileHeight;
+        dest.x = 2 * screenPosX * tileWidth + tileWidth * subPosX;
+        dest.y = 2 * screenPosY * tileHeight + tileHeight * subPosY;
 
         color lightColored = this->foreRgb;
 

@@ -20,8 +20,8 @@ public:
     int mapWidth = 50; // map size
     int mapHeight = 50;
 
-    int mapRenderWidth = 30; // width of map window rendering (odd)
-    int mapRenderHeight = 30;
+    int mapRenderWidth = 50; // width of map window rendering (odd)
+    int mapRenderHeight = 50;
 
     int mapOffsetX = 0; // where on the screen the map will be rendered
     int mapOffsetY = 0;
@@ -44,8 +44,8 @@ public:
 
     Tile* tile = new Tile((const char*)"0", colors::white, colors::black, true, true); //temp variable tile for operations
 
-    int tileHeight = 30; //tile resolution (pixels)
-    int tileWidth = 30;
+    int tileHeight = 20; //tile resolution (pixels)
+    int tileWidth = 20;
 
     void moveCamera(int x, int y);
 private:

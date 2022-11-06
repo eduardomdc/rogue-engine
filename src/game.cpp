@@ -1,6 +1,9 @@
 #include "game.hpp"
 #include "map.hpp"
 #include "entities/monster_factory.hpp"
+#include "inputManager/game_window.hpp"
+#include "inputManager/menu_window.hpp"
+
 #include <iostream>
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -35,7 +38,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(100,100);
+    map = new Map(40,40);
+
+    
+    inputManager = new GameWindow();
 
     Entity * redFire;
     redFire = new Entity();
@@ -44,7 +50,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     redFire->foreRgb = colors::fire;
     redFire->posX = 20;
     redFire->posY = 20;
-    redFire->glow = new Glow(redFire, colors::fire, 4);
+    redFire->glow = new Glow(redFire, colors::fire, 1);
     entityList.push_back(redFire);
     
 
@@ -56,6 +62,26 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     greenFire->posY = 15;
     greenFire->glow = new Glow(greenFire, colors::green, 2);
     entityList.push_back(greenFire);
+
+    for (int i = 0; i<map->mapHeight; i++){
+        for (int j = 0; j<map->mapWidth; j++){
+            
+            if (rand()%500 == 0){
+                if (map->tileMap[i][j].walkable){
+                    Entity * redFire;
+                    redFire = new Entity();
+                    redFire->ch = "*";
+                    redFire->origRgb = colors::fire;
+                    redFire->foreRgb = colors::fire;
+                    redFire->posX = i;
+                    redFire->posY = j;
+                    redFire->glow = new Glow(redFire, colors::fire, 4);
+                    entityList.push_back(redFire);
+                }
+                
+            }
+        }
+    }
 
     Entity * blueFire = new Entity();
     blueFire->ch = "o";
@@ -78,7 +104,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posX = 10;
     player->posY = 10;
     player->ai = new PlayerAi();
-    player->glow = new Glow(player, colors::fire, 10);
+    //player->glow = new Glow(player, colors::white, 1);
     entityList.push_back(player);
 
     Animation* arrow = new Animation();
@@ -97,31 +123,7 @@ void Game::handleEvents(){
      * with the turns they had + the ones they have now**/
 
     while(SDL_PollEvent(&currentEvent)){
-        this->turns = 0; //after every event turns taken are set to 0 again
-
-        switch (currentEvent.type){
-        case SDL_QUIT:
-            std::cout << "Quit Pressed" << std::endl;
-            isRunning = false;
-            break;
-        case SDL_KEYDOWN:
-            player->ai->update(player);
-            break;
-        default: // with menus this will be alot more complicated
-            break;
-        }
-
-        if (this->turns){//if player took action
-            for (Entity* ent : entityList){
-                if (ent != player){
-                    if (ent->ai){
-                        //increment turns
-                        ent->ai->turns += this->turns;
-                        ent->ai->update(ent);
-                    }
-                }
-            }
-        }
+        inputManager->handleInput(currentEvent);
     }
 }
 

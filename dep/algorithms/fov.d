@@ -6,8 +6,8 @@ obj/dep/algorithms/fov.o: src/algorithms/fov.cpp src/algorithms/fov.hpp \
  src/algorithms/../entities/glow.hpp \
  src/algorithms/../animations/animation.hpp \
  src/algorithms/../animations/../colors.hpp \
- src/algorithms/../event_manager.hpp src/algorithms/../map.hpp \
- src/algorithms/../draw/tile_manager.hpp \
+ src/algorithms/../inputManager/input_manager.hpp \
+ src/algorithms/../map.hpp src/algorithms/../draw/tile_manager.hpp \
  src/algorithms/../draw/../game.hpp src/algorithms/../draw/../colors.hpp \
  src/algorithms/../entities/tile_factory.hpp \
  src/algorithms/../entities/tile.hpp \

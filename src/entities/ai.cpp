@@ -34,19 +34,47 @@ void PlayerAi::update(Entity* owner){
     }
 };
 
+void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
+    Animation* step = new Animation();
+    step->foreRgb = colors::grey;
+    step->setFrames({"#","*","."," "});
+    step->posX = posX;
+    step->speed = 100;
+    step->posY = posY;
+    if (targetY > posY){
+        step->subPosY = 1;
+        if (rightStep){
+            step->subPosX = 0;
+        } else step->subPosX = 1;
+    } else if (targetY < posY) {
+        step->subPosY = 0;
+        if (rightStep){
+            step->subPosX = 0;
+        } else step->subPosX = 1;
+    }
+    if (targetX > posX){
+        step->subPosX = 1;
+        if (rightStep){
+            step->subPosY = 0;
+        } else step->subPosY = 1;
+    } else if (targetX < posX) {
+        step->subPosX = 0;
+        if (rightStep){
+            step->subPosY = 0;
+        } else step->subPosY = 1;
+    }
+
+    step->onMap = true;
+    game->animationList.push_back(step);
+}
+
 void PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
         int turns = 0;// >0 if player has taken an action
         if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){// if target is inside map
             if (game->map->tileMap[targetX][targetY].walkable){// if target is walkable floor
                 turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
-                Animation* step = new Animation();
-                step->foreRgb = colors::grey;
-                step->setFrames({"#","*","."," "});
-                step->posX = owner->posX;
-                step->speed = 100;
-                step->posY = owner->posY;
-                step->onMap = true;
-                game->animationList.push_back(step);
+                BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, this->rightStep);
+                this->rightStep = !this->rightStep;
                 owner->posX = targetX;
                 owner->posY = targetY;
                 game->map->moveCamera(targetX, targetY);
@@ -76,6 +104,7 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
             //tile is walkable and is different from current
             turns = 200;
+            BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, rand()%2);
             owner->posX = targetX;
             owner->posY = targetY;
             if (owner->creature){

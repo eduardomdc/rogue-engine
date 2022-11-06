@@ -6,7 +6,7 @@
 #include <vector>
 #include "entities/entity.hpp"
 #include "animations/animation.hpp"
-#include "event_manager.hpp"
+#include "inputManager/input_manager.hpp"
 
 class Game {
 public:
@@ -24,6 +24,8 @@ public:
 
     class Map* map;
 
+    class InputManager* inputManager;
+
     static SDL_Event currentEvent;
 
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
@@ -34,10 +36,10 @@ public:
     void clean();
 
     bool running(){return isRunning;}
+    bool isRunning;
 
     int cnt=0;
 private:
-    bool isRunning;
     SDL_Window *window;
 };
 

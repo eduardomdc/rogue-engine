@@ -9,7 +9,7 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../entities/creature.hpp \
  src/animations/../draw/../entities/glow.hpp \
  src/animations/../draw/../animations/animation.hpp \
- src/animations/../draw/../event_manager.hpp \
+ src/animations/../draw/../inputManager/input_manager.hpp \
  src/animations/../draw/../colors.hpp src/animations/../map.hpp \
  src/animations/../entities/tile_factory.hpp \
  src/animations/../entities/tile.hpp \

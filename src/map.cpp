@@ -1,6 +1,6 @@
 #include "map.hpp"
 #include "entities/tile_factory.hpp"
-
+#include "game.hpp"
 
 Map::Map(int mapWidth, int mapHeight){
     // set variables
@@ -8,7 +8,7 @@ Map::Map(int mapWidth, int mapHeight){
     this->mapHeight = mapHeight;
 
     // set tileset used
-    codepage = TileManager::LoadTexture("assets/30x30cp437.png");
+    codepage = TileManager::LoadTexture("assets/20x20cp437.png");
 
     //generate perlin map
     Perlin* perlin = new Perlin();
@@ -21,14 +21,14 @@ Map::Map(int mapWidth, int mapHeight){
             tileMap[i].push_back(*tile);
         }
     }
-    
+
     // add some walls for testing
     for (int i = 0; i<this->mapHeight; i++){
         for (int j = 0; j<this->mapWidth; j++){
             
-            /*if (rand()%15 == 0){
-                tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
-            }*/
+            if (rand()%30 == 0){
+                
+            }
             if (perlin->value(i*0.1,j*0.1) > 0.2){
                 tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
             }

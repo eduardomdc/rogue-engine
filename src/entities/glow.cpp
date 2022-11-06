@@ -61,10 +61,3 @@ void Glow::cleanLightReceivers(Entity* owner){
         }
     }
 }
-
-void Glow::newUpdate(Entity* owner){
-    int x = owner->posX;
-    int y = owner->posY;
-
-
-}

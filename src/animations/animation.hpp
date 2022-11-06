@@ -11,6 +11,8 @@ class Animation{
 public:
     int posX;
     int posY;
+    int subPosX; // position within the cell at posX, posY. Cells are divided into 4 subcells (0,0) (0,1) (1,0) (1,1)
+    int subPosY;
     SDL_Rect src;
     SDL_Rect dest;
     Uint32 frameStart;
