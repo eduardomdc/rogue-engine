@@ -17,7 +17,7 @@ private:
     int size = 256;
     std::vector<std::vector<unitVector>> grid;
 public:
-    Perlin();
+    Perlin(int size);
     unitVector randomUnitVector();
     float value(float x, float y);
     float dotProd(float x0, float y0, float x1, float y1);

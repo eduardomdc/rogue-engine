@@ -11,8 +11,9 @@ unitVector Perlin::randomUnitVector()
     return vec;
 }
 
-Perlin::Perlin()
+Perlin::Perlin(int size)
 {
+    this->size = size;
     // init grid vector
     for (int i = 0; i<this->size; i++){
         grid.push_back(std:: vector<unitVector >());

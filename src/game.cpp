@@ -3,6 +3,7 @@
 #include "entities/monster_factory.hpp"
 #include "inputManager/game_window.hpp"
 #include "inputManager/menu_window.hpp"
+#include "draw/text.hpp"
 
 #include <iostream>
 
@@ -17,16 +18,24 @@ SDL_Event Game::currentEvent;
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
     int flags = 0;
     if (fullscreen){
-        flags = SDL_WINDOW_FULLSCREEN;
+        //flags = SDL_WINDOW_FULLSCREEN;
     }
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
         std::cout << "Subsystems Initialized" << std::endl;
+        
         SDL_Window *window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+        if (fullscreen){
+            //flags = SDL_WINDOW_FULLSCREEN;
+            SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        }
+        
         if (window){
             std::cout << "Window Created" << std::endl;
         }
         renderer = SDL_CreateRenderer(window, -1, 0);
+        SDL_RenderSetLogicalSize(renderer, 960, 540);
+        SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             std::cout << "Renderer Created" << std::endl;
@@ -38,7 +47,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(40,40);
+    map = new Map(70,50);
 
     
     inputManager = new GameWindow();
@@ -48,10 +57,24 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     redFire->ch = "*";
     redFire->origRgb = colors::fire;
     redFire->foreRgb = colors::fire;
-    redFire->posX = 20;
-    redFire->posY = 20;
-    redFire->glow = new Glow(redFire, colors::fire, 1);
-    entityList.push_back(redFire);
+    redFire->posX = 30;
+    redFire->posY = 30;
+    ParticleEmitter* pemit;
+    pemit = new ParticleEmitter(redFire);
+    pemit->chs = {".", ",","*","`"};
+    pemit->foreRgb = colors::fireAverage;
+    pemit->x = 30;
+    pemit->y = 30;
+    pemit->maxParticles = 10;
+    pemit->spawnRate = 500;
+    pemit->angle = -M_PI/2;
+    pemit->speed = 0.05;
+    pemit->speedSpread = 0.03;
+    pemit->angleSpread = M_PI/6;
+    pemit->duration = 1000;
+    redFire->particleEmitter = pemit;
+    redFire->glow = new Glow(redFire, colors::fire, 50);
+    map->entityList.push_back(redFire);
     
 
     Entity * greenFire = new Entity();
@@ -60,28 +83,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     greenFire->foreRgb = colors::green;
     greenFire->posX = 21;
     greenFire->posY = 15;
-    greenFire->glow = new Glow(greenFire, colors::green, 2);
-    entityList.push_back(greenFire);
-
-    for (int i = 0; i<map->mapHeight; i++){
-        for (int j = 0; j<map->mapWidth; j++){
-            
-            if (rand()%500 == 0){
-                if (map->tileMap[i][j].walkable){
-                    Entity * redFire;
-                    redFire = new Entity();
-                    redFire->ch = "*";
-                    redFire->origRgb = colors::fire;
-                    redFire->foreRgb = colors::fire;
-                    redFire->posX = i;
-                    redFire->posY = j;
-                    redFire->glow = new Glow(redFire, colors::fire, 4);
-                    entityList.push_back(redFire);
-                }
-                
-            }
-        }
-    }
+    greenFire->glow = new Glow(greenFire, colors::green, 1);
+    map->entityList.push_back(greenFire);
 
     Entity * blueFire = new Entity();
     blueFire->ch = "o";
@@ -89,23 +92,22 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->foreRgb = colors::blue;
     blueFire->posX = 17;
     blueFire->posY = 20;
-    blueFire->glow = new Glow(blueFire, colors::blue, 2);
-    entityList.push_back(blueFire);
+    blueFire->glow = new Glow(blueFire, colors::blue, 1);
+    map->entityList.push_back(blueFire);
 
     Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
-    rat->glow = new Glow(rat, colors::blueMagic, 3);
-    entityList.push_back(rat);
+    map->entityList.push_back(rat);
 
 
     player = new Entity();
-    player->ch = "@";
+    player->ch = "☺";
     player->origRgb = colors::white;
     player->foreRgb = colors::white;
     player->posX = 10;
     player->posY = 10;
     player->ai = new PlayerAi();
     //player->glow = new Glow(player, colors::white, 1);
-    entityList.push_back(player);
+    map->entityList.push_back(player);
 
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
@@ -129,17 +131,17 @@ void Game::handleEvents(){
 
 void Game::update(){
     map->update();
-    for (Entity* ent : entityList){
+    for (Entity* ent : map->entityList){
         ent->illumination = {0, 0, 0};
     }
     // first update all glowing entities
-    for (Entity* ent : entityList){
+    for (Entity* ent : map->entityList){
         if (ent->glow != nullptr){
             ent->glow->update(ent);
         }   
     }
     // only then update light-receivers
-    for (Entity* ent : entityList){
+    for (Entity* ent : map->entityList){
         ent->update();
        
         if (ent->foreRgb.colorDances){
@@ -160,9 +162,13 @@ void Game::update(){
 
 void Game::render(){
     SDL_RenderClear(renderer);
+    
     map->drawMap();
     // draw entities
-    for (Entity* ent : entityList){
+    for (Entity* ent : map->entityList){
+        if (ent->particleEmitter){
+            ent->particleEmitter->update();
+        }
         ent->render();
     }
     std::vector<Animation*>::iterator it;
@@ -178,6 +184,10 @@ void Game::render(){
             it++;
         }
     }
+    // draw UI
+    std::string ui = "Roguelight v0.1";
+    renderText(ui, 0,0, colors::white, false);
+
     SDL_RenderPresent(renderer);
 }
 

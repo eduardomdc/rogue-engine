@@ -1,5 +1,6 @@
 #include "game_window.hpp"
 #include "../game.hpp"
+#include "../map.hpp"
 #include <iostream>
 #include "menu_window.hpp"
 
@@ -31,7 +32,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     }
 
     if (game->turns){//if player took action
-        for (Entity* ent : game->entityList){
+        for (Entity* ent : game->map->entityList){
             if (ent != game->player){
                 if (ent->ai){
                     //increment turns

@@ -31,7 +31,7 @@ void Animation::render(){
 
     if (onMap){
         Map* map = game->map;
-        if ((this->posY>=0 && this->posY< map->mapHeight) && (this->posX>=0 && this->posX<map->mapWidth)){
+        if (map->inMap(this->posX, this->posY)){
             if ( 
                 (this->posY >= map->topSide && this->posY < map->bottomSide) && 
                 (this->posX >= map->leftSide && this->posX < map->rightSide)
@@ -41,7 +41,6 @@ void Animation::render(){
             } else return; // out of render area
         } else return; // out of map
 
-        std::cout << map->leftSide << std::endl;
         int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
         int screenPosY = this->posY - map->topSide + map->mapOffsetY;
         dest.x = 2 * screenPosX * tileWidth + tileWidth * subPosX;

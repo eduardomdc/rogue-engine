@@ -26,7 +26,7 @@ std::tuple<int,int> Entity::getPos(){
 
 void Entity::render(){
     Map* map = game->map;
-    if ((this->posY>=0 && this->posY< map->mapHeight) && (this->posX>=0 && this->posX<map->mapWidth)){
+    if (game->map->inMap(this->posX, this->posY)){
         if ( 
             (this->posY >= map->topSide && this->posY < map->bottomSide) && 
             (this->posX >= map->leftSide && this->posX < map->rightSide)
@@ -34,7 +34,6 @@ void Entity::render(){
             *map->tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
         } else return; // out of render area
     } else return; // out of map
-
     
     int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
     int screenPosY = this->posY - map->topSide + map->mapOffsetY;

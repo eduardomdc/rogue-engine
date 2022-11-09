@@ -1,11 +1,15 @@
 #include "tile_manager.hpp"
 #include <map>
 #include <string.h>
+#include <iostream>
 
 SDL_Texture* TileManager::LoadTexture(const char* texture){
     SDL_Surface* tempSurface = IMG_Load(texture);
     SDL_Texture* tex = SDL_CreateTextureFromSurface(Game::renderer, tempSurface);
     SDL_FreeSurface(tempSurface);
+    if (tex == nullptr){
+        std::cout << "Error loading texture: " << texture << std::endl;
+    }
     return tex;
 }
 

@@ -70,7 +70,7 @@ void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rig
 
 void PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
         int turns = 0;// >0 if player has taken an action
-        if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){// if target is inside map
+        if (game->map->inMap(targetX, targetY)){// if target is inside map
             if (game->map->tileMap[targetX][targetY].walkable){// if target is walkable floor
                 turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
                 BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, this->rightStep);
@@ -100,7 +100,7 @@ void CritterAi::update(Entity* owner){
 
 void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
     int turns = 0;
-    if ((targetY>=0 && targetY< game->map->mapHeight) && (targetX>=0 && targetX< game->map->mapWidth)){
+    if (game->map->inMap(targetX, targetY)){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
             //tile is walkable and is different from current
             turns = 200;

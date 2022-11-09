@@ -15,13 +15,13 @@ public:
     Map(int mapWidth, int mapHeight);
     ~Map();
 
-    std::vector< Entity > entityList; // array of entities on the map;
+    std::vector< Entity* > entityList; // array of entities on the map;
 
-    int mapWidth = 50; // map size
-    int mapHeight = 50;
+    int mapWidth; // map size
+    int mapHeight;
 
-    int mapRenderWidth = 50; // width of map window rendering (odd)
-    int mapRenderHeight = 50;
+    int mapRenderWidth = 50; // 96x54 width of map window rendering (odd)
+    int mapRenderHeight = 29;
 
     int mapOffsetX = 0; // where on the screen the map will be rendered
     int mapOffsetY = 0;
@@ -37,6 +37,8 @@ public:
     void loadMap();
     void drawMap();
     void update();
+
+    bool inMap(int x, int y);
 
     SDL_Rect src, dest;
     SDL_Texture* codepage;
