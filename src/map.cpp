@@ -35,7 +35,6 @@ Map::Map(int mapWidth, int mapHeight){
                 tileMap[i][j] = *tileFactory::makeTile(CAVE_MOSSY_FLOOR, i, j);
             }
         }
-        std::cout << std::endl;
     }
 }
 
@@ -64,7 +63,7 @@ void Map::moveCamera(int x, int y){
 void Map::update(){
     for (int i = 0; i<this->mapWidth; i++){
         for (int j = 0; j<this->mapHeight; j++){
-            tileMap[i][j].illumination = {5,5,35}; // ambient light
+            tileMap[i][j].illumination = {20,20,55}; // ambient light
         }
     }
 }

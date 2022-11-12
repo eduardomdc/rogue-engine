@@ -12,20 +12,32 @@ void PlayerAi::update(Entity* owner){
     switch (ev.type){
     case SDL_KEYDOWN:
         switch( ev.key.keysym.sym ){
-            case SDLK_LEFT:
+            case SDLK_a:
                     PlayerAi::moveOrAttack(game->player, game->player->posX-1, game->player->posY);
                     break;
-            case SDLK_RIGHT:
+            case SDLK_d:
                     PlayerAi::moveOrAttack(game->player, game->player->posX+1, game->player->posY);
                     break;
-            case SDLK_UP:
+            case SDLK_w:
                     PlayerAi::moveOrAttack(game->player, game->player->posX, game->player->posY-1);
                     break;
-            case SDLK_DOWN:
+            case SDLK_x:
                     PlayerAi::moveOrAttack(game->player, game->player->posX, game->player->posY+1);
                     break;
             case SDLK_r:
                     PlayerAi::rest(game->player);
+                    break;
+            case SDLK_q:
+                    PlayerAi::moveOrAttack(game->player, game->player->posX-1, game->player->posY-1);
+                    break;
+            case SDLK_z:
+                    PlayerAi::moveOrAttack(game->player, game->player->posX-1, game->player->posY+1);
+                    break;
+            case SDLK_c:
+                    PlayerAi::moveOrAttack(game->player, game->player->posX+1, game->player->posY+1);
+                    break;
+            case SDLK_e:
+                    PlayerAi::moveOrAttack(game->player, game->player->posX+1, game->player->posY-1);
                     break;
         }
         break;
@@ -77,6 +89,7 @@ void PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
                 this->rightStep = !this->rightStep;
                 owner->posX = targetX;
                 owner->posY = targetY;
+                owner->player->updateFov();
                 game->map->moveCamera(targetX, targetY);
             }//if there is entity attackable attack it else:
         }

@@ -13,6 +13,6 @@ std::list< position > bresenham(position orig, position dest);
 
 std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius);
 
-
+std::vector<std::vector <bool>> computeFOV(int x, int y, int radius);
 
 #endif

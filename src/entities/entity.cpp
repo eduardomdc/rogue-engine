@@ -35,6 +35,29 @@ void Entity::render(){
         } else return; // out of render area
     } else return; // out of map
     
+    // highest dynamic color system
+    // short max_color = 0;
+    // if (illumination.red > max_color){
+    //     max_color = illumination.red;
+    // }
+    // if (illumination.green > max_color){
+    //     max_color = illumination.green;
+    // }
+    // if (illumination.blue > max_color){
+    //     max_color = illumination.blue;
+    // }
+    // if (max_color > 255){
+    //     float ratio = 255.0/max_color;
+    //     illumination.red *= ratio;
+    //     illumination.green *= ratio;
+    //     illumination.blue *= ratio;
+    // }
+    
+    
+    if (!game->player->player->canSee(this->posX, this->posY)){
+        return; // player can't see this entity
+    }
+
     int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
     int screenPosY = this->posY - map->topSide + map->mapOffsetY;
     map->dest.x = screenPosX * map->tileWidth;
@@ -101,8 +124,23 @@ void Entity::update(){
     
     if (!this->glow){
         // list of light sources of the tile = list of light sources of entity
-        this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
+        //this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
         this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+        /*
+        short max_color = 0;
+        if (illumination.red > max_color){
+            max_color = illumination.red;
+        }
+        if (illumination.green > max_color){
+            max_color = illumination.green;
+        }
+        if (illumination.blue > max_color){
+            max_color = illumination.blue;
+        }
+        float ratio = 255.0/max_color;
+        illumination.red *= ratio;
+        illumination.green *= ratio;
+        illumination.blue *= ratio;*/
         // go through light sources and add all contributions
         /*
         this->illumination = {0,0,0};
@@ -114,6 +152,13 @@ void Entity::update(){
     } else {
         // this->glow->clean(this) old light receivers
         this->glow->update(this);
+    }
+
+    if (this->player){
+        // this->player->updateFov();
+    }
+    if (this->particleEmitter){
+        this->particleEmitter->update();
     }
 }
 

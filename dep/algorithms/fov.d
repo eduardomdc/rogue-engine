@@ -4,6 +4,8 @@ obj/dep/algorithms/fov.o: src/algorithms/fov.cpp src/algorithms/fov.hpp \
  src/algorithms/../entities/object.hpp src/algorithms/../entities/ai.hpp \
  src/algorithms/../entities/creature.hpp \
  src/algorithms/../entities/glow.hpp \
+ src/algorithms/../entities/player.hpp \
+ src/algorithms/../entities/../algorithms/fov.hpp \
  src/algorithms/../entities/../particles/particle_emitter.hpp \
  src/algorithms/../entities/../particles/particle.hpp \
  src/algorithms/../entities/../particles/../colors.hpp \

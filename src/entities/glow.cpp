@@ -17,10 +17,11 @@ Glow::Glow(Entity* owner, color glowColor, short intensity){
 void Glow::update(Entity* owner){
     int x = owner->posX;
     int y = owner->posY;
-    int radius = sqrt(intensity)*3;
+    int radius = sqrt(intensity/0.05);
     float brightValue = 0;
 
-    std::vector<std::vector <bool>> visible = getVisibleRadius(x, y, radius);
+    std::vector<std::vector <bool>> visible = computeFOV(x,y,radius);
+    // std::vector<std::vector <bool>> visible = getVisibleRadius(x, y, radius);
 
     for (float i = -radius; i<=radius; i++){
         for (float j = -radius; j<=radius; j++){
@@ -33,6 +34,9 @@ void Glow::update(Entity* owner){
                     light->red += short(std::min(float(255-light->red), float(brightValue*this->glowColor.red)));
                     light->green += short(std::min(float(255-light->green), float(brightValue*this->glowColor.green)));
                     light->blue += short(std::min(float(255-light->blue), float(brightValue*this->glowColor.blue) ));
+                    // light->red += short(brightValue*this->glowColor.red);
+                    // light->green += short(brightValue*this->glowColor.green); 
+                    // light->blue += short(brightValue*this->glowColor.blue);
                 }
                 
             }

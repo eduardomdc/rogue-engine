@@ -47,7 +47,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    map = new Map(70,50);
+    map = new Map(100,100);
 
     
     inputManager = new GameWindow();
@@ -73,7 +73,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     pemit->angleSpread = M_PI/6;
     pemit->duration = 1000;
     redFire->particleEmitter = pemit;
-    redFire->glow = new Glow(redFire, colors::fire, 50);
+    redFire->glow = new Glow(redFire, colors::fire, 30);
     map->entityList.push_back(redFire);
     
 
@@ -81,8 +81,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     greenFire->ch = "o";
     greenFire->origRgb = colors::green;
     greenFire->foreRgb = colors::green;
-    greenFire->posX = 21;
-    greenFire->posY = 15;
+    greenFire->posX = 31;
+    greenFire->posY = 35;
     greenFire->glow = new Glow(greenFire, colors::green, 1);
     map->entityList.push_back(greenFire);
 
@@ -90,8 +90,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->ch = "o";
     blueFire->origRgb = colors::blue;
     blueFire->foreRgb = colors::blue;
-    blueFire->posX = 17;
-    blueFire->posY = 20;
+    blueFire->posX = 32;
+    blueFire->posY = 30;
     blueFire->glow = new Glow(blueFire, colors::blue, 1);
     map->entityList.push_back(blueFire);
 
@@ -106,13 +106,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posX = 10;
     player->posY = 10;
     player->ai = new PlayerAi();
+    player->player = new Player(player);
     //player->glow = new Glow(player, colors::white, 1);
     map->entityList.push_back(player);
 
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
-    arrow->setFrames({"E","D",".","*","☺"});
+    arrow->setFrames({"R","O",".","*","☺","☺"});
     arrow->posX = 5;
     arrow->speed = 1000;
     arrow->posY = 5;
@@ -163,30 +164,43 @@ void Game::update(){
 void Game::render(){
     SDL_RenderClear(renderer);
     
-    map->drawMap();
-    // draw entities
-    for (Entity* ent : map->entityList){
-        if (ent->particleEmitter){
-            ent->particleEmitter->update();
-        }
-        ent->render();
-    }
-    std::vector<Animation*>::iterator it;
+    
 
-    it = animationList.begin();
-    while (it != animationList.end()){
-        Animation* anim = *it;
-        anim->render();
-        
-        if (anim->done == true){
-            it = animationList.erase(it);
-        } else {
-            it++;
+    if (dynamic_cast<MenuWindow*>(inputManager)){
+        // options menu
+    } else {
+        map->drawMap();
+        // draw entities
+        for (Entity* ent : map->entityList){
+            ent->render();
+            if (ent->particleEmitter){
+                if (player->player->canSee(ent->posX, ent->posY)){
+                    ent->particleEmitter->update();
+                }
+            }
         }
+        std::vector<Animation*>::iterator it;
+
+        it = animationList.begin();
+        while (it != animationList.end()){
+            Animation* anim = *it;
+            anim->render();
+            
+            if (anim->done == true){
+                it = animationList.erase(it);
+            } else {
+                it++;
+            }
+        }
+        // draw UI
+        std::string ui = "Roguelight v0.1";
+        renderText(ui, 0,0, colors::white, false);
+        uint32_t tickd = SDL_GetTicks()-lastTick;
+        int fps = 1000/tickd;
+        std::string fpsString = std::to_string(fps);
+        renderText("FPS "+fpsString, 88, 0, colors::yellow, false);
+        lastTick = SDL_GetTicks();
     }
-    // draw UI
-    std::string ui = "Roguelight v0.1";
-    renderText(ui, 0,0, colors::white, false);
 
     SDL_RenderPresent(renderer);
 }

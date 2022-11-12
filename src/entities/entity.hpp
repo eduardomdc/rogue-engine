@@ -7,6 +7,7 @@
 #include "ai.hpp"
 #include "creature.hpp"
 #include "glow.hpp"
+#include "player.hpp"
 #include "../particles/particle_emitter.hpp"
 #include <SDL2/SDL.h>
 #include <string>
@@ -27,6 +28,7 @@ public:
     Creature* creature = NULL; // entity is a living creature with needs and organs
     Glow* glow = NULL;
     ParticleEmitter* particleEmitter = NULL; // entity emits particles
+    Player* player = NULL; // entity is player
     color foreRgb;//foreground color
     bool hasBackground = false;
     color backRgb;//background color

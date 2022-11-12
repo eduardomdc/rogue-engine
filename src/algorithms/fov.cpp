@@ -1,6 +1,8 @@
 #include "fov.hpp"
 #include "../game.hpp"
 #include "../map.hpp"
+#include <iostream>
+#include <algorithm>
 
 std::list<position> bresenham(position orig, position dest) {
     std::list<position> line;
@@ -65,25 +67,12 @@ std::list<position> bresenham(position orig, position dest) {
 }
 
 std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius) {
-    // Symmetric Shadowcasting Algorithm by Albert Ford
+    // need to implement Symmetric Shadowcasting Algorithm by Albert Ford
+    // really bad algorithm by me!
     // init array[radius][radius] filled with false
     int size = 2*radius+1;
     std::vector<std::vector <bool>> visible( size, std::vector <bool>(size, false));
     
-    /**
-    int mapX, mapY; // corresponding coordinates on game map
-    for (int i = 0; i < size; i++){
-        for (int j=0; j < size; j++){
-            mapX = i - radius + x;
-            mapY = j - radius + y;
-            if (mapX >= 0 && mapX < game->map->mapWidth
-            &&  mapY >= 0 && mapY < game->map->mapHeight){ //check if is inside map
-                
-                
-            }
-        }
-    }
-    **/
     std::list<position> line;
                 
     for (int oct = 0; oct < 4; oct++){
@@ -110,7 +99,7 @@ std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius) {
                 int mapY = it->y - radius + y;
                 if (mapX >= 0 && mapX < game->map->mapWidth
                 &&  mapY >= 0 && mapY < game->map->mapHeight){
-                    if (game->map->tileMap[it->x - radius + x][it->y - radius + y].transparent)
+                    if (game->map->tileMap[mapX][mapY].transparent)
                         visible[it->x][it->y] = true;
                     else{
                         visible[it->x][it->y] = true;
@@ -120,5 +109,129 @@ std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius) {
             }
         }
     }
+    return visible;
+}
+
+bool isBlocking(position position){
+    if (!(position.x >= 0 && position.y>= 0 && position.x < game->map->mapWidth && position.y < game->map->mapHeight)){
+        return true;
+    }
+    return !(game->map->tileMap[position.x][position.y].transparent);
+}
+
+// SYMMETRIC SHADOWCASTING
+
+
+
+
+int roundTiesUp(float n){
+    return floor(n + 0.5);
+}
+
+int roundTiesDown(float n){
+    return ceil(n - 0.5);
+}
+/**
+    Quadrant transformation matrixes.
+    {xx, xy, yx, yy}
+ */
+static const int quadrant_table[4][4] = {
+    {1,     0,      0,      1},
+    {0,     1,      1,      0},
+    {0,    -1,     -1,      0},
+    {-1,    0,      0,     -1},
+};
+/**
+    Information for the current active row.
+ */
+typedef struct Row {
+  const int pov_x;  // The origin point-of-view.
+  const int pov_y;
+  const int quadrant;  // The quadrant index.
+  int depth;  // The depth of this row.
+  float slope_low;
+  const float slope_high;
+} Row;
+
+static bool is_symmetric(const Row* __restrict row, int column) {
+  return column >= row->depth * row->slope_low && column <= row->depth * row->slope_high;
+}
+
+static float slope(int row_depth, int column) { return (2.0f * column - 1.0f) / (2.0f * row_depth); }
+
+position getArrayPos(position mapPos, position origin, int radius){
+    return {mapPos.x + radius - origin.x , mapPos.y + radius - origin.y};
+}
+
+static void scan(Row* __restrict row, std::vector<std::vector <bool>>* visible, int radius){
+    const int xx = quadrant_table[row->quadrant][0];
+    const int xy = quadrant_table[row->quadrant][1];
+    const int yx = quadrant_table[row->quadrant][2];
+    const int yy = quadrant_table[row->quadrant][3];
+    int mapX = row->pov_x + row->depth * xx;
+    int mapY = row->pov_y + row->depth * yx;
+    if (!game->map->inMap(mapX,mapY)){
+        return; //Row->depth out of bounds
+    }
+    if (row->depth > radius){
+        return;
+    }
+    const int column_min = roundTiesUp(row->depth * row->slope_low);
+    const int column_max = roundTiesDown(row->depth * row->slope_high);
+    bool prev_tile_is_wall = false;
+    for (int column = column_min; column <= column_max; column++){
+        const int map_x = row->pov_x + row->depth * xx + column * xy;
+        const int map_y = row->pov_y + row->depth * yx + column * yy;
+        // if (!game->map->inMap(map_x, map_y)){
+            // return; // tile is out of bounds
+        // }
+        const bool isWall = isBlocking({map_x, map_y});
+        if (isWall || is_symmetric(row, column)){
+            position fovMatrixPos = getArrayPos({map_x, map_y}, {row->pov_x,row->pov_y}, radius);
+            (*visible)[fovMatrixPos.x][fovMatrixPos.y] = true;
+        }
+        if (prev_tile_is_wall && !isWall){
+            row->slope_low = slope(row->depth, column);
+        }
+        if (column != column_min && !prev_tile_is_wall && isWall){
+            Row next_row = {
+                .pov_x = row->pov_x,
+                .pov_y = row->pov_y,
+                .quadrant = row->quadrant,
+                .depth = row->depth + 1,
+                .slope_low = row->slope_low,
+                .slope_high = slope(row->depth, column),
+            };
+            scan(&next_row, visible, radius);
+        }
+        prev_tile_is_wall = isWall;
+    }
+    if (!prev_tile_is_wall){
+        row->depth += 1;
+        scan(row, visible, radius);
+    }
+}
+
+
+
+std::vector< std::vector<bool> > computeFOV(int x, int y, int radius){
+    // symmetric shadowcasting algorithm by Albert Ford from libtcod source
+    int size = 2*radius+1;
+    std::vector<std::vector <bool>> visible(size, std::vector <bool>(size, false));
+    position fovMatrixPos = getArrayPos({x, y}, {x,y}, radius);
+    visible[fovMatrixPos.x][fovMatrixPos.y] = true;
+
+    for (int i = 0; i< 4; i++){
+        Row row = {
+        .pov_x = x,
+        .pov_y = y,
+        .quadrant = i,
+        .depth = 1,
+        .slope_low = -1,
+        .slope_high = 1,
+        };
+        scan(&row, &visible, radius);
+    }
+    
     return visible;
 }
