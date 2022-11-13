@@ -2,8 +2,11 @@
 #include "ai.hpp"
 #include "../map.hpp"
 #include "../game.hpp"
+#include <iostream>
 
-Ai::~Ai(){};
+Ai::~Ai(){
+    path = std::list<position>();
+};
 
 void Ai::update(Entity* owner){};
 
@@ -39,6 +42,8 @@ void PlayerAi::update(Entity* owner){
             case SDLK_e:
                     PlayerAi::moveOrAttack(game->player, game->player->posX+1, game->player->posY-1);
                     break;
+            case SDLK_g:
+                    PlayerAi::pickUp(game->player);
         }
         break;
     default:
@@ -48,7 +53,7 @@ void PlayerAi::update(Entity* owner){
 
 void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
     Animation* step = new Animation();
-    step->foreRgb = colors::grey;
+    step->foreRgb = colors::white;
     step->setFrames({"#","*","."," "});
     step->posX = posX;
     step->speed = 100;
@@ -80,6 +85,15 @@ void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rig
     game->animationList.push_back(step);
 }
 
+void PlayerAi::pickUp(Entity* owner){
+    int turns = 0;
+    if (owner->player->pickup()){
+        turns = 100;
+    }
+    game->turns = turns;
+    return;
+}
+
 void PlayerAi::moveOrAttack(Entity *owner, int targetX, int targetY){
         int turns = 0;// >0 if player has taken an action
         if (game->map->inMap(targetX, targetY)){// if target is inside map
@@ -101,14 +115,44 @@ void PlayerAi::rest(Entity* owner){
     game->turns = 100;
 }
 
+float euclideanDistance(int x1, int y1, int x2, int y2){
+    return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+}
+
 void CritterAi::update(Entity* owner){
+    // look for player
+    try 
+    {
+    if (euclideanDistance(owner->posX, owner->posY, game->player->posX, game->player->posY) < 10){
+        path = bresenham({owner->posX, owner->posY},{game->player->posX-owner->posX, game->player->posY-owner->posY});
+    }
+
+    // if (path.size()>0){
+    //     std::cout<<"player:" <<game->player->posX<<" "<<game->player->posY<<std::endl;
+    //     std::cout<<"rat:" <<owner->posX<<" "<<owner->posY<<std::endl;
+    //     std::list<position>::iterator pos;
+    //     pos = path.begin();
+    //     while (pos != path.end()){
+    //         std::cout<<pos->x<<" "<<pos->y<<std::endl;
+    //         pos++;
+    //     }
+    // }
+
     while ( this->turns >= 200 ){
-        //if (has_path){
+        if (path.size() == 0){
             int dx = rand()%3-1;
             int dy = rand()%3-1;
             CritterAi::moveOrAttack(owner, owner->posX + dx, owner->posY + dy);
             this->turns -= 10; // this needs reworking
+        }
+        else {
+            position* step = &path.front();
+            CritterAi::moveOrAttack(owner, step->x, step->y);
+            path.pop_front();
+        }
     }
+    }
+    catch (...){std::cout<<"Critter AI error" << std::endl; }
 }
 
 void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){

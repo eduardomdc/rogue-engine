@@ -20,9 +20,14 @@ public:
     
     static SDL_Renderer *renderer;
 
+    SDL_Texture* codepageSmall;
+    SDL_Texture* codepageBig;
+
     class Map* map;
 
     class InputManager* inputManager;
+
+    std::list<InputManager> windows;
 
     static SDL_Event currentEvent;
 

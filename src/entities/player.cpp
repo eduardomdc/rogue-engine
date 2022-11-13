@@ -7,9 +7,10 @@
 
 Player::Player(Entity* owner){
     this->owner = owner;
+    this->inventory = new std::list<Entity>();
     updateFov();
     fovRadius = 24;
-    // std::vector<std::vector<bool>> fov = std::vector<std::vector <bool>>( fovRadius*2+1, std::vector <bool>(fovRadius*2+1, false));
+    fov = std::vector<std::vector <short>>( fovRadius*2+1, std::vector <short>(fovRadius*2+1, false));
 }
 
 void Player::updateFov(){
@@ -25,4 +26,22 @@ bool Player::canSee(int x, int y){
     } else {
         return false;
     }
+}
+
+bool Player::pickup(){
+    // picks up item from floor and adds it to inventory, returns true if picked-up something
+    // to do: menu to select between items
+    std::vector<Entity*>::iterator item;
+    item = game->map->entityList.begin();
+    while(item != game->map->entityList.end()){
+        if ((*item)->object != nullptr){
+            if ((*item)->object->pickable && (*item)->posX == owner->posX && (*item)->posY == owner->posY){
+                inventory->push_back(**item);
+                game->map->entityList.erase(item);
+                return true;
+            }
+        }
+        item++;
+    }
+    return false;
 }

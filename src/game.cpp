@@ -4,6 +4,9 @@
 #include "inputManager/game_window.hpp"
 #include "inputManager/menu_window.hpp"
 #include "draw/text.hpp"
+#include "algorithms/fov.hpp"
+#include "draw/tile_manager.hpp"
+
 
 #include <iostream>
 
@@ -17,6 +20,7 @@ SDL_Event Game::currentEvent;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
     int flags = 0;
+    
     if (fullscreen){
         //flags = SDL_WINDOW_FULLSCREEN;
     }
@@ -37,7 +41,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         SDL_RenderSetLogicalSize(renderer, 960, 540);
         SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 12, 255);
             std::cout << "Renderer Created" << std::endl;
         }
 
@@ -46,6 +50,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         std::cout << "SDL_INIT error" << std::endl;
         isRunning = false;
     }
+
+    codepageSmall = TileManager::LoadTexture("assets/10x10cp437.png");
+    codepageBig = TileManager::LoadTexture("assets/20x20cp437.png");
 
     map = new Map(100,100);
 
@@ -79,6 +86,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     Entity * greenFire = new Entity();
     greenFire->ch = "o";
+    greenFire->name = "The Green Ring";
+    greenFire->object = new Object();
     greenFire->origRgb = colors::green;
     greenFire->foreRgb = colors::green;
     greenFire->posX = 31;
@@ -87,7 +96,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     map->entityList.push_back(greenFire);
 
     Entity * blueFire = new Entity();
-    blueFire->ch = "o";
+    blueFire->ch = "/";
+    blueFire->name = "Aqua Wand of Menehor";
+    blueFire->object = new Object();
     blueFire->origRgb = colors::blue;
     blueFire->foreRgb = colors::blue;
     blueFire->posX = 32;
@@ -198,8 +209,31 @@ void Game::render(){
         uint32_t tickd = SDL_GetTicks()-lastTick;
         int fps = 1000/tickd;
         std::string fpsString = std::to_string(fps);
-        renderText("FPS "+fpsString, 88, 0, colors::yellow, false);
+        renderText("FPS "+fpsString, 88, 0, colors::green, false);
         lastTick = SDL_GetTicks();
+
+        // inventory
+        std::list<Entity>* inventory = game->player->player->inventory;
+        std::list<Entity>::iterator item;
+        item = inventory->begin();
+        int line = 20;
+        while (item != inventory->end()){
+            renderText(item->name,70, line, colors::white, false);
+            line++;
+            item++;
+        }
+
+        // draw line path to mouse
+        int x,y;
+        SDL_GetMouseState(&x,&y);
+        std::list<position>::iterator itui;
+        std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
+        itui = path.begin();
+        while (itui != path.end()){
+            renderText("X", 2*itui->x, 2*itui->y, colors::red, false);
+            itui++;
+        }
+
     }
 
     SDL_RenderPresent(renderer);

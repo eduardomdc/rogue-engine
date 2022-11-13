@@ -28,10 +28,10 @@ Map::Map(int mapWidth, int mapHeight){
     // add some walls for testing
     for (int i = 0; i<this->mapWidth; i++){
         for (int j = 0; j<this->mapHeight; j++){
-            if (perlin->value(i*0.1,j*0.1) > 0.2){
+            if (perlin->value(i*0.1,j*0.1) > 0.3){
                 tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
             }
-            else if (perlin->value(i*0.1,j*0.1) > 0.1){
+            else if (perlin->value(i*0.1,j*0.1) > -0.1){
                 tileMap[i][j] = *tileFactory::makeTile(CAVE_MOSSY_FLOOR, i, j);
             }
         }
@@ -44,10 +44,15 @@ void Map::loadMap(){
 
 void Map::drawMap(){
     // draw tiles
+    try{
     for (std::vector<Tile> tileRow : tileMap){
         for (Tile tile : tileRow){
             tile.render();
         }
+    }
+    }
+    catch(...){
+        std::cout<<"drawMap error"<<std::endl;
     }
 }
 

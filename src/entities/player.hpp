@@ -13,8 +13,10 @@ public:
     Entity* owner;
     bool canSee(int x, int y);
     void updateFov();
-    std::vector<std::vector<bool>> fov;
-    // std::list<position> newFov;
+    bool pickup();
+    std::vector<std::vector<short>> fov;
+    std::list<Entity>* inventory;
+private:
     int fovRadius;
 };
 

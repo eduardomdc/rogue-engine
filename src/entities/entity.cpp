@@ -26,12 +26,13 @@ std::tuple<int,int> Entity::getPos(){
 
 void Entity::render(){
     Map* map = game->map;
+    Tile* tile;
     if (game->map->inMap(this->posX, this->posY)){
         if ( 
             (this->posY >= map->topSide && this->posY < map->bottomSide) && 
             (this->posX >= map->leftSide && this->posX < map->rightSide)
             ){
-            *map->tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
+            tile = &map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
         } else return; // out of render area
     } else return; // out of map
     
@@ -64,7 +65,8 @@ void Entity::render(){
     map->dest.y = screenPosY * map->tileHeight;
     if (this->glow == nullptr){
         // multiply native color by illumination color
-
+        
+        
         color lightColored = this->foreRgb;
 
         lightColored.red *= this->illumination.red/255.0;
@@ -95,22 +97,36 @@ void Entity::render(){
                 map->tileWidth, 16, 16
             );
         } else {
+            color lightColoredBg = tile->backRgb; // current tile background color
+            
+            lightColoredBg.red *= this->illumination.red/255.0;
+            lightColoredBg.blue *= this->illumination.blue/255.0;
+            lightColoredBg.green *= this->illumination.green/255.0;
+
             TileManager::drawAscii(
             map->codepage,
             map->src,
             map->dest,
             this->ch,
-            lightColored,
+            this->foreRgb, // lightColored for light affected characters
+            lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
-        }
+        }  
     } else {
+        color lightColoredBg = tile->backRgb; // current tile background color
+            
+        lightColoredBg.red *= tile->illumination.red/255.0;
+        lightColoredBg.blue *= tile->illumination.blue/255.0;
+        lightColoredBg.green *= tile->illumination.green/255.0;
+
         TileManager::drawAscii(
             map->codepage,
             map->src,
             map->dest,
             this->ch,
             this->glow->glowColor,
+            lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
     }
@@ -155,7 +171,7 @@ void Entity::update(){
     }
 
     if (this->player){
-        // this->player->updateFov();
+        this->player->updateFov();
     }
     if (this->particleEmitter){
         this->particleEmitter->update();

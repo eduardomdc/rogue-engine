@@ -2,11 +2,11 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "tile_manager.hpp"
-
+#include "../game.hpp"
 
 
 void renderText(std::string text, int x, int y, color color, bool centered){
-    SDL_Texture* codepage = TileManager::LoadTexture("assets/10x10cp437.png");
+    SDL_Texture* codepage = game->codepageSmall;
     SDL_Rect src;
     SDL_Rect dest;
     for (long unsigned int i = 0; i < text.length(); i++){

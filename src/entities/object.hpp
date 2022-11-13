@@ -9,6 +9,7 @@
 class Object {
 public:
     Object();
+    bool pickable = true;
 private:
 };
 

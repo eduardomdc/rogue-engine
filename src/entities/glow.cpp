@@ -15,19 +15,20 @@ Glow::Glow(Entity* owner, color glowColor, short intensity){
 }
 
 void Glow::update(Entity* owner){
+    try {
     int x = owner->posX;
     int y = owner->posY;
     int radius = sqrt(intensity/0.05);
     float brightValue = 0;
 
-    std::vector<std::vector <bool>> visible = computeFOV(x,y,radius);
+    std::vector<std::vector <short>> visible = computeFOV(x,y,radius);
     // std::vector<std::vector <bool>> visible = getVisibleRadius(x, y, radius);
 
     for (float i = -radius; i<=radius; i++){
         for (float j = -radius; j<=radius; j++){
             if (game->map->inMap(x+i, x+j)){
 
-                if (visible[i+radius][j+radius]){
+                if (visible[i+radius][j+radius] == 1){
                     brightValue = std::min(float(1), 1/(5*abs(1+i*i+j*j)/intensity) );
 
                     lightColor* light = &game->map->tileMap[x+i][y+j].illumination;
@@ -41,6 +42,10 @@ void Glow::update(Entity* owner){
                 
             }
         }
+    }
+    }
+    catch(...){
+        std::cout<< "Glow::update() error" << std::endl;
     }
 }
 

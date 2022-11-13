@@ -163,7 +163,8 @@ position getArrayPos(position mapPos, position origin, int radius){
     return {mapPos.x + radius - origin.x , mapPos.y + radius - origin.y};
 }
 
-static void scan(Row* __restrict row, std::vector<std::vector <bool>>* visible, int radius){
+static void scan(Row* __restrict row, std::vector<std::vector <short>>* visible, int radius){
+    try{
     const int xx = quadrant_table[row->quadrant][0];
     const int xy = quadrant_table[row->quadrant][1];
     const int yx = quadrant_table[row->quadrant][2];
@@ -183,12 +184,12 @@ static void scan(Row* __restrict row, std::vector<std::vector <bool>>* visible, 
         const int map_x = row->pov_x + row->depth * xx + column * xy;
         const int map_y = row->pov_y + row->depth * yx + column * yy;
         // if (!game->map->inMap(map_x, map_y)){
-            // return; // tile is out of bounds
+        //     return; // tile is out of bounds
         // }
         const bool isWall = isBlocking({map_x, map_y});
         if (isWall || is_symmetric(row, column)){
             position fovMatrixPos = getArrayPos({map_x, map_y}, {row->pov_x,row->pov_y}, radius);
-            (*visible)[fovMatrixPos.x][fovMatrixPos.y] = true;
+            (*visible)[fovMatrixPos.x][fovMatrixPos.y] = 1;
         }
         if (prev_tile_is_wall && !isWall){
             row->slope_low = slope(row->depth, column);
@@ -210,16 +211,25 @@ static void scan(Row* __restrict row, std::vector<std::vector <bool>>* visible, 
         row->depth += 1;
         scan(row, visible, radius);
     }
+    }
+    catch(...){
+        std::cout << "scan() error" << std::endl;
+    }
 }
 
 
 
-std::vector< std::vector<bool> > computeFOV(int x, int y, int radius){
+std::vector< std::vector<short> > computeFOV(int x, int y, int radius){
     // symmetric shadowcasting algorithm by Albert Ford from libtcod source
+    try{
     int size = 2*radius+1;
-    std::vector<std::vector <bool>> visible(size, std::vector <bool>(size, false));
+    std::vector<std::vector <short>> visible(size, std::vector <short>(size, 0));
     position fovMatrixPos = getArrayPos({x, y}, {x,y}, radius);
-    visible[fovMatrixPos.x][fovMatrixPos.y] = true;
+    visible[fovMatrixPos.x][fovMatrixPos.y] = 1;
+
+    if (isBlocking({x,y})){
+        return visible;
+    }
 
     for (int i = 0; i< 4; i++){
         Row row = {
@@ -232,6 +242,10 @@ std::vector< std::vector<bool> > computeFOV(int x, int y, int radius){
         };
         scan(&row, &visible, radius);
     }
-    
     return visible;
+    }
+    catch(...){
+        std::cout<<"computeFOV() error"<<std::endl;
+        return std::vector<std::vector <short>>(2*radius+1, std::vector <short>(2*radius+1, 0));
+    }
 }
