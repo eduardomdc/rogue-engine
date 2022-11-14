@@ -7,10 +7,9 @@
 
 Player::Player(Entity* owner){
     this->owner = owner;
-    this->inventory = new std::list<Entity>();
+    this->inventory = std::vector<Entity>();
     updateFov();
-    fovRadius = 24;
-    fov = std::vector<std::vector <short>>( fovRadius*2+1, std::vector <short>(fovRadius*2+1, false));
+    std::vector<std::vector <short>> fov (fovRadius*2+1, std::vector <short>(fovRadius*2+1, 0));
 }
 
 void Player::updateFov(){
@@ -36,7 +35,7 @@ bool Player::pickup(){
     while(item != game->map->entityList.end()){
         if ((*item)->object != nullptr){
             if ((*item)->object->pickable && (*item)->posX == owner->posX && (*item)->posY == owner->posY){
-                inventory->push_back(**item);
+                inventory.push_back(**item);
                 game->map->entityList.erase(item);
                 return true;
             }

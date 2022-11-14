@@ -124,7 +124,7 @@ void CritterAi::update(Entity* owner){
     try 
     {
     if (euclideanDistance(owner->posX, owner->posY, game->player->posX, game->player->posY) < 10){
-        path = bresenham({owner->posX, owner->posY},{game->player->posX-owner->posX, game->player->posY-owner->posY});
+        path = straightPath({owner->posX,owner->posY},{game->player->posX, game->player->posY});
     }
 
     // if (path.size()>0){
@@ -160,7 +160,7 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
     if (game->map->inMap(targetX, targetY)){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
             //tile is walkable and is different from current
-            turns = 200;
+            turns = 150;
             BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, rand()%2);
             owner->posX = targetX;
             owner->posY = targetY;

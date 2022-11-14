@@ -92,7 +92,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     greenFire->foreRgb = colors::green;
     greenFire->posX = 31;
     greenFire->posY = 35;
-    greenFire->glow = new Glow(greenFire, colors::green, 1);
+    greenFire->glow = new Glow(greenFire, colors::green, 20);
     map->entityList.push_back(greenFire);
 
     Entity * blueFire = new Entity();
@@ -103,7 +103,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->foreRgb = colors::blue;
     blueFire->posX = 32;
     blueFire->posY = 30;
-    blueFire->glow = new Glow(blueFire, colors::blue, 1);
+    blueFire->glow = new Glow(blueFire, colors::blue, 20);
     map->entityList.push_back(blueFire);
 
     Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
@@ -213,11 +213,11 @@ void Game::render(){
         lastTick = SDL_GetTicks();
 
         // inventory
-        std::list<Entity>* inventory = game->player->player->inventory;
-        std::list<Entity>::iterator item;
-        item = inventory->begin();
+        std::vector<Entity> inventory = game->player->player->inventory;
+        std::vector<Entity>::iterator item;
+        item = inventory.begin();
         int line = 20;
-        while (item != inventory->end()){
+        while (item != inventory.end()){
             renderText(item->name,70, line, colors::white, false);
             line++;
             item++;

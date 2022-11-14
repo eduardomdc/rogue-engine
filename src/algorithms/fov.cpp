@@ -66,6 +66,31 @@ std::list<position> bresenham(position orig, position dest) {
     return line;
 }
 
+std::list<position> straightPath(position orig, position dest){
+    // returns in map straight path from orig to dest
+    // without orig
+    // returns empty list if there is no unobstructed straight path => go to A*
+    std::list<position> path;
+    std::list<position> line = bresenham(orig,{dest.x - orig.x, dest.y - orig.y});
+    std::list<position>::iterator it;
+    it = line.begin();
+    bool hasPath = true;
+    while ((it != line.end()) and hasPath){
+        if (game->map->tileMap[it->x][it->y].walkable){
+            path.push_back(*it);
+        }
+        else {
+            hasPath = false; // if one tile in the path is not walkable then there's no path
+            path.clear();
+        }
+        it++;
+    }
+    if (path.size() > 1){
+        path.pop_front(); // remove origin
+    }
+    return path;
+}
+
 std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius) {
     // need to implement Symmetric Shadowcasting Algorithm by Albert Ford
     // really bad algorithm by me!
@@ -219,17 +244,13 @@ static void scan(Row* __restrict row, std::vector<std::vector <short>>* visible,
 
 
 
-std::vector< std::vector<short> > computeFOV(int x, int y, int radius){
+std::vector<std::vector<short>> computeFOV(int x, int y, int radius){
     // symmetric shadowcasting algorithm by Albert Ford from libtcod source
     try{
     int size = 2*radius+1;
     std::vector<std::vector <short>> visible(size, std::vector <short>(size, 0));
     position fovMatrixPos = getArrayPos({x, y}, {x,y}, radius);
     visible[fovMatrixPos.x][fovMatrixPos.y] = 1;
-
-    if (isBlocking({x,y})){
-        return visible;
-    }
 
     for (int i = 0; i< 4; i++){
         Row row = {

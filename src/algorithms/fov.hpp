@@ -10,6 +10,7 @@ typedef struct position{
 } position;
 
 std::list< position > bresenham(position orig, position dest);
+std::list< position > straightPath(position orig, position dest);
 
 std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius);
 

@@ -15,9 +15,9 @@ public:
     void updateFov();
     bool pickup();
     std::vector<std::vector<short>> fov;
-    std::list<Entity>* inventory;
+    std::vector<Entity> inventory;
 private:
-    int fovRadius;
+    int fovRadius = 24;
 };
 
 #endif

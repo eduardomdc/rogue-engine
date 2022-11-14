@@ -167,7 +167,7 @@ void Entity::update(){
         }*/
     } else {
         // this->glow->clean(this) old light receivers
-        this->glow->update(this);
+        // this->glow->update(this);
     }
 
     if (this->player){
