@@ -21,8 +21,8 @@ void Glow::update(Entity* owner){
     int radius = sqrt(intensity/0.05);
     float brightValue = 0;
 
-    std::vector<std::vector <short>> visible = computeFOV(x,y,radius);
-    // std::vector<std::vector <bool>> visible = getVisibleRadius(x, y, radius);
+    // std::vector<std::vector <short>> visible = computeFOV(x,y,radius);
+    std::vector<std::vector <bool>> visible = getVisibleRadius(x, y, radius);
 
     for (float i = -radius; i<=radius; i++){
         for (float j = -radius; j<=radius; j++){

@@ -5,10 +5,10 @@
 
 // Wazowski... esqueceu a papelada de ontem à noite!
 
-class monsterFactory {
-public:
-    static Entity* makeMonster(int monsterEnum, int posX, int posY);
-};
+typedef void (*aiConstructor)();
+
+Entity* makeMonster(int monsterEnum, int posX, int posY);
+
 
 typedef struct Monster {
     std::string name; // name
@@ -24,15 +24,21 @@ typedef struct Monster {
 
     Object * object; // entity is physical object
 
-    Ai* ai; // entity can do things
+    // Ai* ai; // entity can do things
+    int ai;
 
     Creature* creature; // entity is a living creature with needs and organs
 
 
 } Monster;
 
+enum ai {
+    CRITTER,
+};
+
 enum monsterTypes {
     RAT,
+    WOLF,
     NUMBER_OF_MONSTERS
 };
 

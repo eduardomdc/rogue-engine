@@ -13,6 +13,7 @@ public:
     static void DrawTile(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, int id, color rgb, int tileHeight, int tileWidth, int setHeight, int setWidth);
     static void drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, color backRgb, int tileHeight, int tileWidth, int setHeight, int setWidth);
     static void drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, int tileHeight, int tileWidth, int setHeight, int setWidth);
+    static void drawSmallAsciiUI(int x, int y, std::string id, color foreRgb);
 };
 
 #endif

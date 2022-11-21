@@ -11,4 +11,5 @@ obj/dep/map.o: src/map.cpp src/map.hpp src/draw/tile_manager.hpp \
  src/draw/../animations/../colors.hpp \
  src/draw/../inputManager/input_manager.hpp src/draw/../colors.hpp \
  src/entities/tile_factory.hpp src/entities/tile.hpp \
- src/entities/entity.hpp src/algorithms/perlin.hpp src/game.hpp
+ src/entities/entity.hpp src/algorithms/perlin.hpp src/game.hpp \
+ src/procgen/levelgen.hpp

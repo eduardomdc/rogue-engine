@@ -1,7 +1,6 @@
 #include "monster_factory.hpp"
 
-
-Entity* monsterFactory::makeMonster(int monsterEnum, int posX, int posY){
+Entity* makeMonster(int monsterEnum, int posX, int posY){
     Monster monster = monsterCatalog[monsterEnum];
     Entity* monsterObj = new Entity();
 
@@ -15,8 +14,12 @@ Entity* monsterFactory::makeMonster(int monsterEnum, int posX, int posY){
     monsterObj->chDestroyed = monster.chDestroyed;
     monsterObj->foreRgbDestroyed = monster.foreRgbDestroyed;
 
-    monsterObj->ai = monster.ai;
-    
+    switch (monster.ai){
+        case ai::CRITTER:
+            monsterObj->ai = new CritterAi();
+            break;
+    }
+
     return monsterObj;
 };
 
@@ -32,8 +35,20 @@ Monster monsterCatalog[NUMBER_OF_MONSTERS]={
         true, // transparent
         colors::red, // foreColorDestroyed
         nullptr,
-        new CritterAi(),
-        new Creature(),
-    }
+        ai::CRITTER,
+    },
+    {
+        "Wolf", // name
+        "W", // char
+        "%", // dead char
+        colors::snow, // foreColor
+        colors::black, // backColor
+        colors::black, // origColor
+        true, // walkable
+        true, // transparent
+        colors::red, // foreColorDestroyed
+        nullptr,
+        ai::CRITTER,
+    },
 };
 

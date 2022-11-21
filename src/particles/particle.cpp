@@ -5,7 +5,7 @@
 
 
 Particle::Particle(){
-    this->codepage = TileManager::LoadTexture("assets/10x10cp437.png");
+    this->codepage = game->codepageSmall;
     this->startTime = SDL_GetTicks();
 }
 

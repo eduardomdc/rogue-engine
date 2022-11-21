@@ -19,4 +19,4 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../entities/tile_factory.hpp \
  src/animations/../entities/tile.hpp \
  src/animations/../entities/entity.hpp \
- src/animations/../algorithms/perlin.hpp
+ src/animations/../algorithms/perlin.hpp src/animations/../game.hpp

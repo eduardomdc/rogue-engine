@@ -11,4 +11,4 @@ obj/dep/game.o: src/game.cpp src/game.hpp src/entities/entity.hpp \
  src/entities/tile.hpp src/entities/entity.hpp src/algorithms/perlin.hpp \
  src/entities/monster_factory.hpp src/inputManager/game_window.hpp \
  src/inputManager/input_manager.hpp src/inputManager/menu_window.hpp \
- src/draw/text.hpp src/algorithms/fov.hpp
+ src/draw/draw_ui.hpp src/algorithms/fov.hpp

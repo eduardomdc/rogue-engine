@@ -9,6 +9,8 @@ SDL_Texture* TileManager::LoadTexture(const char* texture){
     SDL_FreeSurface(tempSurface);
     if (tex == nullptr){
         std::cout << "Error loading texture: " << texture << std::endl;
+    } else {
+        std::cout << "Loaded " << texture << std::endl;
     }
     return tex;
 }
@@ -299,4 +301,13 @@ void TileManager::drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, s
     int idInt = UNI_TO_ASCII[id];
     TileManager::DrawTile(tileset, src, dest, 219, backRgb, tileHeight, tileWidth, setHeight, setWidth); // first print background of tile with color
     TileManager::DrawTile(tileset, src, dest, idInt, foreRgb, tileHeight, tileWidth, setHeight, setWidth); // then print character with color
+}
+
+void TileManager::drawSmallAsciiUI(int x, int y, std::string id, color foreRgb){
+    SDL_Texture* codepage = game->codepageSmall;
+    SDL_Rect src;
+    SDL_Rect dest;
+    dest.x = x*10;
+    dest.y = y*10;
+    TileManager::drawAscii(codepage,src,dest,id,foreRgb,10, 10,16, 16);
 }

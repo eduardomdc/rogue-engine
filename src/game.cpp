@@ -3,7 +3,7 @@
 #include "entities/monster_factory.hpp"
 #include "inputManager/game_window.hpp"
 #include "inputManager/menu_window.hpp"
-#include "draw/text.hpp"
+#include "draw/draw_ui.hpp"
 #include "algorithms/fov.hpp"
 #include "draw/tile_manager.hpp"
 
@@ -58,6 +58,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
     inputManager = new GameWindow();
+    windows.push_back(inputManager);
 
     Entity * redFire;
     redFire = new Entity();
@@ -69,7 +70,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     ParticleEmitter* pemit;
     pemit = new ParticleEmitter(redFire);
     pemit->chs = {".", ",","*","`"};
-    pemit->foreRgb = colors::fireAverage;
+    pemit->foreRgb = colors::yellow;
     pemit->x = 30;
     pemit->y = 30;
     pemit->maxParticles = 10;
@@ -106,7 +107,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->glow = new Glow(blueFire, colors::blue, 20);
     map->entityList.push_back(blueFire);
 
-    Entity* rat = monsterFactory::makeMonster(RAT, 15, 10);
+    Entity* rat = makeMonster(RAT, 15, 10);
     map->entityList.push_back(rat);
 
 
@@ -118,7 +119,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posY = 10;
     player->ai = new PlayerAi();
     player->player = new Player(player);
-    //player->glow = new Glow(player, colors::white, 1);
+    player->glow = new Glow(player, colors::white, 1);
     map->entityList.push_back(player);
 
     Animation* arrow = new Animation();
@@ -131,13 +132,25 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     animationList.push_back(arrow);
 }
 
+InputManager* Game::activeWindow(){
+    // returns last window on the list
+    try{
+        return windows.back();
+    }
+    catch (...){
+        std::cout << "Game::activeWindow() error"<<std::endl;
+        return nullptr;
+    }
+}
+
 void Game::handleEvents(){
     /** to do turns system: when player takes action change game->turns to turns used,
      * then increment those turns into each monsters' AIs so they can do things
      * with the turns they had + the ones they have now**/
 
     while(SDL_PollEvent(&currentEvent)){
-        inputManager->handleInput(currentEvent);
+        // get current active window to handle input
+        activeWindow()->handleInput(currentEvent);
     }
 }
 
@@ -175,67 +188,52 @@ void Game::update(){
 void Game::render(){
     SDL_RenderClear(renderer);
     
-    
-
-    if (dynamic_cast<MenuWindow*>(inputManager)){
-        // options menu
-    } else {
-        map->drawMap();
-        // draw entities
-        for (Entity* ent : map->entityList){
-            ent->render();
-            if (ent->particleEmitter){
-                if (player->player->canSee(ent->posX, ent->posY)){
-                    ent->particleEmitter->update();
-                }
-            }
-        }
-        std::vector<Animation*>::iterator it;
-
-        it = animationList.begin();
-        while (it != animationList.end()){
-            Animation* anim = *it;
-            anim->render();
-            
-            if (anim->done == true){
-                it = animationList.erase(it);
-            } else {
-                it++;
-            }
-        }
-        // draw UI
-        std::string ui = "Roguelight v0.1";
-        renderText(ui, 0,0, colors::white, false);
-        uint32_t tickd = SDL_GetTicks()-lastTick;
-        int fps = 1000/tickd;
-        std::string fpsString = std::to_string(fps);
-        renderText("FPS "+fpsString, 88, 0, colors::green, false);
-        lastTick = SDL_GetTicks();
-
-        // inventory
-        std::vector<Entity> inventory = game->player->player->inventory;
-        std::vector<Entity>::iterator item;
-        item = inventory.begin();
-        int line = 20;
-        while (item != inventory.end()){
-            renderText(item->name,70, line, colors::white, false);
-            line++;
-            item++;
-        }
-
-        // draw line path to mouse
-        int x,y;
-        SDL_GetMouseState(&x,&y);
-        std::list<position>::iterator itui;
-        std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
-        itui = path.begin();
-        while (itui != path.end()){
-            renderText("X", 2*itui->x, 2*itui->y, colors::red, false);
-            itui++;
-        }
-
+    for (InputManager* window : windows){
+        window->render();
     }
 
+    // map->drawMap();
+    // // draw entities
+    // for (Entity* ent : map->entityList){
+    //     ent->render();
+    //     if (ent->particleEmitter){
+    //         if (player->player->canSee(ent->posX, ent->posY)){
+    //             ent->particleEmitter->update();
+    //         }
+    //     }
+    // }
+    // std::vector<Animation*>::iterator it;
+
+    // it = animationList.begin();
+    // while (it != animationList.end()){
+    //     Animation* anim = *it;
+    //     anim->render();
+        
+    //     if (anim->done == true){
+    //         it = animationList.erase(it);
+    //     } else {
+    //         it++;
+    //     }
+    // }
+    // draw debug info
+    std::string ui = "Roguelight v0.1";
+    renderText(ui, 0,0, colors::white, false);
+    uint32_t tickd = SDL_GetTicks()-lastTick;
+    int fps = 1000/tickd;
+    std::string fpsString = std::to_string(fps);
+    renderText("FPS "+fpsString, 88, 0, colors::green, false);
+    lastTick = SDL_GetTicks();
+
+    // draw line path to mouse
+    // int x,y;
+    // SDL_GetMouseState(&x,&y);
+    // std::list<position>::iterator itui;
+    // std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
+    // itui = path.begin();
+    // while (itui != path.end()){
+    //     renderText("X", 2*itui->x, 2*itui->y, colors::red, false);
+    //     itui++;
+    // }
     SDL_RenderPresent(renderer);
 }
 

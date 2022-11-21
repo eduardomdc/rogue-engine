@@ -160,13 +160,25 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
     if (game->map->inMap(targetX, targetY)){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
             //tile is walkable and is different from current
-            turns = 150;
-            BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, rand()%2);
-            owner->posX = targetX;
-            owner->posY = targetY;
-            if (owner->creature){
-                //do things for creatures
+            bool hasEntity = false;
+            for (long unsigned int i = 0; i<game->map->entityList.size(); i++){
+                Entity* ent = game->map->entityList[i];
+                if (ent->posX == targetX && ent->posY == targetY){
+                    hasEntity = true;
+                }
             }
+            if (hasEntity){
+
+            } else {
+                turns = 150;
+                BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, rand()%2);
+                owner->posX = targetX;
+                owner->posY = targetY;
+                if (owner->creature){
+                    //do things for creatures
+                }
+            }
+            
         }//if there is entity attackable attack it else:
     }
     this->turns -= turns;

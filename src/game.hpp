@@ -27,7 +27,9 @@ public:
 
     class InputManager* inputManager;
 
-    std::list<InputManager> windows;
+    std::vector<InputManager*> windows = {}; // last item is current active window, rendered from first to last
+
+    InputManager* activeWindow();
 
     static SDL_Event currentEvent;
 

@@ -1,10 +1,11 @@
 #include "animation.hpp"
 #include "../draw/tile_manager.hpp"
 #include "../map.hpp"
+#include "../game.hpp"
 #include <iostream>
 
 Animation::Animation(){
-    codepage = TileManager::LoadTexture("assets/10x10cp437.png");
+    codepage = game->codepageSmall;
     tileHeight = 10; // tileset resolution
     tileWidth = 10;
     currentFrame = 0;

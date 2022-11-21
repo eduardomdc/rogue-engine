@@ -7,7 +7,10 @@
 
 class InputManager{
 public:
-    virtual void handleInput(SDL_Event currentEvent){std::cout<<"nao pfvr para "<<std::endl; return;};
+    virtual void handleInput(SDL_Event currentEvent){std::cout<<"calling virtual InputManager handleInput method"<<std::endl; return;};
+    virtual void render(){std::cout<<"calling virtual InputManager render method"<<std::endl; return;};
+    void close();
+    virtual ~InputManager() = default;
 };
 
 #endif

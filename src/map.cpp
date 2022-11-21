@@ -1,6 +1,7 @@
 #include "map.hpp"
 #include "entities/tile_factory.hpp"
 #include "game.hpp"
+#include "procgen/levelgen.hpp"
 #include <iostream>
 
 Map::Map(int mapWidth, int mapHeight){
@@ -11,31 +12,7 @@ Map::Map(int mapWidth, int mapHeight){
 
     // set tileset used
     codepage = TileManager::LoadTexture("assets/20x20cp437.png");
-
-    //generate perlin map
-    Perlin* perlin = new Perlin(500);
-    std::cout << "Perlin noise generated" << std::endl;
-
-    // add floor tiles
-    for (int i = 0; i<this->mapWidth; i++){
-        tileMap.push_back( std:: vector< Tile >() );
-        for (int j = 0; j<this->mapHeight; j++){
-            tile = tileFactory::makeTile(CAVE_FLOOR, i, j);
-            tileMap[i].push_back(*tile);
-        }
-    }
-
-    // add some walls for testing
-    for (int i = 0; i<this->mapWidth; i++){
-        for (int j = 0; j<this->mapHeight; j++){
-            if (perlin->value(i*0.1,j*0.1) > 0.3){
-                tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
-            }
-            else if (perlin->value(i*0.1,j*0.1) > -0.1){
-                tileMap[i][j] = *tileFactory::makeTile(CAVE_MOSSY_FLOOR, i, j);
-            }
-        }
-    }
+    makeSnowyMountain(this);
 }
 
 void Map::loadMap(){

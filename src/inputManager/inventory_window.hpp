@@ -1,11 +1,11 @@
-#ifndef MENU_WINDOW_HPP
-#define MENU_WINDOW_HPP
+#ifndef INVENTORY_WINDOW_HPP
+#define INVENTORY_WINDOW_HPP
 
 #include "input_manager.hpp"
 
-class MenuWindow : public InputManager {
+class InventoryWindow : public InputManager {
 public:
-    MenuWindow();
+    InventoryWindow();
     virtual void handleInput(SDL_Event currentEvent);
     virtual void render();
 };
