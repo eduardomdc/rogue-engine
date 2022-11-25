@@ -76,12 +76,41 @@ std::list<position> straightPath(position orig, position dest){
     it = line.begin();
     bool hasPath = true;
     while ((it != line.end()) and hasPath){
-        if (game->map->tileMap[it->x][it->y].walkable){
+        if (game->map->tileMap[it->x][it->y].walkable && game->map->inMap(it->x, it->y)){
             path.push_back(*it);
         }
         else {
             hasPath = false; // if one tile in the path is not walkable then there's no path
             path.clear();
+        }
+        it++;
+    }
+    if (path.size() > 1){
+        path.pop_front(); // remove origin
+    }
+    return path;
+}
+
+std::list<position> straightPathToWall(position orig, position dest){
+    // returns in map straight path from orig to dest
+    // without orig
+    // returns current list if there is a wall in the straight path
+    std::list<position> path;
+    std::list<position> line = bresenham(orig,{dest.x - orig.x, dest.y - orig.y});
+    std::list<position>::iterator it;
+    it = line.begin();
+    while ((it != line.end())){
+        if (game->map->inMap(it->x, it->y)){
+            if (game->map->tileMap[it->x][it->y].walkable){
+                path.push_back(*it);
+            }
+        }
+        
+        else {
+            if (path.size() > 1){
+                path.pop_front(); // remove origin
+            }
+            return path;
         }
         it++;
     }
@@ -194,11 +223,11 @@ static void scan(Row* __restrict row, std::vector<std::vector <short>>* visible,
     const int xy = quadrant_table[row->quadrant][1];
     const int yx = quadrant_table[row->quadrant][2];
     const int yy = quadrant_table[row->quadrant][3];
-    int mapX = row->pov_x + row->depth * xx;
-    int mapY = row->pov_y + row->depth * yx;
-    if (!game->map->inMap(mapX,mapY)){
-        return; //Row->depth out of bounds
-    }
+    // int mapX = row->pov_x + row->depth * xx;
+    // int mapY = row->pov_y + row->depth * yx;
+    // if (!game->map->inMap(mapX,mapY)){
+    //     return; //Row->depth out of bounds
+    // }
     if (row->depth > radius){
         return;
     }

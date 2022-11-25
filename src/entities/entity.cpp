@@ -86,7 +86,7 @@ void Entity::render(){
             map->dest.x = screenPosX * map->tileWidth;
             map->dest.y = screenPosY * map->tileHeight;
 
-            TileManager::drawAscii(
+            game->tileManager->drawAscii(
                 map->codepage,
                 map->src,
                 map->dest,
@@ -103,7 +103,7 @@ void Entity::render(){
             lightColoredBg.blue *= this->illumination.blue/255.0;
             lightColoredBg.green *= this->illumination.green/255.0;
 
-            TileManager::drawAscii(
+            game->tileManager->drawAscii(
             map->codepage,
             map->src,
             map->dest,
@@ -120,7 +120,7 @@ void Entity::render(){
         lightColoredBg.blue *= tile->illumination.blue/255.0;
         lightColoredBg.green *= tile->illumination.green/255.0;
 
-        TileManager::drawAscii(
+        game->tileManager->drawAscii(
             map->codepage,
             map->src,
             map->dest,

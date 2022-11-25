@@ -37,8 +37,11 @@ void Animation::render(){
                 (this->posY >= map->topSide && this->posY < map->bottomSide) && 
                 (this->posX >= map->leftSide && this->posX < map->rightSide)
                 ){
-                Tile tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
-                this->illumination = tile.illumination;
+                if (game->player->player->canSee(this->posX, this->posY)){
+                    Tile tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
+                    this->illumination = tile.illumination;
+                }
+                else return; // animation out of player view
             } else return; // out of render area
         } else return; // out of map
 
@@ -53,7 +56,7 @@ void Animation::render(){
         lightColored.blue *= this->illumination.blue/255.0;
         lightColored.green *= this->illumination.green/255.0;
 
-        TileManager::drawAscii(
+        game->tileManager->drawAscii(
             codepage,
             src,
             dest,
@@ -65,7 +68,7 @@ void Animation::render(){
     else{
         dest.x = posX * tileWidth;
         dest.y = posY * tileHeight;
-        TileManager::drawAscii(codepage, src, dest, passCh, foreRgb, tileWidth, tileHeight, 16, 16);
+        game->tileManager->drawAscii(codepage, src, dest, passCh, foreRgb, tileWidth, tileHeight, 16, 16);
     }
     if (currentFrame == frames - 1) {
         done = true;

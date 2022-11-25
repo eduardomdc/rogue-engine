@@ -35,7 +35,7 @@ void InventoryWindow::render(){
     item = inventory.begin();
     int line = 20;
     while (item != inventory.end()){
-        TileManager::drawSmallAsciiUI(70,line,item->ch,item->foreRgb);
+        game->tileManager->drawSmallAsciiUI(70,line,item->ch,item->foreRgb);
         renderText(item->name,71, line, colors::white, false);
         line++;
         item++;

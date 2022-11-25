@@ -7,6 +7,7 @@
 #include "entities/entity.hpp"
 #include "animations/animation.hpp"
 #include "inputManager/input_manager.hpp"
+#include "draw/tile_manager.hpp"
 
 class Game {
 public:
@@ -24,6 +25,8 @@ public:
     SDL_Texture* codepageBig;
 
     class Map* map;
+
+    class TileManager* tileManager;
 
     class InputManager* inputManager;
 

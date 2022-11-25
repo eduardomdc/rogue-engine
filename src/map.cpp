@@ -11,7 +11,7 @@ Map::Map(int mapWidth, int mapHeight){
     this->mapHeight = mapHeight;
 
     // set tileset used
-    codepage = TileManager::LoadTexture("assets/20x20cp437.png");
+    codepage = game->codepageBig;
     makeSnowyMountain(this);
 }
 
@@ -22,11 +22,18 @@ void Map::loadMap(){
 void Map::drawMap(){
     // draw tiles
     try{
-    for (std::vector<Tile> tileRow : tileMap){
-        for (Tile tile : tileRow){
-            tile.render();
+        // THIS IS SUPER SLOW? WHY
+    // for (std::vector<Tile> tileRow : tileMap){
+    //     for (Tile tile : tileRow){
+    //         tile.render();
+    //     }
+    // }
+        // FASTER
+        for (int i = 0; i < mapWidth; i++){
+            for (int j = 0; j < mapHeight; j++){
+                tileMap[i][j].render();
+            }
         }
-    }
     }
     catch(...){
         std::cout<<"drawMap error"<<std::endl;
@@ -45,7 +52,7 @@ void Map::moveCamera(int x, int y){
 void Map::update(){
     for (int i = 0; i<this->mapWidth; i++){
         for (int j = 0; j<this->mapHeight; j++){
-            tileMap[i][j].illumination = {20,20,55}; // ambient light
+            tileMap[i][j].illumination = {5,5,55}; // ambient light
         }
     }
 }

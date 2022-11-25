@@ -41,7 +41,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         SDL_RenderSetLogicalSize(renderer, 960, 540);
         SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
-            SDL_SetRenderDrawColor(renderer, 0, 0, 12, 255);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             std::cout << "Renderer Created" << std::endl;
         }
 
@@ -51,12 +51,13 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    codepageSmall = TileManager::LoadTexture("assets/10x10cp437.png");
-    codepageBig = TileManager::LoadTexture("assets/20x20cp437.png");
+    this->tileManager = new TileManager();
+
+    codepageSmall = tileManager->LoadTexture("assets/10x10cp437.png");
+    codepageBig = tileManager->LoadTexture("assets/20x20cp437.png");
 
     map = new Map(100,100);
 
-    
     inputManager = new GameWindow();
     windows.push_back(inputManager);
 
@@ -119,7 +120,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posY = 10;
     player->ai = new PlayerAi();
     player->player = new Player(player);
-    player->glow = new Glow(player, colors::white, 1);
+    player->glow = new Glow(player, colors::white, 3);
     map->entityList.push_back(player);
 
     Animation* arrow = new Animation();
@@ -156,6 +157,7 @@ void Game::handleEvents(){
 
 void Game::update(){
     map->update();
+    tileManager->update();
     for (Entity* ent : map->entityList){
         ent->illumination = {0, 0, 0};
     }
@@ -192,29 +194,6 @@ void Game::render(){
         window->render();
     }
 
-    // map->drawMap();
-    // // draw entities
-    // for (Entity* ent : map->entityList){
-    //     ent->render();
-    //     if (ent->particleEmitter){
-    //         if (player->player->canSee(ent->posX, ent->posY)){
-    //             ent->particleEmitter->update();
-    //         }
-    //     }
-    // }
-    // std::vector<Animation*>::iterator it;
-
-    // it = animationList.begin();
-    // while (it != animationList.end()){
-    //     Animation* anim = *it;
-    //     anim->render();
-        
-    //     if (anim->done == true){
-    //         it = animationList.erase(it);
-    //     } else {
-    //         it++;
-    //     }
-    // }
     // draw debug info
     std::string ui = "Roguelight v0.1";
     renderText(ui, 0,0, colors::white, false);
@@ -223,17 +202,7 @@ void Game::render(){
     std::string fpsString = std::to_string(fps);
     renderText("FPS "+fpsString, 88, 0, colors::green, false);
     lastTick = SDL_GetTicks();
-
-    // draw line path to mouse
-    // int x,y;
-    // SDL_GetMouseState(&x,&y);
-    // std::list<position>::iterator itui;
-    // std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
-    // itui = path.begin();
-    // while (itui != path.end()){
-    //     renderText("X", 2*itui->x, 2*itui->y, colors::red, false);
-    //     itui++;
-    // }
+    
     SDL_RenderPresent(renderer);
 }
 

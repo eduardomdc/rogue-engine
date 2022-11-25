@@ -1,4 +1,5 @@
 #include "tile_manager.hpp"
+#include "../game.hpp"
 #include <map>
 #include <string.h>
 #include <iostream>
@@ -29,6 +30,22 @@ void TileManager::DrawTile(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, in
     src.h = dest.h = tileHeight;
     src.w = dest.w = tileWidth;
     SDL_RenderCopy(Game::renderer, tileset, &src, &dest);
+}
+
+void TileManager::DrawTransparentTile(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, int id, color rgb, int tileHeight, int tileWidth, int setHeight, int setWidth, int alpha){
+    
+    // set color
+    SDL_SetTextureColorMod(tileset, rgb.red, rgb.green, rgb.blue);
+    // SDL_SetTextureBlendMode(tileset, SDL_BLENDMODE_ADD);
+    SDL_SetTextureAlphaMod(tileset, blinkAlpha);
+
+    src.x = (id*tileWidth)%(setWidth*tileWidth);
+    src.y = ((id*tileWidth)/(setWidth*tileWidth))*tileHeight;
+    src.h = dest.h = tileHeight;
+    src.w = dest.w = tileWidth;
+    SDL_RenderCopy(Game::renderer, tileset, &src, &dest);
+    // SDL_SetTextureBlendMode(tileset, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureAlphaMod(tileset, 255);
 }
 
 std::map<std::string, int> UNI_TO_ASCII {
@@ -310,4 +327,13 @@ void TileManager::drawSmallAsciiUI(int x, int y, std::string id, color foreRgb){
     dest.x = x*10;
     dest.y = y*10;
     TileManager::drawAscii(codepage,src,dest,id,foreRgb,10, 10,16, 16);
+}
+
+int updateBlinkAlpha(){
+    // uint32_t tickd = SDL_GetTicks()-game->lastTick;
+    return 20+50*abs(sin(SDL_GetTicks()/600.0));
+}
+
+void TileManager::update(){
+    blinkAlpha = updateBlinkAlpha();
 }

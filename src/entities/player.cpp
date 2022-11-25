@@ -17,6 +17,14 @@ void Player::updateFov(){
     fov = computeFOV(owner->posX, owner->posY, fovRadius);
 }
 
+void Player::getWalkQueue(SDL_Event mouse){
+    int screenX = mouse.button.x/20;
+    int screenY = mouse.button.y/20;
+    int x = screenX + game->map->leftSide - game->map->mapOffsetX;
+    int y = screenY + game->map->topSide - game->map->mapOffsetY;
+    this->walkQueue = straightPathToWall({owner->posX, owner->posY}, {x,y});
+}
+
 bool Player::canSee(int x, int y){
     int dx = x - this->owner->posX + fovRadius;
     int dy = y - this->owner->posY + fovRadius;

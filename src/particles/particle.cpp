@@ -41,7 +41,7 @@ void Particle::render(){
     lightColored.blue *= this->illumination.blue/255.0;
     lightColored.green *= this->illumination.green/255.0;
 
-    TileManager::drawAscii(
+    game->tileManager->drawAscii(
         codepage,
         src,
         dest,

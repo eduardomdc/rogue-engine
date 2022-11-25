@@ -4,6 +4,7 @@
 #include <iostream>
 #include "menu_window.hpp"
 #include "inventory_window.hpp"
+#include "../draw/draw_ui.hpp"
 
 GameWindow::GameWindow(){
     std::cout << "Game Window created" << std::endl;
@@ -31,17 +32,35 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
             game->player->ai->update(game->player);
             break;
         }
-    default: // with menus this will be alot more complicated
+        break;
+    case SDL_MOUSEBUTTONDOWN:
+        game->player->ai->update(game->player);
+        break;
+    default:
         break;
     }
 
-    if (game->turns){//if player took action
+    if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
         for (Entity* ent : game->map->entityList){
             if (ent != game->player){
                 if (ent->ai){
                     //increment turns
                     ent->ai->turns += game->turns;
                     ent->ai->update(ent);
+                }
+            }
+        }
+    }
+    else if (game->player->player->walkQueue.size() > 0){
+        while (game->player->player->walkQueue.size() > 0){
+            game->player->ai->update(game->player);
+            for (Entity* ent : game->map->entityList){
+                if (ent != game->player){
+                    if (ent->ai){
+                        //increment turns
+                        ent->ai->turns += game->turns;
+                        ent->ai->update(ent);
+                    }
                 }
             }
         }
@@ -71,5 +90,17 @@ void GameWindow::render(){
         } else {
             it++;
         }
+    }
+
+    // draw path to mouse
+    int x,y;
+    SDL_GetMouseState(&x,&y);
+    std::list<position>::iterator itui;
+    std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
+    path.pop_front();
+    itui = path.begin();
+    while (itui != path.end()){
+        drawTileSelect(itui->x, itui->y);
+        itui++;
     }
 }

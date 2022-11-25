@@ -25,6 +25,7 @@ class PlayerAi : public Ai {
 public:
     bool rightStep = true; // last step taken was right
     void update(Entity *owner);
+    void moveFromWalkQueue(Entity* owner);
     void moveOrAttack(Entity *owner, int targetX, int targetY);
     void pickUp(Entity* owner);
     void rest(Entity *owner);

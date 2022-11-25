@@ -8,6 +8,7 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../entities/ai.hpp \
  src/animations/../draw/../entities/../algorithms/fov.hpp \
  src/animations/../draw/../entities/creature.hpp \
+ src/animations/../draw/../entities/fighter.hpp \
  src/animations/../draw/../entities/glow.hpp \
  src/animations/../draw/../entities/player.hpp \
  src/animations/../draw/../entities/../particles/particle_emitter.hpp \
