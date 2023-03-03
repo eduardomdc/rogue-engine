@@ -20,6 +20,9 @@ Entity* makeMonster(int monsterEnum, int posX, int posY){
             break;
     }
 
+    monsterObj->fighter = new Fighter(monsterObj);
+    monsterObj->fighter->setHp(2);
+
     return monsterObj;
 };
 
@@ -38,10 +41,10 @@ Monster monsterCatalog[NUMBER_OF_MONSTERS]={
         ai::CRITTER,
     },
     {
-        "Wolf", // name
-        "W", // char
+        "Goblin", // name
+        "g", // char
         "%", // dead char
-        colors::snow, // foreColor
+        colors::goblinGreen, // foreColor
         colors::black, // backColor
         colors::black, // origColor
         true, // walkable

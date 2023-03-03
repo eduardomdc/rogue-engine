@@ -20,11 +20,11 @@ public:
     int mapWidth; // map size
     int mapHeight;
 
-    int mapRenderWidth = 50; // 96x54 width of map window rendering (odd)
-    int mapRenderHeight = 29;
+    int mapRenderWidth = 25;//50; // 96x54 width of map window rendering (odd)
+    int mapRenderHeight = 25;//29;
 
     int mapOffsetX = 0; // where on the screen the map will be rendered
-    int mapOffsetY = 0;
+    int mapOffsetY = 1;
 
     int mapPositionX = 10; // what map position is being rendered (centered)
     int mapPositionY = 10;
@@ -34,11 +34,16 @@ public:
     int topSide = this->mapPositionY-((this->mapRenderHeight-1)/2);
     int bottomSide = this->mapPositionY+((this->mapRenderHeight-1)/2);
 
+    lightColor ambientLight = {0,0,0};
+
     void loadMap();
+    void genMap();
     void drawMap();
     void update();
 
     bool inMap(int x, int y);
+    bool inCamera(int x, int y);
+    Entity* getFighterAt(int x, int y);
 
     SDL_Rect src, dest;
     SDL_Texture* codepage;

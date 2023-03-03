@@ -4,5 +4,6 @@
 #include "../map.hpp"
 
 void makeSnowyMountain(Map* map);
+void makeDungeon(Map* map);
 
 #endif

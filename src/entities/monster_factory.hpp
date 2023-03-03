@@ -22,7 +22,7 @@ typedef struct Monster {
     
     const color foreRgbDestroyed;
 
-    Object * object; // entity is physical object
+    Item* object; // entity is physical object
 
     // Ai* ai; // entity can do things
     int ai;
@@ -38,7 +38,7 @@ enum ai {
 
 enum monsterTypes {
     RAT,
-    WOLF,
+    GOBLIN,
     NUMBER_OF_MONSTERS
 };
 

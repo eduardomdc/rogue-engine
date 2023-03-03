@@ -36,6 +36,9 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     case SDL_MOUSEBUTTONDOWN:
         game->player->ai->update(game->player);
         break;
+    case SDL_MOUSEMOTION:
+        this->mouseX = currentEvent.button.x;
+        this->mouseY = currentEvent.button.y;
     default:
         break;
     }
@@ -53,6 +56,11 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     }
     else if (game->player->player->walkQueue.size() > 0){
         while (game->player->player->walkQueue.size() > 0){
+            lastMoveTick = SDL_GetTicks();
+            while(SDL_GetTicks()-lastMoveTick < 10){
+                game->update();
+                game->render();
+            }
             game->player->ai->update(game->player);
             for (Entity* ent : game->map->entityList){
                 if (ent != game->player){
@@ -92,15 +100,24 @@ void GameWindow::render(){
         }
     }
 
-    // draw path to mouse
-    int x,y;
-    SDL_GetMouseState(&x,&y);
+    drawBorder(1,3,48,48,colors::dark,colors::black);
+
+    /** mouse support!!
+    int screenX = this->mouseX/20;
+    int screenY = this->mouseY/20;
+    int x = screenX + game->map->leftSide - game->map->mapOffsetX;
+    int y = screenY + game->map->topSide - game->map->mapOffsetY;
+    std::list<position> path = straightPath({game->player->posX, game->player->posY}, {x, y});
     std::list<position>::iterator itui;
-    std::list<position> path = bresenham({game->map->mapRenderWidth/2-1, game->map->mapRenderHeight/2}, {x/20-game->map->mapRenderWidth/2+1,y/20-game->map->mapRenderHeight/2});
-    path.pop_front();
     itui = path.begin();
     while (itui != path.end()){
-        drawTileSelect(itui->x, itui->y);
+        int tileX = itui->x - game->map->leftSide + game->map->mapOffsetX;
+        int tileY = itui->y - game->map->topSide + game->map->mapOffsetY;
+        drawTileSelect(tileX, tileY);
         itui++;
     }
+    **/
+
+    // draw health
+    renderText(std::to_string(game->player->fighter->getHp()), 1, 1, colors::red, false);
 }

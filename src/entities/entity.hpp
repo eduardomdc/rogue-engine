@@ -3,7 +3,7 @@
 
 
 #include "../colors.hpp"
-#include "object.hpp"
+#include "item.hpp"
 #include "ai.hpp"
 #include "creature.hpp"
 #include "fighter.hpp"
@@ -24,7 +24,7 @@ public:
     std::tuple<int, int> getPos();
     int posX;
     int posY;
-    Object * object = NULL; // entity is physical object
+    Item* item = NULL; // entity is physical object
     Ai* ai = NULL; // entity can do things
     Creature* creature = NULL; // entity is a living creature with needs and organs
     Fighter* fighter = NULL; // entity can attack and be attacked
@@ -45,8 +45,11 @@ public:
 
     lightColor illumination = {0,0,0};
     std::list<Entity*> lightSources; //list of light sources that affect this entity, used for updating
+
     void shineLight(short red, short green, short blue); // increase illumination values of entity
 
+    std::vector<Entity> inventory = {};
+    bool pickUp();
     
     void destroy(); // entity is destroyed
     void update();

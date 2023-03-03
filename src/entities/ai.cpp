@@ -17,6 +17,7 @@ void PlayerAi::update(Entity* owner){
         return; // if player has queued up moves he can't play
     }
     switch (ev.type){
+        /** mouse support!!
         case SDL_MOUSEBUTTONDOWN:
             switch(ev.button.button){
                 case SDL_BUTTON_LEFT:
@@ -27,6 +28,7 @@ void PlayerAi::update(Entity* owner){
                     break;
             }
             break;
+        **/
         case SDL_KEYDOWN:
             switch( ev.key.keysym.sym ){
                 case SDLK_a:
@@ -74,7 +76,7 @@ void PlayerAi::moveFromWalkQueue(Entity* owner){
 
 void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
     Animation* step = new Animation();
-    step->foreRgb = colors::white;
+    step->foreRgb = colors::grey;
     step->setFrames({"#","*","."," "});
     step->posX = posX;
     step->speed = 100;
@@ -108,7 +110,7 @@ void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rig
 
 void PlayerAi::pickUp(Entity* owner){
     int turns = 0;
-    if (owner->player->pickup()){
+    if (owner->pickUp()){
         turns = 100;
     }
     game->turns = turns;
@@ -147,17 +149,6 @@ void CritterAi::update(Entity* owner){
         path = straightPath({owner->posX,owner->posY},{game->player->posX, game->player->posY});
     }
 
-    // if (path.size()>0){
-    //     std::cout<<"player:" <<game->player->posX<<" "<<game->player->posY<<std::endl;
-    //     std::cout<<"rat:" <<owner->posX<<" "<<owner->posY<<std::endl;
-    //     std::list<position>::iterator pos;
-    //     pos = path.begin();
-    //     while (pos != path.end()){
-    //         std::cout<<pos->x<<" "<<pos->y<<std::endl;
-    //         pos++;
-    //     }
-    // }
-
     while ( this->turns >= 200 ){
         if (path.size() == 0){
             int dx = rand()%3-1;
@@ -177,19 +168,24 @@ void CritterAi::update(Entity* owner){
 
 void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
     int turns = 0;
+    Entity* targetEntity;
     if (game->map->inMap(targetX, targetY)){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
-            //tile is walkable and is different from current
-            bool hasEntity = false;
-            for (long unsigned int i = 0; i<game->map->entityList.size(); i++){
-                Entity* ent = game->map->entityList[i];
-                if (ent->posX == targetX && ent->posY == targetY){
-                    hasEntity = true;
+            targetEntity = game->map->getFighterAt(targetX, targetY);
+            if (targetEntity){
+                if (targetEntity == game->player){
+                    turns = 150;
+                    game->player->fighter->getHit(1);
+                    Animation* dmg = new Animation();
+                    dmg->foreRgb = colors::yellow;
+                    dmg->setFrames({"1!"});
+                    dmg->posX = targetX;
+                    dmg->speed = 100;
+                    dmg->posY = targetY;
+                    dmg->damageNumber = true;
+                    game->animationList.push_back(dmg);
                 }
-            }
-            if (hasEntity){
-
-            } else {
+            } else if (targetEntity==nullptr) { // only go if there are no fighters there
                 turns = 150;
                 BipedalStepAnimation(owner->posX, owner->posY, targetX, targetY, rand()%2);
                 owner->posX = targetX;
@@ -197,6 +193,9 @@ void CritterAi::moveOrAttack(Entity* owner, int targetX, int targetY){
                 if (owner->creature){
                     //do things for creatures
                 }
+            } else {
+                // wait
+                turns = 50;
             }
             
         }//if there is entity attackable attack it else:

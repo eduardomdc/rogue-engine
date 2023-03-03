@@ -1,7 +1,7 @@
 obj/dep/algorithms/fov.o: src/algorithms/fov.cpp src/algorithms/fov.hpp \
  src/algorithms/../game.hpp src/algorithms/../entities/entity.hpp \
  src/algorithms/../entities/../colors.hpp \
- src/algorithms/../entities/object.hpp src/algorithms/../entities/ai.hpp \
+ src/algorithms/../entities/item.hpp src/algorithms/../entities/ai.hpp \
  src/algorithms/../entities/../algorithms/fov.hpp \
  src/algorithms/../entities/creature.hpp \
  src/algorithms/../entities/fighter.hpp \

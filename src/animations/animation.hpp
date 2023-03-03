@@ -11,8 +11,8 @@ class Animation{
 public:
     int posX;
     int posY;
-    int subPosX; // position within the cell at posX, posY. Cells are divided into 4 subcells (0,0) (0,1) (1,0) (1,1)
-    int subPosY;
+    int subPosX = 0; // position within the cell at posX, posY. Cells are divided into 4 subcells (0,0) (0,1) (1,0) (1,1)
+    int subPosY = 0;
     SDL_Rect src;
     SDL_Rect dest;
     Uint32 frameStart;
@@ -28,7 +28,10 @@ public:
 
     bool onMap = false; // is the animation on the map or in the UI?
 
-    bool done = false; // is the animation finished? 
+    bool done = false; // is the animation finished?
+
+    bool damageNumber = false;
+    short int damageNumberMove = 0;
 
     Animation();
 

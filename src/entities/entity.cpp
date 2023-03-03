@@ -196,3 +196,22 @@ void Entity::destroy(){
         }
     }
 }
+
+
+bool Entity::pickUp(){
+    // picks up item from floor and adds it to inventory, returns true if picked-up something
+    // to do: menu to select between items
+    std::vector<Entity*>::iterator item;
+    item = game->map->entityList.begin();
+    while(item != game->map->entityList.end()){
+        if ((*item)->item != nullptr){
+            if ((*item)->item->pickable && (*item)->posX == this->posX && (*item)->posY == this->posY){
+                inventory.push_back(**item);
+                game->map->entityList.erase(item);
+                return true;
+            }
+        }
+        item++;
+    }
+    return false;
+}

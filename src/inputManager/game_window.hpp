@@ -6,6 +6,8 @@
 class GameWindow : public InputManager {
 public:
     GameWindow();
+    int mouseX, mouseY;
+    int lastMoveTick = 0;
     virtual void handleInput(SDL_Event currentEvent);
     virtual void render();
 };

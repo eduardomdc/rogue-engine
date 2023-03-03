@@ -15,9 +15,7 @@ public:
     bool canSee(int x, int y);
     void updateFov();
     void getWalkQueue(SDL_Event mouse);
-    bool pickup();
     std::vector<std::vector<short>> fov;
-    std::vector<Entity> inventory = {};
     std::list<position> walkQueue = {};
 private:
     int fovRadius = 24;

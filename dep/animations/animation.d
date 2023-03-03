@@ -4,7 +4,7 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../game.hpp \
  src/animations/../draw/../entities/entity.hpp \
  src/animations/../draw/../entities/../colors.hpp \
- src/animations/../draw/../entities/object.hpp \
+ src/animations/../draw/../entities/item.hpp \
  src/animations/../draw/../entities/ai.hpp \
  src/animations/../draw/../entities/../algorithms/fov.hpp \
  src/animations/../draw/../entities/creature.hpp \
@@ -16,8 +16,8 @@ obj/dep/animations/animation.o: src/animations/animation.cpp \
  src/animations/../draw/../entities/../particles/../colors.hpp \
  src/animations/../draw/../animations/animation.hpp \
  src/animations/../draw/../inputManager/input_manager.hpp \
- src/animations/../draw/../colors.hpp src/animations/../map.hpp \
- src/animations/../entities/tile_factory.hpp \
+ src/animations/../draw/../colors.hpp src/animations/../draw/draw_ui.hpp \
+ src/animations/../map.hpp src/animations/../entities/tile_factory.hpp \
  src/animations/../entities/tile.hpp \
  src/animations/../entities/entity.hpp \
  src/animations/../algorithms/perlin.hpp src/animations/../game.hpp

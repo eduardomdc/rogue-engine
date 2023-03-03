@@ -56,7 +56,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     codepageSmall = tileManager->LoadTexture("assets/10x10cp437.png");
     codepageBig = tileManager->LoadTexture("assets/20x20cp437.png");
 
-    map = new Map(100,100);
+    map = new Map(50,50);
+    map->genMap();
 
     inputManager = new GameWindow();
     windows.push_back(inputManager);
@@ -77,19 +78,19 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     pemit->maxParticles = 10;
     pemit->spawnRate = 500;
     pemit->angle = -M_PI/2;
-    pemit->speed = 0.05;
-    pemit->speedSpread = 0.03;
+    pemit->speed = 0.01;
+    pemit->speedSpread = 0.005;
     pemit->angleSpread = M_PI/6;
-    pemit->duration = 1000;
+    pemit->duration = 2000;
     redFire->particleEmitter = pemit;
-    redFire->glow = new Glow(redFire, colors::fire, 30);
+    redFire->glow = new Glow(redFire, colors::fire, 60);
     map->entityList.push_back(redFire);
     
 
     Entity * greenFire = new Entity();
     greenFire->ch = "o";
     greenFire->name = "The Green Ring";
-    greenFire->object = new Object();
+    greenFire->item = new Item();
     greenFire->origRgb = colors::green;
     greenFire->foreRgb = colors::green;
     greenFire->posX = 31;
@@ -100,7 +101,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Entity * blueFire = new Entity();
     blueFire->ch = "/";
     blueFire->name = "Aqua Wand of Menehor";
-    blueFire->object = new Object();
+    blueFire->item = new Item();
     blueFire->origRgb = colors::blue;
     blueFire->foreRgb = colors::blue;
     blueFire->posX = 32;
@@ -111,7 +112,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Entity* rat = makeMonster(RAT, 15, 10);
     map->entityList.push_back(rat);
 
-
     player = new Entity();
     player->ch = "☺";
     player->origRgb = colors::white;
@@ -120,13 +120,15 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->posY = 10;
     player->ai = new PlayerAi();
     player->player = new Player(player);
-    player->glow = new Glow(player, colors::white, 3);
+    player->fighter = new Fighter(player);
+    player->fighter->setHp(10);
+    player->glow = new Glow(player, colors::fire, 8);
     map->entityList.push_back(player);
-
+    
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
-    arrow->setFrames({"R","O",".","*","☺","☺"});
+    arrow->setFrames({"R","O","G","U","E","☺"});
     arrow->posX = 5;
     arrow->speed = 1000;
     arrow->posY = 5;
@@ -198,7 +200,7 @@ void Game::render(){
     std::string ui = "Roguelight v0.1";
     renderText(ui, 0,0, colors::white, false);
     uint32_t tickd = SDL_GetTicks()-lastTick;
-    int fps = 1000/tickd;
+    int fps = 1000/(tickd+1);
     std::string fpsString = std::to_string(fps);
     renderText("FPS "+fpsString, 88, 0, colors::green, false);
     lastTick = SDL_GetTicks();
