@@ -3,8 +3,8 @@
 unitVector Perlin::randomUnitVector()
 {
     unitVector vec;
-    vec.x = rand()-RAND_MAX/2;
-    vec.y = rand()-RAND_MAX/2;
+    vec.x = rand()-RAND_MAX/2.0;
+    vec.y = rand()-RAND_MAX/2.0;
     float length = sqrt(vec.x*vec.x + vec.y*vec.y);
     vec.x /= length;
     vec.y /= length;
