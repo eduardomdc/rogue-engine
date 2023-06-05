@@ -10,7 +10,15 @@
 
 Entity::Entity(){};
 
-Entity::~Entity(){};
+Entity::~Entity(){
+    if (item != nullptr) delete item;
+    if (ai != nullptr) delete ai;
+    if (creature != nullptr) delete creature;
+    if (fighter != nullptr) delete fighter;
+    if (glow != nullptr) delete glow;
+    if (particleEmitter != nullptr) delete particleEmitter;
+    if (player != nullptr) delete player;
+};
 
 void Entity::setPos(int x, int y){
     if (this->glow){
@@ -189,10 +197,10 @@ void Entity::destroy(){
     this->foreRgb = this->foreRgbDestroyed;
     if (this->creature){
         delete this->creature;
-        this->creature = NULL; // death...;
+        this->creature = nullptr; // death...;
         if (this->ai){
             delete this->ai;
-            this->ai = NULL;
+            this->ai = nullptr;
         }
     }
 }
@@ -205,9 +213,12 @@ bool Entity::pickUp(){
     item = game->map->entityList.begin();
     while(item != game->map->entityList.end()){
         if ((*item)->item != nullptr){
-            if ((*item)->item->pickable && (*item)->posX == this->posX && (*item)->posY == this->posY){
+            if ((*item)->item->pickable 
+                && (*item)->posX == this->posX 
+                && (*item)->posY == this->posY){
                 inventory.push_back(**item);
                 game->map->entityList.erase(item);
+                std::cout << "picked up " << (**item).name << std::endl;
                 return true;
             }
         }

@@ -109,8 +109,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->glow = new Glow(blueFire, colors::blue, 20);
     map->entityList.push_back(blueFire);
 
-    Entity* rat = makeMonster(RAT, 15, 10);
-    map->entityList.push_back(rat);
 
     player = new Entity();
     player->ch = "☺";

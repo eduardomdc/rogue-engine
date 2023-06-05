@@ -74,6 +74,7 @@ Entity* makeFireplace(){
     Entity * redFire;
     redFire = new Entity();
     redFire->ch = "*";
+    redFire->name = "Fireplace";
     redFire->origRgb = colors::fire;
     redFire->foreRgb = colors::fire;
     ParticleEmitter* pemit;
@@ -89,6 +90,7 @@ Entity* makeFireplace(){
     pemit->duration = 2000;
     redFire->particleEmitter = pemit;
     redFire->glow = new Glow(redFire, colors::fire, 10);
+    redFire->item = new Item();
     return redFire;
 }
 
@@ -108,13 +110,15 @@ void makeDungeon(Map* map){
             x = 9;
             y = 9;
         }
-        makeRoom(map, CAVE_FLOOR, x, y, width, height);
-        
+        makeRoom(map, CAVE_FLOOR, x, y, width, height); 
         if (map->inMap(x+width/2, y+height/2)){
             Entity* fireplace = makeFireplace();
             fireplace->posX = x+width/2;
             fireplace->posY = y+height/2;
             map->entityList.push_back(fireplace);
+
+            //Entity* rat = makeRat(x+width/2, y+height/2);
+            //map->entityList.push_back(rat);
         }
         
         

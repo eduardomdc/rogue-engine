@@ -44,7 +44,6 @@ public:
     color foreRgbDestroyed;
 
     lightColor illumination = {0,0,0};
-    std::list<Entity*> lightSources; //list of light sources that affect this entity, used for updating
 
     void shineLight(short red, short green, short blue); // increase illumination values of entity
 

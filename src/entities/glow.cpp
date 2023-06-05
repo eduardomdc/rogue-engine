@@ -48,7 +48,7 @@ void Glow::update(Entity* owner){
         std::cout<< "Glow::update() error" << std::endl;
     }
 }
-
+/*
 void Glow::cleanLightReceivers(Entity* owner){
     int x = owner->posX;
     int y = owner->posY;
@@ -67,4 +67,4 @@ void Glow::cleanLightReceivers(Entity* owner){
             }
         }
     }
-}
+}*/

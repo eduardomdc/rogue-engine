@@ -1,5 +1,5 @@
 #include "monster_factory.hpp"
-
+/*
 Entity* makeMonster(int monsterEnum, int posX, int posY){
     Monster monster = monsterCatalog[monsterEnum];
     Entity* monsterObj = new Entity();
@@ -53,5 +53,21 @@ Monster monsterCatalog[NUMBER_OF_MONSTERS]={
         nullptr,
         ai::CRITTER,
     },
-};
+};*/
+Entity* makeRat(int posX, int posY){
+    Entity* rat = new Entity();
 
+    rat->posX = posX;
+    rat->posY = posY;
+
+    rat->name = "Rat";
+    rat->ch = "r";
+    rat->chDestroyed = "%";
+    rat->foreRgb = colors::grey;
+    rat->foreRgbDestroyed = colors::red;
+    rat->ai = new CritterAi();
+    rat->fighter = new Fighter(rat);
+    rat->fighter->setHp(2);
+
+    return rat;
+}

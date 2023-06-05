@@ -1,5 +1,4 @@
 dep/
 obj/
 .vscode/
-Makefile
-roguelike
+build/
