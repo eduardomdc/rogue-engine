@@ -4,6 +4,9 @@ project(roguelight)
 #for debugging
 set(CMAKE_BUILD_TYPE Debug)
 
+#for clang
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(SDL2 REQUIRED)
 
 set(SDL2_IMAGE_INCLUDE_DIRS "/usr/include/SDL2")

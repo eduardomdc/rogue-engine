@@ -100,7 +100,7 @@ void GameWindow::render(){
         }
     }
 
-    //drawBorder(1,3,48,48,colors::dark,colors::black);
+    drawBorder(1,1,94,52,colors::dark,colors::black);
 
     /** mouse support!!
     int screenX = this->mouseX/20;
