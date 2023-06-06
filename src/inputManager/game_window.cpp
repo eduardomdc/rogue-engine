@@ -95,12 +95,13 @@ void GameWindow::render(){
         
         if (anim->done == true){
             it = game->animationList.erase(it);
+            delete *it;
         } else {
             it++;
         }
     }
 
-    drawBorder(1,3,48,48,colors::dark,colors::black);
+    //drawBorder(1,3,48,48,colors::dark,colors::black);
 
     /** mouse support!!
     int screenX = this->mouseX/20;

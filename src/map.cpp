@@ -9,7 +9,7 @@ Map::Map(int mapWidth, int mapHeight){
     // set variables
     this->mapWidth = mapWidth;
     this->mapHeight = mapHeight;
-    mapRenderWidth = 25; //49
+    mapRenderWidth = 49; //49
     mapRenderHeight = 25;
 
     // set tileset used

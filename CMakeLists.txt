@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.26)
 project(roguelight)
 
+#for debugging
+set(CMAKE_BUILD_TYPE Debug)
+
 find_package(SDL2 REQUIRED)
 
 set(SDL2_IMAGE_INCLUDE_DIRS "/usr/include/SDL2")

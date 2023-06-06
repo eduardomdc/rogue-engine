@@ -47,7 +47,7 @@ public:
 
     void shineLight(short red, short green, short blue); // increase illumination values of entity
 
-    std::vector<Entity> inventory = {};
+    std::vector<Entity*> inventory = {};
     bool pickUp();
     
     void destroy(); // entity is destroyed

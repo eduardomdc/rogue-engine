@@ -7,7 +7,7 @@
 
 Player::Player(Entity* owner){
     this->owner = owner;
-    owner->inventory = std::vector<Entity>();
+    owner->inventory = std::vector<Entity*>();
     updateFov();
     std::vector<std::vector <short>> fov (fovRadius*2+1, std::vector <short>(fovRadius*2+1, 0));
     game->map->moveCamera(game->player->posX,game->player->posY);

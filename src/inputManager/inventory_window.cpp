@@ -28,15 +28,15 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
 }
 
 void InventoryWindow::render(){
-    std::vector<Entity> inventory = game->player->inventory;
+    std::vector<Entity*> inventory = game->player->inventory;
 
     drawWindow(70,20,23,20,colors::red, colors::black);
-    std::vector<Entity>::iterator item;
+    std::vector<Entity*>::iterator item;
     item = inventory.begin();
     int line = 20;
     while (item != inventory.end()){
-        game->tileManager->drawSmallAsciiUI(70,line,item->ch,item->foreRgb);
-        renderText(item->name,71, line, colors::white, false);
+        game->tileManager->drawSmallAsciiUI(70,line,(*item)->ch,(*item)->foreRgb);
+        renderText((*item)->name,71, line, colors::white, false);
         line++;
         item++;
     }

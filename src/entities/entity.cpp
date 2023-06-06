@@ -216,9 +216,9 @@ bool Entity::pickUp(){
             if ((*item)->item->pickable 
                 && (*item)->posX == this->posX 
                 && (*item)->posY == this->posY){
-                inventory.push_back(**item);
-                game->map->entityList.erase(item);
+                inventory.push_back(*item);
                 std::cout << "picked up " << (**item).name << std::endl;
+                game->map->entityList.erase(item);
                 return true;
             }
         }
