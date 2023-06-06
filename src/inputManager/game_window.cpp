@@ -95,7 +95,6 @@ void GameWindow::render(){
         
         if (anim->done == true){
             it = game->animationList.erase(it);
-            delete *it;
         } else {
             it++;
         }
