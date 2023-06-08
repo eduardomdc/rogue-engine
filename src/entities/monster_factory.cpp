@@ -60,7 +60,7 @@ Entity* makeRat(int posX, int posY){
     rat->posX = posX;
     rat->posY = posY;
 
-    rat->name = "Rat";
+    rat->name = "Giant Rat";
     rat->ch = "r";
     rat->chDestroyed = "%";
     rat->foreRgb = colors::grey;
@@ -68,6 +68,15 @@ Entity* makeRat(int posX, int posY){
     rat->ai = new CritterAi(rat);
     rat->fighter = new Fighter(rat);
     rat->fighter->setHp(2);
+
+    rat->fighter->str = 8;
+    rat->fighter->agi = 12;
+    rat->fighter->dex = 9;
+    rat->fighter->con = 8;
+    rat->fighter->itl = 4;
+    rat->fighter->wis = 3;
+    rat->fighter->cha = 1;
+    rat->fighter->luck = 10;
 
     return rat;
 }

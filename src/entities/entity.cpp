@@ -198,11 +198,12 @@ void Entity::destroy(){
     if (this->creature){
         delete this->creature;
         this->creature = nullptr; // death...;
-        if (this->ai){
-            delete this->ai;
-            this->ai = nullptr;
-        }
+        
     }
+    if (this->ai){
+        delete this->ai;
+        this->ai = nullptr;
+    }   
 }
 
 

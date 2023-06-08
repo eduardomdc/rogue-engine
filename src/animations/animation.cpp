@@ -38,8 +38,12 @@ void Animation::render(){
                 Tile tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
                 this->illumination = tile.illumination;
             }
-            else return; //animation out of player view
-        } else return; // animation not in camera view
+            else {
+                return;
+            }//animation out of player view
+        } else {
+            return; 
+        }// animation not in camera view
 
         int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
         int screenPosY = this->posY - map->topSide + map->mapOffsetY;

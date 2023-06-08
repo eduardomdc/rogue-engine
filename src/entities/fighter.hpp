@@ -12,17 +12,19 @@ public:
     bool alive = true;
     void getHit(int damage);
     void getHitCritically(int damage);
+    void dodge();
     void setHp(int newHp);
-    void attackFighter(Fighter* enemy);
     int getHp();
+    Entity* getWeapon();
 
     // equipments
-    std::vector<Entity>* equipments = new std::vector<Entity>(9); // items are allocated according to equipSlot enum index
+    std::vector<Entity*>* equipments;// items are allocated according to equipSlot enum index
 
     int hp = 1;
     int maxHp = 1;
     // attributes
     int str = 1;
+    int agi = 1;
     int dex = 1;
     int con = 1;
     int itl = 1;//intelligence

@@ -38,6 +38,7 @@ set(MY_SOURCES
     src/inputManager/menu_window.cpp
     src/particles/particle.cpp
     src/particles/particle_emitter.cpp
+    src/procgen/dice.cpp
     src/procgen/levelgen.cpp
     src/colors.cpp
     src/game.cpp

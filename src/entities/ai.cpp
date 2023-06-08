@@ -123,19 +123,26 @@ void PlayerAi::pickUp(){
 }
 
 void PlayerAi::moveOrAttack(int targetX, int targetY){
-        int turns = 0;// >0 if player has taken an action
+        this->turns = 0;
         if (game->map->inMap(targetX, targetY)){// if target is inside map
-            if (game->map->tileMap[targetX][targetY].walkable){// if target is walkable floor
-                turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
+            if ((game->map->tileMap[targetX][targetY].walkable) 
+                && (targetX != owner->posX || targetY != owner->posY)){// if target is walkable floor
+            Entity* targetEntity = game->map->getFighterAt(targetX, targetY);
+            if (targetEntity){
+                attackAction(this->owner, targetEntity);
+                this->turns = -this->turns;
+            } else if (targetEntity==nullptr) { // only go if there are no fighters there
+                this->turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
                 BipedalStepAnimation(this->owner->posX, owner->posY, targetX, targetY, this->rightStep);
                 this->rightStep = !this->rightStep;
                 this->owner->posX = targetX;
                 this->owner->posY = targetY;
                 this->owner->player->updateFov();
                 game->map->moveCamera(targetX, targetY);
-            }//if there is entity attackable attack it else:
+            }
+            game->turns = this->turns;
+            } 
         }
-        game->turns = turns;
 }
 
 void PlayerAi::rest(){

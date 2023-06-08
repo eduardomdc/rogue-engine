@@ -112,6 +112,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     player = new Entity();
     player->ch = "☺";
+    player->name = "Player";
     player->origRgb = colors::white;
     player->foreRgb = colors::white;
     player->posX = 10;
@@ -119,6 +120,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
+    player->fighter->maxHp = 10;
+    player->fighter->str = 10;
+    player->fighter->agi = 10;
+    player->fighter->con = 10;
     player->fighter->setHp(10);
     player->glow = new Glow(player, colors::fire, 8);
     map->entityList.push_back(player);

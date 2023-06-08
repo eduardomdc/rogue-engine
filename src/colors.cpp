@@ -13,6 +13,7 @@ const color colors::white =					{255, 255, 255, 0, 0, 0, 0, false};
 const color colors::red =					{255,   0,   0, 0,   0,	0, 0, false};
 const color colors::green =					{0,   255,   0, 0,   0,	0, 0, false};
 const color colors::blue =					{0,   0,   255, 0,   0,	0, 0, false};
+const color colors::lightBlue =				{100,   100,   255, 0,   0,	0, 0, false};
 const color colors::yellow =                {255, 255, 0, 0, 0, 0, 0, false};
 const color colors::black = 				{0, 0, 0, 0, 0,	0,	0,	false};
 const color colors::grey =					{95, 95, 95, 0, 0, 0, 0, false};

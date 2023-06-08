@@ -46,7 +46,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
         for (Entity* ent : game->map->entityList){
             if (ent != game->player){
-                if (ent->ai){
+                if (ent->ai != nullptr){
                     //increment turns
                     ent->ai->turns += game->turns;
                     ent->ai->update();
@@ -64,7 +64,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
             game->player->ai->update();
             for (Entity* ent : game->map->entityList){
                 if (ent != game->player){
-                    if (ent->ai){
+                    if (ent->ai != nullptr){
                         //increment turns
                         ent->ai->turns += game->turns;
                         ent->ai->update();
@@ -95,7 +95,16 @@ void GameWindow::render(){
         
         if (anim->done == true){
             it = game->animationList.erase(it);
-        } else {
+        } else if ( anim->onMap ){ 
+            if (!game->map->inCamera((*it)->posX, (*it)->posY)
+                || !game->player->player->canSee(anim->posX, anim->posY)){
+                it = game->animationList.erase(it);
+            }
+            else {
+                it++;
+            }
+        } 
+        else {
             it++;
         }
     }
