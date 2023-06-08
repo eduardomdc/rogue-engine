@@ -29,12 +29,12 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
             std::cout << "Open inventory window" << std::endl;
             game->windows.push_back(new InventoryWindow());
         default:
-            game->player->ai->update(game->player);
+            game->player->ai->update();
             break;
         }
         break;
     case SDL_MOUSEBUTTONDOWN:
-        game->player->ai->update(game->player);
+        game->player->ai->update();
         break;
     case SDL_MOUSEMOTION:
         this->mouseX = currentEvent.button.x;
@@ -49,7 +49,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
                 if (ent->ai){
                     //increment turns
                     ent->ai->turns += game->turns;
-                    ent->ai->update(ent);
+                    ent->ai->update();
                 }
             }
         }
@@ -61,13 +61,13 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
                 game->update();
                 game->render();
             }
-            game->player->ai->update(game->player);
+            game->player->ai->update();
             for (Entity* ent : game->map->entityList){
                 if (ent != game->player){
                     if (ent->ai){
                         //increment turns
                         ent->ai->turns += game->turns;
-                        ent->ai->update(ent);
+                        ent->ai->update();
                     }
                 }
             }

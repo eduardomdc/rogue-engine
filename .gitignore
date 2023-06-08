@@ -1,4 +1,5 @@
 dep/
 obj/
 .vscode/
+.cache/
 build/

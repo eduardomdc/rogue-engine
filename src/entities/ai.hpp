@@ -9,26 +9,30 @@ class Entity;
 
 class Ai {
 public:
+    Ai(Entity* owner);
     int turns = 0;
+    Entity* owner;
     std::list<position> path;
-    virtual void update(Entity *owner);
+    virtual void update();
     virtual ~Ai();
 };
 
 class CritterAi : public Ai {
 public:
-    void update(Entity *owner);
-    void moveOrAttack(Entity *owner, int targetX, int targetY);
+    CritterAi(Entity* owner) : Ai(owner) {};
+    void update();
+    void moveOrAttack(int targetX, int targetY);
 };
 
 class PlayerAi : public Ai {
 public:
+    PlayerAi(Entity* owner) : Ai(owner) {};
     bool rightStep = true; // last step taken was right
-    void update(Entity *owner);
-    void moveFromWalkQueue(Entity* owner);
-    void moveOrAttack(Entity *owner, int targetX, int targetY);
-    void pickUp(Entity* owner);
-    void rest(Entity *owner);
+    void update();
+    void moveFromWalkQueue();
+    void moveOrAttack(int targetX, int targetY);
+    void pickUp();
+    void rest();
 };
 
 #endif

@@ -116,7 +116,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->foreRgb = colors::white;
     player->posX = 10;
     player->posY = 10;
-    player->ai = new PlayerAi();
+    player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
     player->fighter->setHp(10);

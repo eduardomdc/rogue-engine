@@ -117,8 +117,8 @@ void makeDungeon(Map* map){
             fireplace->posY = y+height/2;
             map->entityList.push_back(fireplace);
 
-            //Entity* rat = makeRat(x+width/2, y+height/2);
-            //map->entityList.push_back(rat);
+            Entity* rat = makeRat(x+width/2, y+height/2);
+            map->entityList.push_back(rat);
         }
         
         

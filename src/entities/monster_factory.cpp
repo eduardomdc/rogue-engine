@@ -65,7 +65,7 @@ Entity* makeRat(int posX, int posY){
     rat->chDestroyed = "%";
     rat->foreRgb = colors::grey;
     rat->foreRgbDestroyed = colors::red;
-    rat->ai = new CritterAi();
+    rat->ai = new CritterAi(rat);
     rat->fighter = new Fighter(rat);
     rat->fighter->setHp(2);
 

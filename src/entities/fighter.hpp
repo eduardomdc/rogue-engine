@@ -11,14 +11,14 @@ public:
     Entity* owner;
     bool alive = true;
     void getHit(int damage);
+    void getHitCritically(int damage);
     void setHp(int newHp);
     void attackFighter(Fighter* enemy);
     int getHp();
 
     // equipments
     std::vector<Entity>* equipments = new std::vector<Entity>(9); // items are allocated according to equipSlot enum index
-    
-private:
+
     int hp = 1;
     int maxHp = 1;
     // attributes

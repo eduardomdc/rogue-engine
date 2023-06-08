@@ -16,6 +16,7 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 #find src/*/*.cpp -type f
 set(MY_SOURCES
+    src/actions/action.cpp
     src/algorithms/fov.cpp
     src/algorithms/perlin.cpp
     src/animations/animation.cpp
