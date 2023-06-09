@@ -9,9 +9,11 @@ void renderText(std::string text, int x, int y, color color, bool centered){
     SDL_Texture* codepage = game->codepageSmall;
     SDL_Rect src;
     SDL_Rect dest;
+    int start = 0;
+    if (centered) start = text.length()/2;
     for (long unsigned int i = 0; i < text.length(); i++){
         std::string ch = text.substr(i,1);
-        dest.x = x*10;
+        dest.x = (x-start)*10;
         dest.y = y*10;
         game->tileManager->drawAscii(
             codepage,
@@ -26,6 +28,32 @@ void renderText(std::string text, int x, int y, color color, bool centered){
         x += 1;
     }
 }
+
+void renderTextAndBg(std::string text, int x, int y, color fgColor, color bgColor, bool centered){
+    SDL_Texture* codepage = game->codepageSmall;
+    SDL_Rect src;
+    SDL_Rect dest;
+    int start = 0;
+    if (centered) start = text.length()/2;
+    for (long unsigned int i = 0; i < text.length(); i++){
+        std::string ch = text.substr(i,1);
+        dest.x = (x-start)*10;
+        dest.y = y*10;
+        game->tileManager->drawAscii(
+            codepage,
+            src,
+            dest,
+            ch,
+            fgColor,
+            bgColor,
+            10, 
+            10,
+            16, 
+            16);
+        x += 1;
+    }
+}
+
 
 void drawWindow(int x, int y, int width, int height, color fgColor, color bgColor){
     SDL_Texture* codepage = game->codepageSmall;
@@ -50,6 +78,32 @@ void drawWindow(int x, int y, int width, int height, color fgColor, color bgColo
     }
 
     drawBorder(x,y,width,height,fgColor,bgColor);
+}
+
+void drawWindowAndTitle(std::string title, int x, int y, int width, int height, color fgColor, color bgColor){
+    SDL_Texture* codepage = game->codepageSmall;
+    SDL_Rect src;
+    SDL_Rect dest;
+    // fill with black
+    for (int i = x; i < width+x; i++){
+        for (int j = y; j < height+y; j++){
+            dest.x = i*10;
+            dest.y = j*10;
+            game->tileManager->drawAscii(
+            codepage,
+            src,
+            dest,
+            " ",
+            fgColor,
+            bgColor,
+            10, 
+            10,
+            16, 
+            16);
+        }
+    } 
+    drawBorder(x,y,width,height,fgColor,bgColor);
+    renderTextAndBg(title, x+width/2, y-1, bgColor, fgColor, true);
 }
 
 void drawBorder(int x, int y, int width, int height, color fgColor, color bgColor){

@@ -28,13 +28,15 @@ set(MY_SOURCES
     src/entities/fighter.cpp
     src/entities/glow.cpp
     src/entities/item.cpp
-    src/entities/monster_factory.cpp
     src/entities/player.cpp
     src/entities/tile.cpp
-    src/entities/tile_factory.cpp
+    src/factories/item_factory.cpp
+    src/factories/monster_factory.cpp
+    src/factories/tile_factory.cpp
     src/inputManager/game_window.cpp
     src/inputManager/input_manager.cpp
     src/inputManager/inventory_window.cpp
+    src/inputManager/item_window.cpp
     src/inputManager/menu_window.cpp
     src/particles/particle.cpp
     src/particles/particle_emitter.cpp

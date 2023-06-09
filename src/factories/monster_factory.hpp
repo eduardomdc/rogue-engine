@@ -1,7 +1,7 @@
 #ifndef MONSTER_FACTORY_HPP
 #define MONSTER_FACTORY_HPP
 
-#include "entity.hpp"
+#include "../entities/entity.hpp"
 
 // Wazowski... esqueceu a papelada de ontem à noite!
 

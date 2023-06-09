@@ -29,7 +29,7 @@ void attackAction(Entity *attacker, Entity *target){
                 int(weapon->item->weight*10-fighter->str)
                 );
         dmgMod += weapon->item->damageMod;
-        dmg = roll(1, weapon->item->damageDie);
+        dmg = roll(weapon->item->dieAmount, weapon->item->damageDie);
     } else {
         dmg = roll(1, 4);
     }

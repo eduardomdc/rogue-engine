@@ -1,6 +1,7 @@
 #include "levelgen.hpp"
 #include "../algorithms/perlin.hpp"
-#include "../entities/monster_factory.hpp"
+#include "../factories/monster_factory.hpp"
+#include "../factories/item_factory.hpp"
 #include "../entities/glow.hpp"
 #include "../entities/entity.hpp"
 #include <iostream>
@@ -70,29 +71,7 @@ void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int end
     else makeRoom(map, floorTile, endx, endy, 1, -dy);
 }
 
-Entity* makeFireplace(){
-    Entity * redFire;
-    redFire = new Entity();
-    redFire->ch = "*";
-    redFire->name = "Fireplace";
-    redFire->origRgb = colors::fire;
-    redFire->foreRgb = colors::fire;
-    ParticleEmitter* pemit;
-    pemit = new ParticleEmitter(redFire);
-    pemit->chs = {".", ",","*","`"};
-    pemit->foreRgb = colors::yellow;
-    pemit->maxParticles = 10;
-    pemit->spawnRate = 500;
-    pemit->angle = -M_PI/2;
-    pemit->speed = 0.01;
-    pemit->speedSpread = 0.005;
-    pemit->angleSpread = M_PI/6;
-    pemit->duration = 2000;
-    redFire->particleEmitter = pemit;
-    redFire->glow = new Glow(redFire, colors::fire, 10);
-    redFire->item = new Item();
-    return redFire;
-}
+
 
 void makeDungeon(Map* map){
     map->ambientLight = {0,0,50};
@@ -116,11 +95,13 @@ void makeDungeon(Map* map){
             fireplace->posX = x+width/2;
             fireplace->posY = y+height/2;
             map->entityList.push_back(fireplace);
-
+            Entity* sword = makeSword();
+            sword->posX = x+width/3;
+            sword->posY = y+height/3;
+            map->entityList.push_back(sword);
             Entity* rat = makeRat(x+width/2, y+height/2);
             map->entityList.push_back(rat);
         }
-        
         
         if (i!=0) makeCorridor(map, CAVE_MOSSY_FLOOR, x, y, lastx, lasty);
         lastx = x+width/2;

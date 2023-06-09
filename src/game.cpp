@@ -1,6 +1,6 @@
 #include "game.hpp"
 #include "map.hpp"
-#include "entities/monster_factory.hpp"
+#include "factories/monster_factory.hpp"
 #include "inputManager/game_window.hpp"
 #include "inputManager/menu_window.hpp"
 #include "draw/draw_ui.hpp"

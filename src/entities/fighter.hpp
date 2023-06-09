@@ -16,6 +16,7 @@ public:
     void setHp(int newHp);
     int getHp();
     Entity* getWeapon();
+    void equipItem(Entity* item);
 
     // equipments
     std::vector<Entity*>* equipments;// items are allocated according to equipSlot enum index

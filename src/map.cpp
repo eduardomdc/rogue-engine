@@ -1,5 +1,5 @@
 #include "map.hpp"
-#include "entities/tile_factory.hpp"
+#include "factories/tile_factory.hpp"
 #include "game.hpp"
 #include "procgen/levelgen.hpp"
 #include <iostream>

@@ -20,10 +20,15 @@ void MenuWindow::handleInput(SDL_Event currentEvent) {
             close();
             delete this;
             break;
+        case SDLK_q:
+            std::cout<< "Quit Pressed" << std::endl;
+            game->isRunning = false;
+            break;
         }
     }
 }
 
 void MenuWindow::render(){
-    renderText("Options Menu", 35, 35, colors::blueMagic, false);
+    renderText("Options Menu", 35, 35, colors::white, false);
+    renderText("Q to quit", 35, 36, colors::white, false);
 }

@@ -2,7 +2,7 @@
 #define TILE_FACTORY_HPP
 
 #include <vector>
-#include "tile.hpp"
+#include "../entities/tile.hpp"
 
 
 typedef struct TileData{

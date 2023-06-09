@@ -227,3 +227,16 @@ bool Entity::pickUp(){
     }
     return false;
 }
+
+void Entity::drop(Entity* item){
+    this->inventory.erase(
+        std::remove(
+                this->inventory.begin(),
+                this->inventory.end(),
+                item
+            )        
+    );
+    item->posX = this->posX;
+    item->posY = this->posY;
+    game->map->entityList.push_back(item);
+}

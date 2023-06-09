@@ -3,6 +3,7 @@
 #include "../map.hpp"
 #include "../draw/draw_ui.hpp"
 #include <iostream>
+#include "item_window.hpp"
 
 InventoryWindow::InventoryWindow(){
     std::cout<< "Inventory Window created" << std::endl;
@@ -20,6 +21,17 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
             close();
             delete this;
             break;
+        default:
+            if (currentEvent.key.keysym.sym >= 97
+                && currentEvent.key.keysym.sym <= 122){
+                std::vector<Entity*> inventory = game->player->inventory;
+                int selected = currentEvent.key.keysym.sym-97;
+                if (inventory.size()>selected){
+                    Entity* item=inventory[selected]; 
+                    game->windows.push_back(new ItemWindow(item));
+                }
+            } 
+            break;
         }
         break;
     default:
@@ -30,14 +42,20 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
 void InventoryWindow::render(){
     std::vector<Entity*> inventory = game->player->inventory;
 
-    drawWindow(70,20,23,20,colors::grey, colors::black);
+    drawWindowAndTitle("Inventory",69,20,25,26,colors::grey, colors::black);
     std::vector<Entity*>::iterator item;
     item = inventory.begin();
     int line = 20;
+    char ascii = 97;
     while (item != inventory.end()){
-        game->tileManager->drawSmallAsciiUI(70,line,(*item)->ch,(*item)->foreRgb);
-        renderText((*item)->name,71, line, colors::grey, false);
+        std::string letter(1,ascii);
+        game->tileManager->drawSmallAsciiUI(69,line, letter,(*item)->foreRgb);
+        game->tileManager->drawSmallAsciiUI(70,line, "[", colors::grey);
+        game->tileManager->drawSmallAsciiUI(71,line,(*item)->ch,(*item)->foreRgb);
+        game->tileManager->drawSmallAsciiUI(72,line, "]", colors::grey);
+        renderText((*item)->name,73, line, colors::grey, false);
         line++;
         item++;
+        ascii++;
     }
 }

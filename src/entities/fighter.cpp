@@ -3,6 +3,7 @@
 #include "../animations/animation.hpp"
 #include "../game.hpp"
 #include "item.hpp"
+#include <algorithm>
 #include <string>
 
 Fighter::Fighter(Entity* owner){
@@ -67,4 +68,17 @@ int Fighter::getHp(){
 
 Entity* Fighter::getWeapon(){
     return (*this->equipments)[equipSlots::HAND1];
+}
+
+void Fighter::equipItem(Entity *item){
+    if ( (*this->equipments)[item->item->equipSlot] ){
+        this->owner->inventory.push_back((*this->equipments)[item->item->equipSlot]);
+    }
+    this->owner->inventory.erase(
+            std::remove( 
+                this->owner->inventory.begin(),
+                this->owner->inventory.end(),
+                item)
+            );
+    (*this->equipments)[item->item->equipSlot] = item;
 }
