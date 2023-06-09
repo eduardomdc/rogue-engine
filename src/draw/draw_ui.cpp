@@ -1,6 +1,7 @@
 #include "draw_ui.hpp"
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <string>
 #include "tile_manager.hpp"
 #include "../game.hpp"
 
@@ -150,4 +151,28 @@ void drawTileSelect(int x, int y){
     dest.x = 20*x;
     dest.y = 20*y;
     game->tileManager->DrawTransparentTile(codepage, src, dest, 219, colors::blue, 20, 20, 16, 16, 70*(1+rand()%2));
+}
+
+void drawQuantityBar(std::string label, int value, int maxValue, int x, int y, int width, color color){
+    int fullBlocks = int((float(value)/maxValue)*width);
+    for (int i=0; i<width; i++){
+        game->tileManager->drawSmallAsciiUI(x+i, y, "█", colors::black);
+    }
+    for (int i=0; i<fullBlocks; i++){
+        game->tileManager->drawSmallAsciiUI(x+i, y, "█", color);
+    }
+    float boundaryValue = value - fullBlocks*float(maxValue)/width;
+    float actualValue = float(maxValue)/width;
+    if (boundaryValue > 0.66*actualValue){
+        game->tileManager->drawSmallAsciiUI(x+fullBlocks, y, "▓", color, colors::black);
+    } else if ( boundaryValue > 0.33*actualValue){
+        game->tileManager->drawSmallAsciiUI(x+fullBlocks, y, "▒", color, colors::black);
+    } else if (boundaryValue > 0){
+        game->tileManager->drawSmallAsciiUI(x+fullBlocks, y, "░", color, colors::black);
+    }
+    renderText(label, x, y, colors::white, false);
+    std::string quantityLabel = std::to_string(value);
+    quantityLabel.append("/");
+    quantityLabel.append(std::to_string(maxValue));
+    renderText(quantityLabel, x+width-quantityLabel.length(), y, colors::white, false);
 }

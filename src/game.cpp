@@ -120,11 +120,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
-    player->fighter->maxHp = 10;
+    player->fighter->maxHp = 45;
     player->fighter->str = 10;
     player->fighter->agi = 10;
     player->fighter->con = 10;
-    player->fighter->setHp(10);
+    player->fighter->setHp(45);
     player->glow = new Glow(player, colors::fire, 8);
     map->entityList.push_back(player);
     
@@ -132,9 +132,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
     arrow->setFrames({"R","O","G","U","E","☺"});
-    arrow->posX = 5;
-    arrow->speed = 1000;
-    arrow->posY = 5;
+    arrow->posX = 1;
+    arrow->speed = 500;
+    arrow->posY = 1;
     animationList.push_back(arrow);
 }
 
@@ -200,12 +200,10 @@ void Game::render(){
     }
 
     // draw debug info
-    std::string ui = "Roguelight v0.1";
-    renderText(ui, 0,0, colors::white, false);
     uint32_t tickd = SDL_GetTicks()-lastTick;
     int fps = 1000/(tickd+1);
     std::string fpsString = std::to_string(fps);
-    renderText("FPS "+fpsString, 88, 0, colors::green, false);
+    renderText("FPS "+fpsString, 88, 0, colors::grey, false);
     lastTick = SDL_GetTicks();
     
     SDL_RenderPresent(renderer);

@@ -4,6 +4,7 @@
 #include "../game.hpp"
 #include "item.hpp"
 #include <algorithm>
+#include <cstdlib>
 #include <string>
 
 Fighter::Fighter(Entity* owner){
@@ -14,9 +15,15 @@ Fighter::Fighter(Entity* owner){
 void Fighter::getHit(int damage){
     setHp(getHp() - damage);
     Animation* dmg = new Animation();
-    dmg->foreRgb = colors::red;
-    std::string damageString = std::to_string(damage);
-    dmg->setFrames({damageString});
+    if (damage){
+        dmg->foreRgb = colors::red;
+        std::string damageString = std::to_string(damage);
+        dmg->setFrames({damageString});
+    } else {
+        dmg->foreRgb = colors::lightBlue;
+        dmg->setFrames({"0"});
+        
+    }
     dmg->posX = this->owner->posX;
     dmg->speed = 100;
     dmg->posY = this->owner->posY;
@@ -27,10 +34,15 @@ void Fighter::getHit(int damage){
 void Fighter::getHitCritically(int damage){
     setHp(getHp() - damage);
     Animation* dmg = new Animation();
-    dmg->foreRgb = colors::yellow;
-    std::string damageString = std::to_string(damage);
-    damageString.append("!");
-    dmg->setFrames({damageString});
+    if (damage){
+        dmg->foreRgb = colors::yellow;
+        std::string damageString = std::to_string(damage);
+        damageString.append("!");
+        dmg->setFrames({damageString});
+    } else {
+        dmg->foreRgb = colors::lightBlue;
+        dmg->setFrames({"0!"});
+    }
     dmg->posX = this->owner->posX;
     dmg->speed = 150;
     dmg->posY = this->owner->posY;
@@ -40,7 +52,7 @@ void Fighter::getHitCritically(int damage){
 
 void Fighter::dodge(){
     Animation* miss = new Animation();
-    miss->setFrames({"miss"});
+    miss->setFrames({"~"});
     miss->foreRgb = colors::lightBlue;
     miss->posX = this->owner->posX;
     miss->posY = this->owner->posY;

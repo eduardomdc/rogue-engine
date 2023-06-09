@@ -33,6 +33,7 @@ set(MY_SOURCES
     src/factories/item_factory.cpp
     src/factories/monster_factory.cpp
     src/factories/tile_factory.cpp
+    src/inputManager/character_sheet.cpp
     src/inputManager/game_window.cpp
     src/inputManager/input_manager.cpp
     src/inputManager/inventory_window.cpp

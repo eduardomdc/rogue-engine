@@ -42,7 +42,7 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
 void InventoryWindow::render(){
     std::vector<Entity*> inventory = game->player->inventory;
 
-    drawWindowAndTitle("Inventory",69,20,25,26,colors::grey, colors::black);
+    drawWindowAndTitle("Inventory",69,20,25,game->player->inventory.size(),colors::grey, colors::black);
     std::vector<Entity*>::iterator item;
     item = inventory.begin();
     int line = 20;

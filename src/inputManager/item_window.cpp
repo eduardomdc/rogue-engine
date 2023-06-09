@@ -47,6 +47,7 @@ void ItemWindow::render(){
     int width = 16;
     int height = 22;
     drawWindowAndTitle(this->item->name, posX, posY, width, height, colors::grey, colors::black);
+    renderTextAndBg(this->item->ch, posX + width/2, posY+2, this->item->foreRgb, this->item->backRgb, false);
     renderText("[e] to equip", posX, posY+5, colors::grey, false);
     renderText("[d] to drop", posX, posY+6, colors::grey, false);
 }

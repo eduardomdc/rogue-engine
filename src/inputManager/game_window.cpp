@@ -1,7 +1,9 @@
 #include "game_window.hpp"
 #include "../game.hpp"
 #include "../map.hpp"
+#include <SDL_keycode.h>
 #include <iostream>
+#include "character_sheet.hpp"
 #include "menu_window.hpp"
 #include "inventory_window.hpp"
 #include "../draw/draw_ui.hpp"
@@ -28,6 +30,11 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
         case SDLK_i:
             std::cout << "Open inventory window" << std::endl;
             game->windows.push_back(new InventoryWindow());
+            break;
+        case SDLK_TAB:
+            std::cout<<"Open character window"<<std::endl;
+            game->windows.push_back(new CharacterSheet());
+            break;
         default:
             game->player->ai->update();
             break;
@@ -128,5 +135,5 @@ void GameWindow::render(){
     **/
 
     // draw health
-    renderText(std::to_string(game->player->fighter->getHp()), 1, 1, colors::red, false);
+    drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, 53, 15, colors::red);
 }

@@ -329,6 +329,15 @@ void TileManager::drawSmallAsciiUI(int x, int y, std::string id, color foreRgb){
     TileManager::drawAscii(codepage,src,dest,id,foreRgb,10, 10,16, 16);
 }
 
+void TileManager::drawSmallAsciiUI(int x, int y, std::string id, color foreRgb, color backRgb){
+    SDL_Texture* codepage = game->codepageSmall;
+    SDL_Rect src;
+    SDL_Rect dest;
+    dest.x = x*10;
+    dest.y = y*10;
+    TileManager::drawAscii(codepage,src,dest,id,foreRgb,backRgb,10, 10,16, 16);
+}
+
 int updateBlinkAlpha(){
     // uint32_t tickd = SDL_GetTicks()-game->lastTick;
     return 20+50*abs(sin(SDL_GetTicks()/600.0));

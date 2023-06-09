@@ -15,6 +15,7 @@ public:
     void drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, color backRgb, int tileHeight, int tileWidth, int setHeight, int setWidth);
     void drawAscii(SDL_Texture* tileset, SDL_Rect src, SDL_Rect dest, std::string id, color foreRgb, int tileHeight, int tileWidth, int setHeight, int setWidth);
     void drawSmallAsciiUI(int x, int y, std::string id, color foreRgb);
+    void drawSmallAsciiUI(int x, int y, std::string id, color foreRgb, color backRgb);
     void update();
     int blinkAlpha = 100;
 };

@@ -24,7 +24,7 @@ public:
     int mapRenderHeight = 25;//29;
 
     int mapOffsetX = 0; // where on the screen the map will be rendered
-    int mapOffsetY = 1;
+    int mapOffsetY = 0;
 
     int mapPositionX = 10; // what map position is being rendered (centered)
     int mapPositionY = 10;

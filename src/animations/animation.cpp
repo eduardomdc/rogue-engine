@@ -77,8 +77,6 @@ void Animation::render(){
         Map* map = game->map;
         if (map->inCamera(this->posX, this->posY)){
             if (game->player->player->canSee(this->posX, this->posY)){
-                Tile tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
-                this->illumination = tile.illumination;
             }
             else return; //animation out of player view
         } else return; // animation not in camera view

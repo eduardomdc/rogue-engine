@@ -10,5 +10,6 @@ void drawWindow(int x, int y, int width, int height, color fgColor, color bgColo
 void drawWindowAndTitle(std::string title, int x, int y, int width, int height, color fgColor, color bgColor);
 void drawBorder(int x, int y, int width, int height, color fgColor, color bgColor);
 void drawTileSelect(int x, int y);
+void drawQuantityBar(std::string label, int value, int maxValue, int x, int y, int width, color color);
 
 #endif

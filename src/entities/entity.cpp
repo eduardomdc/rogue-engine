@@ -8,7 +8,10 @@
 #include "../map.hpp"
 #include "../algorithms/fov.hpp"
 
-Entity::Entity(){};
+Entity::Entity(){
+    this->foreRgb = colors::white;
+    this->backRgb = colors::black;
+};
 
 Entity::~Entity(){
     if (item != nullptr) delete item;

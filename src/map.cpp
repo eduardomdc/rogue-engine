@@ -10,7 +10,7 @@ Map::Map(int mapWidth, int mapHeight){
     this->mapWidth = mapWidth;
     this->mapHeight = mapHeight;
     mapRenderWidth = 49; //49
-    mapRenderHeight = 25;
+    mapRenderHeight = 26;
 
     // set tileset used
     codepage = game->codepageBig;
