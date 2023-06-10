@@ -44,4 +44,6 @@ private:
     std::vector<std::string> chFrames;
 };
 
+void bipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep);
+
 #endif

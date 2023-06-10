@@ -19,5 +19,7 @@ public:
 };
 */
 void attackAction(Entity* attacker, Entity* target);
+void moveAction(Entity* self, int x, int y);
+int returnSmallestAction(Entity* self);
 
 #endif

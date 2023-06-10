@@ -3,6 +3,7 @@
 
 #include "../map.hpp"
 
+void makeTestChamber(Map* map);
 void makeSnowyMountain(Map* map);
 void makeDungeon(Map* map);
 

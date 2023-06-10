@@ -16,6 +16,20 @@ void fillMap(Map* map, int floorTile){
     }
 }
 
+void makeTestChamber(Map *map){
+    map->ambientLight = {255,100,100};
+    fillMap(map, CAVE_MOSSY_FLOOR);
+    map->entityList.push_back(makeRat(20,20));
+    map->entityList.push_back(makeRat(21, 21));
+    map->entityList.push_back(makeRat(19, 21));
+    map->entityList.push_back(makeRat(21, 20));
+    map->entityList.push_back(makeRat(20, 21));
+    Entity* sword = makeSword();
+    sword->posX = 11;
+    sword->posY = 8;
+    map->entityList.push_back(sword);
+}
+
 void makeSnowyMountain(Map* map){
     //generate perlin map
     map->ambientLight = {100,100,150};

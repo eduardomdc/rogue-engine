@@ -10,7 +10,7 @@ Entity* makeSword(){
     sword->item->damageDie = 6;
     sword->item->damageMod = 0;
     sword->item->dieAmount = 1;
-    sword->item->weight = 0.7;
+    sword->item->weight = 5;
     sword->item->pickable = true;
     return sword;
 }

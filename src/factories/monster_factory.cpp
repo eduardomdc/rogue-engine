@@ -1,4 +1,5 @@
 #include "monster_factory.hpp"
+#include "../procgen/dice.hpp"
 /*
 Entity* makeMonster(int monsterEnum, int posX, int posY){
     Monster monster = monsterCatalog[monsterEnum];
@@ -67,7 +68,9 @@ Entity* makeRat(int posX, int posY){
     rat->foreRgbDestroyed = colors::red;
     rat->ai = new CritterAi(rat);
     rat->fighter = new Fighter(rat);
-    rat->fighter->setHp(2);
+    rat->fighter->maxHp = roll(1,4);
+    rat->fighter->setHp(rat->fighter->maxHp);
+
 
     rat->fighter->str = 8;
     rat->fighter->agi = 12;

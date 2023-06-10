@@ -94,3 +94,37 @@ void Animation::render(){
         }
     }
 }
+
+void bipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
+    Animation* step = new Animation();
+    step->foreRgb = colors::grey;
+    step->setFrames({"#","*","."," "});
+    step->posX = posX;
+    step->speed = 100;
+    step->posY = posY;
+    if (targetY > posY){
+        step->subPosY = 1;
+        if (rightStep){
+            step->subPosX = 0;
+        } else step->subPosX = 1;
+    } else if (targetY < posY) {
+        step->subPosY = 0;
+        if (rightStep){
+            step->subPosX = 0;
+        } else step->subPosX = 1;
+    }
+    if (targetX > posX){
+        step->subPosX = 1;
+        if (rightStep){
+            step->subPosY = 0;
+        } else step->subPosY = 1;
+    } else if (targetX < posX) {
+        step->subPosX = 0;
+        if (rightStep){
+            step->subPosY = 0;
+        } else step->subPosY = 1;
+    }
+
+    step->onMap = true;
+    game->animationList.push_back(step);
+}

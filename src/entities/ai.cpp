@@ -1,5 +1,6 @@
 #include "entity.hpp"
 #include "ai.hpp"
+#include "../animations/animation.hpp"
 #include "../map.hpp"
 #include "../game.hpp"
 #include <iostream>
@@ -79,44 +80,10 @@ void PlayerAi::moveFromWalkQueue(){
     PlayerAi::moveOrAttack(dest.x, dest.y);
 }
 
-void BipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
-    Animation* step = new Animation();
-    step->foreRgb = colors::grey;
-    step->setFrames({"#","*","."," "});
-    step->posX = posX;
-    step->speed = 100;
-    step->posY = posY;
-    if (targetY > posY){
-        step->subPosY = 1;
-        if (rightStep){
-            step->subPosX = 0;
-        } else step->subPosX = 1;
-    } else if (targetY < posY) {
-        step->subPosY = 0;
-        if (rightStep){
-            step->subPosX = 0;
-        } else step->subPosX = 1;
-    }
-    if (targetX > posX){
-        step->subPosX = 1;
-        if (rightStep){
-            step->subPosY = 0;
-        } else step->subPosY = 1;
-    } else if (targetX < posX) {
-        step->subPosX = 0;
-        if (rightStep){
-            step->subPosY = 0;
-        } else step->subPosY = 1;
-    }
-
-    step->onMap = true;
-    game->animationList.push_back(step);
-}
-
 void PlayerAi::pickUp(){
     int turns = 0;
     if (owner->pickUp()){
-        turns = 100;
+        turns = 10;
     }
     game->turns = turns;
     return;
@@ -132,11 +99,10 @@ void PlayerAi::moveOrAttack(int targetX, int targetY){
                 attackAction(this->owner, targetEntity);
                 this->turns = -this->turns;
             } else if (targetEntity==nullptr) { // only go if there are no fighters there
-                this->turns = 100; // 100 turns to walk, todo: make it depend on weight, race, effects etc...
-                BipedalStepAnimation(this->owner->posX, owner->posY, targetX, targetY, this->rightStep);
+                bipedalStepAnimation(this->owner->posX, owner->posY, targetX, targetY, this->rightStep);
                 this->rightStep = !this->rightStep;
-                this->owner->posX = targetX;
-                this->owner->posY = targetY;
+                moveAction(this->owner, targetX, targetY);
+                this->turns = -this->turns;
                 this->owner->player->updateFov();
                 game->map->moveCamera(targetX, targetY);
             }
@@ -146,7 +112,7 @@ void PlayerAi::moveOrAttack(int targetX, int targetY){
 }
 
 void PlayerAi::rest(){
-    game->turns = 100;
+    game->turns = 10;
 }
 
 float euclideanDistance(int x1, int y1, int x2, int y2){
@@ -160,13 +126,12 @@ void CritterAi::update(){
     if (euclideanDistance(this->owner->posX, this->owner->posY, game->player->posX, game->player->posY) < 10){
         path = straightPath({this->owner->posX,owner->posY},{game->player->posX, game->player->posY});
     }
-
-    while ( this->turns >= 200 ){
+    std::cout << "critterAi has "<<this->turns<<" avaible"<<std::endl;
+    while ( this->turns >= returnSmallestAction(this->owner)){
         if (path.size() == 0){
             int dx = rand()%3-1;
             int dy = rand()%3-1;
             CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
-            this->turns -= 10; // this needs reworking
         }
         else {
             position* step = &path.front();
@@ -174,12 +139,12 @@ void CritterAi::update(){
             path.pop_front();
         }
     }
+
     }
-    catch (...){std::cout<<"Critter AI error" << std::endl; }
+    catch (...){std::cout<<"Critter AI error" << std::endl;}
 }
 
 void CritterAi::moveOrAttack(int targetX, int targetY){
-    int turns = 0; // turns this AI will take this round
     Entity* targetEntity;
     if (game->map->inMap(targetX, targetY)){
         if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
@@ -189,19 +154,16 @@ void CritterAi::moveOrAttack(int targetX, int targetY){
                     attackAction(this->owner, game->player);
                 }
             } else if (targetEntity==nullptr) { // only go if there are no fighters there
-                turns = 150;
-                BipedalStepAnimation(this->owner->posX, this->owner->posY, targetX, targetY, rand()%2);
-                this->owner->posX = targetX;
-                this->owner->posY = targetY;
+                bipedalStepAnimation(this->owner->posX, this->owner->posY, targetX, targetY, rand()%2);
+                moveAction(this->owner, targetX, targetY); 
                 if (this->owner->creature){
                     //do things for creatures
                 }
             } else {
                 // wait
-                turns = 50;
+                //this->turns -= 10;
             }
             
         }//if there is entity attackable attack it else:
     }
-    this->turns -= turns;
 };
