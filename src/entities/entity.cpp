@@ -7,6 +7,7 @@
 #include "../game.hpp"
 #include "../map.hpp"
 #include "../algorithms/fov.hpp"
+#include "../animations/animation.hpp"
 
 Entity::Entity(){
     this->foreRgb = colors::white;
@@ -233,6 +234,7 @@ bool Entity::pickUp(){
                 && (*item)->posY == this->posY){
                 inventory.push_back(*item);
                 std::cout << "picked up " << (**item).name << std::endl;
+                pickUpAnimation(*item);
                 game->map->entityList.mid.erase(item);
                 return true;
             }

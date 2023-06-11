@@ -23,7 +23,44 @@ public:
 private:
 };
 
+namespace material{
+enum material{
+    NONE,
+    WOOD,
+    STONE,
+    IRON,
+    STEEL,
+    SILVER,
+    GOLD,
+    GEM,
+};
+}
+
+namespace element{
+enum element{
+    NONE,
+    FIRE,
+    WATER,
+    WIND,
+    ICE,
+    ELECTRIC,
+};
+}
+
+namespace itemType{
+enum itemType{
+    NONE,
+    USABLE,
+    TREASURE,
+    WEAPON,
+    ARMOUR,
+    SHIELD,
+};
+}
+
+namespace equipSlots{
 enum equipSlots{
+    NONE,
     HEAD,
     NECK,
     BODY,
@@ -34,5 +71,6 @@ enum equipSlots{
     RING1,
     RING2,
 };
+}
 
 #endif

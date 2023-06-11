@@ -212,3 +212,36 @@ void slashAnimation(int posX, int posY){
     slash->onMap = true;
     game->animationList.push_back(slash);
 }
+
+void pickUpAnimation(Entity *item){
+    Animation* pick = new Animation();
+    pick->foreRgb = item->foreRgb;
+    const char* ch = item->ch;
+    pick->setFrames({
+            {
+                "","","\n",
+                "","","\n",
+                ch,"",
+            },
+            {
+                "","","\n",
+                "",ch,"\n",
+                "","",
+            },
+            {
+                ch,"","\n",
+                "","","\n",
+            },
+            {
+                "",ch,"\n",
+                "","","\n",
+            },{}
+
+            });
+    pick->posX = item->posX;
+    pick->posY = item->posY;
+    pick->subPosY = -1;
+    pick->speed = 100;
+    pick->onMap = true;
+    game->animationList.push_back(pick);
+}
