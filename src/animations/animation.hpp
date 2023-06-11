@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "../colors.hpp"
+#include "../entities/entity.hpp"
 
 class Animation{
 public:
@@ -27,7 +28,7 @@ public:
     lightColor illumination = {0,0,0};
 
     bool onMap = false; // is the animation on the map or in the UI?
-
+    bool lit = false;
     bool done = false; // is the animation finished?
 
     bool damageNumber = false;
@@ -35,15 +36,16 @@ public:
 
     Animation();
 
-    void setFrames(std::vector<std::string> framesASCII);
+    void setFrames(std::vector<std::vector<std::string>> framesASCII);
 
     void nextFrame();
     void render();
 
 private:
-    std::vector<std::string> chFrames;
+    std::vector<std::vector<std::string>> chFrames;
 };
 
 void bipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep);
-
+void punchAnimation(int posX, int posY, int dirX, int dirY);
+void slashAnimation(int posX, int posY);
 #endif

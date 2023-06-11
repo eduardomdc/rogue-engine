@@ -126,7 +126,7 @@ void CritterAi::update(){
     if (euclideanDistance(this->owner->posX, this->owner->posY, game->player->posX, game->player->posY) < 10){
         path = straightPath({this->owner->posX,owner->posY},{game->player->posX, game->player->posY});
     }
-    std::cout << "critterAi has "<<this->turns<<" avaible"<<std::endl;
+    //std::cout << "critterAi has "<<this->turns<<" avaible"<<std::endl;
     while ( this->turns >= returnSmallestAction(this->owner)){
         if (path.size() == 0){
             int dx = rand()%3-1;

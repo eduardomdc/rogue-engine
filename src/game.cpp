@@ -131,11 +131,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Animation* arrow = new Animation();
     arrow->foreRgb = colors::red;
     arrow->backRgb = colors::blue;
-    arrow->setFrames({"R","O","G","U","E","☺"});
+    //arrow->setFrames({"R","O","G","U","E","☺"});
     arrow->posX = 1;
     arrow->speed = 500;
     arrow->posY = 1;
-    animationList.push_back(arrow);
+    //animationList.push_back(arrow);
 }
 
 InputManager* Game::activeWindow(){

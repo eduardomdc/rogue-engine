@@ -18,10 +18,10 @@ void Fighter::getHit(int damage){
     if (damage){
         dmg->foreRgb = colors::red;
         std::string damageString = std::to_string(damage);
-        dmg->setFrames({damageString});
+        dmg->setFrames({{damageString}});
     } else {
         dmg->foreRgb = colors::lightBlue;
-        dmg->setFrames({"0"});
+        dmg->setFrames({{"0"}});
         
     }
     dmg->posX = this->owner->posX;
@@ -38,10 +38,10 @@ void Fighter::getHitCritically(int damage){
         dmg->foreRgb = colors::yellow;
         std::string damageString = std::to_string(damage);
         damageString.append("!");
-        dmg->setFrames({damageString});
+        dmg->setFrames({{damageString}});
     } else {
         dmg->foreRgb = colors::lightBlue;
-        dmg->setFrames({"0!"});
+        dmg->setFrames({{"0!"}});
     }
     dmg->posX = this->owner->posX;
     dmg->speed = 150;
@@ -52,7 +52,7 @@ void Fighter::getHitCritically(int damage){
 
 void Fighter::dodge(){
     Animation* miss = new Animation();
-    miss->setFrames({"~"});
+    miss->setFrames({{"~"}});
     miss->foreRgb = colors::lightBlue;
     miss->posX = this->owner->posX;
     miss->posY = this->owner->posY;
