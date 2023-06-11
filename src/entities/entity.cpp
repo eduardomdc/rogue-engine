@@ -120,7 +120,7 @@ void Entity::render(){
             map->dest,
             this->ch,
             this->foreRgb, // lightColored for light affected characters
-            lightColoredBg,
+            //lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
         }  
@@ -137,7 +137,7 @@ void Entity::render(){
             map->dest,
             this->ch,
             this->glow->glowColor,
-            lightColoredBg,
+            //lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
     }
@@ -206,7 +206,18 @@ void Entity::destroy(){
     if (this->ai){
         delete this->ai;
         this->ai = nullptr;
-    }   
+    }
+    if (this->fighter){
+        //is in top layer
+        game->map->entityList.top.erase(
+                std::remove(
+                    game->map->entityList.top.begin(),
+                    game->map->entityList.top.end(),
+                    this
+                    )
+                );
+        game->map->entityList.bottom.push_back(this);
+    }
 }
 
 
@@ -214,15 +225,15 @@ bool Entity::pickUp(){
     // picks up item from floor and adds it to inventory, returns true if picked-up something
     // to do: menu to select between items
     std::vector<Entity*>::iterator item;
-    item = game->map->entityList.begin();
-    while(item != game->map->entityList.end()){
+    item = game->map->entityList.mid.begin();
+    while(item != game->map->entityList.mid.end()){
         if ((*item)->item != nullptr){
             if ((*item)->item->pickable 
                 && (*item)->posX == this->posX 
                 && (*item)->posY == this->posY){
                 inventory.push_back(*item);
                 std::cout << "picked up " << (**item).name << std::endl;
-                game->map->entityList.erase(item);
+                game->map->entityList.mid.erase(item);
                 return true;
             }
         }

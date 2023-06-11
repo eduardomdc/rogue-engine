@@ -24,7 +24,7 @@ void makeTestChamber(Map *map){
     map->entityList.push_back(makeRat(19, 21));
     map->entityList.push_back(makeRat(21, 20));
     map->entityList.push_back(makeRat(20, 21));
-    Entity* sword = makeSword();
+    Entity* sword = makeLongsword();
     sword->posX = 11;
     sword->posY = 8;
     map->entityList.push_back(sword);
@@ -109,7 +109,7 @@ void makeDungeon(Map* map){
             fireplace->posX = x+width/2;
             fireplace->posY = y+height/2;
             map->entityList.push_back(fireplace);
-            Entity* sword = makeSword();
+            Entity* sword = makeLongsword();
             sword->posX = x+width/3;
             sword->posY = y+height/3;
             map->entityList.push_back(sword);

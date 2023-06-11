@@ -1,6 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
+#include "entities/entity.hpp"
 #pragma once
 #include <vector>
 #include "draw/tile_manager.hpp"
@@ -10,12 +11,22 @@
 //#include "entities/object.hpp"
 //#include "entities/entity.hpp"
 
+class EntityList {
+public:
+    EntityList();
+    std::vector< Entity* > bottom; // holds bodies and other things to step on
+    std::vector< Entity* > mid; // holds items and things you can interact with
+    std::vector< Entity* > top; // holds you and things that can kill you
+    void push_back(Entity*);
+};
+
 class Map{
 public:
     Map(int mapWidth, int mapHeight);
     ~Map();
 
-    std::vector< Entity* > entityList; // array of entities on the map;
+    //std::vector< Entity* > entityList; // array of entities on the map;
+    EntityList entityList;
 
     int mapWidth; // map size
     int mapHeight;

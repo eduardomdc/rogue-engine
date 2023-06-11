@@ -131,7 +131,11 @@ void CritterAi::update(){
         if (path.size() == 0){
             int dx = rand()%3-1;
             int dy = rand()%3-1;
-            CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
+            if (std::abs(owner->posX-game->player->posX) <= 1 && std::abs(owner->posY-game->player->posY) <= 1){
+                CritterAi::moveOrAttack(game->player->posX, game->player->posY);
+            } else {
+                CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
+            }
         }
         else {
             position* step = &path.front();

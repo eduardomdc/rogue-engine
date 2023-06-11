@@ -3,7 +3,7 @@
 
 #include "../entities/entity.hpp"
 
-Entity* makeSword();
+Entity* makeLongsword();
 Entity* makeFireplace();
 
 #endif

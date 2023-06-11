@@ -51,7 +51,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     }
 
     if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
-        for (Entity* ent : game->map->entityList){
+        for (Entity* ent : game->map->entityList.top){
             if (ent != game->player){
                 if (ent->ai != nullptr){
                     //increment turns
@@ -69,7 +69,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
                 game->render();
             }
             game->player->ai->update();
-            for (Entity* ent : game->map->entityList){
+            for (Entity* ent : game->map->entityList.top){
                 if (ent != game->player){
                     if (ent->ai != nullptr){
                         //increment turns
@@ -85,7 +85,23 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
 void GameWindow::render(){
     game->map->drawMap();
     // draw entities
-    for (Entity* ent : game->map->entityList){
+    for (Entity* ent : game->map->entityList.bottom){
+        ent->render();
+        if (ent->particleEmitter){
+            if (game->player->player->canSee(ent->posX, ent->posY)){
+                ent->particleEmitter->update();
+            }
+        }
+    }
+    for (Entity* ent : game->map->entityList.mid){
+        ent->render();
+        if (ent->particleEmitter){
+            if (game->player->player->canSee(ent->posX, ent->posY)){
+                ent->particleEmitter->update();
+            }
+        }
+    }
+    for (Entity* ent : game->map->entityList.top){
         ent->render();
         if (ent->particleEmitter){
             if (game->player->player->canSee(ent->posX, ent->posY)){

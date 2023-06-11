@@ -16,7 +16,7 @@ void attackAction(Entity *attacker, Entity *target){
     if (weapon){
         // add weight penalty
         turnsNeeded += std::max(0,
-                int(weapon->item->weight*10-fighter->str)
+                2*int(weapon->item->weight*10-fighter->str)
                 );
         dmgMod += weapon->item->damageMod;
         dmg = roll(weapon->item->dieAmount, weapon->item->damageDie);

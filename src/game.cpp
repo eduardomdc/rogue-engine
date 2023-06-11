@@ -163,17 +163,67 @@ void Game::handleEvents(){
 void Game::update(){
     map->update();
     tileManager->update();
-    for (Entity* ent : map->entityList){
+    for (Entity* ent : map->entityList.bottom){
+        ent->illumination = {0, 0, 0};
+    }
+    for (Entity* ent : map->entityList.mid){
+        ent->illumination = {0, 0, 0};
+    }
+    for (Entity* ent : map->entityList.top){
         ent->illumination = {0, 0, 0};
     }
     // first update all glowing entities
-    for (Entity* ent : map->entityList){
+    for (Entity* ent : map->entityList.bottom){
+        if (ent->glow != nullptr){
+            ent->glow->update(ent);
+        }   
+    }
+    for (Entity* ent : map->entityList.mid){
+        if (ent->glow != nullptr){
+            ent->glow->update(ent);
+        }   
+    }
+    for (Entity* ent : map->entityList.top){
         if (ent->glow != nullptr){
             ent->glow->update(ent);
         }   
     }
     // only then update light-receivers
-    for (Entity* ent : map->entityList){
+    for (Entity* ent : map->entityList.bottom){
+        ent->update();
+       
+        if (ent->foreRgb.colorDances){
+            if (rand()%10 == 0){
+                ent->foreRgb = colorManager::randomize(ent->origRgb);
+            }
+        }
+        if (ent->glow){
+            if (ent->glow->glowColor.colorDances){
+                if (rand()%10 == 0) {
+                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
+                }
+            }
+        }
+        
+    }
+    for (Entity* ent : map->entityList.mid){
+        ent->update();
+       
+        if (ent->foreRgb.colorDances){
+            if (rand()%10 == 0){
+                ent->foreRgb = colorManager::randomize(ent->origRgb);
+            }
+        }
+        if (ent->glow){
+            if (ent->glow->glowColor.colorDances){
+                if (rand()%10 == 0) {
+                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
+                }
+            }
+        }
+        
+    }
+    for (Entity* ent : map->entityList.top){
         ent->update();
        
         if (ent->foreRgb.colorDances){

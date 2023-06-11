@@ -1,16 +1,16 @@
 #include "item_factory.hpp"
 
-Entity* makeSword(){
+Entity* makeLongsword(){
     Entity* sword = new Entity();
     sword->ch = "\\";
-    sword->name = "Sword";
+    sword->name = "Longsword";
     sword->item = new Item();
     sword->foreRgb = colors::white;
     sword->item->equipSlot=equipSlots::HAND1;
-    sword->item->damageDie = 6;
+    sword->item->damageDie = 8;
     sword->item->damageMod = 0;
     sword->item->dieAmount = 1;
-    sword->item->weight = 5;
+    sword->item->weight = 1;
     sword->item->pickable = true;
     return sword;
 }

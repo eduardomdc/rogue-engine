@@ -1,8 +1,24 @@
 #include "map.hpp"
+#include "entities/entity.hpp"
 #include "factories/tile_factory.hpp"
 #include "game.hpp"
 #include "procgen/levelgen.hpp"
 #include <iostream>
+
+EntityList::EntityList(){
+
+}
+
+void EntityList::push_back(Entity* ent){
+    if (ent->fighter){
+        this->top.push_back(ent);
+    } else if (ent->item){
+        this->mid.push_back(ent);
+    }
+    else {
+        this->bottom.push_back(ent);
+    }
+}
 
 Map::Map(int mapWidth, int mapHeight){
     std::cout << "Generating map..." << std::endl;
@@ -21,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeTestChamber(this);
+    makeDungeon(this);
 }
 
 void Map::drawMap(){
@@ -81,8 +97,8 @@ bool Map::inCamera(int x, int y){
 
 
 Entity* Map::getFighterAt(int x, int y){
-    for (long unsigned int i = 0; i<this->entityList.size(); i++){
-        Entity* ent = this->entityList[i];
+    for (long unsigned int i = 0; i<this->entityList.top.size(); i++){
+        Entity* ent = this->entityList.top[i];
         if (ent->posX == x && ent->posY == y){
             if (ent->fighter && ent->fighter->alive){
                 return ent;
