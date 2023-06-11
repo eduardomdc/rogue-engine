@@ -109,6 +109,28 @@ void GameWindow::render(){
             }
         }
     }
+    // draw particles
+    for (Entity* ent : game->map->entityList.bottom){
+        if (ent->particleEmitter){
+            if (game->player->player->canSee(ent->posX, ent->posY)){
+                ent->particleEmitter->render();
+            }
+        }
+    }
+    for (Entity* ent : game->map->entityList.mid){
+        if (ent->particleEmitter){
+            if (game->player->player->canSee(ent->posX, ent->posY)){
+                ent->particleEmitter->render();
+            }
+        }
+    }
+    for (Entity* ent : game->map->entityList.top){
+        if (ent->particleEmitter){
+            if (game->player->player->canSee(ent->posX, ent->posY)){
+                ent->particleEmitter->render();
+            }
+        }
+    }
     std::vector<Animation*>::iterator it;
 
     it = game->animationList.begin();

@@ -58,5 +58,4 @@ void ParticleEmitter::update(){
             it++;
         }
     }
-    this->render();
 }
