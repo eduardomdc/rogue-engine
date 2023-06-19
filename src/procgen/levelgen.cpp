@@ -17,16 +17,14 @@ void fillMap(Map* map, int floorTile){
 }
 
 void makeTestChamber(Map *map){
-    map->ambientLight = {255,100,100};
+    map->ambientLight = {0,0,0};
     fillMap(map, CAVE_MOSSY_FLOOR);
     map->entityList.push_back(makeRat(20,20));
     map->entityList.push_back(makeRat(21, 21));
     map->entityList.push_back(makeRat(19, 21));
     map->entityList.push_back(makeRat(21, 20));
     map->entityList.push_back(makeRat(20, 21));
-    Entity* sword = makeLongsword();
-    sword->posX = 11;
-    sword->posY = 8;
+    Entity* sword = makeLongsword(11, 8);
     map->entityList.push_back(sword);
 }
 
@@ -88,7 +86,7 @@ void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int end
 
 
 void makeDungeon(Map* map){
-    map->ambientLight = {0,0,50};
+    map->ambientLight = {0,0,0};
 
     fillMap(map, CAVE_WALL);
     int nRooms = 10;//rand()%5+5; // number of rooms
@@ -105,13 +103,11 @@ void makeDungeon(Map* map){
         }
         makeRoom(map, CAVE_FLOOR, x, y, width, height); 
         if (map->inMap(x+width/2, y+height/2)){
-            Entity* fireplace = makeFireplace();
-            fireplace->posX = x+width/2;
-            fireplace->posY = y+height/2;
-            map->entityList.push_back(fireplace);
-            Entity* sword = makeLongsword();
-            sword->posX = x+width/3;
-            sword->posY = y+height/3;
+            //Entity* fireplace = makeFireplace();
+            //fireplace->posX = x+width/2;
+            //fireplace->posY = y+height/2;
+            //map->entityList.push_back(fireplace);
+            Entity* sword = makeLongsword(x+width/3, y+height/3);
             map->entityList.push_back(sword);
             Entity* rat = makeRat(x+width/2, y+height/2);
             map->entityList.push_back(rat);

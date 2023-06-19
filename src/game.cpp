@@ -125,7 +125,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->fighter->agi = 10;
     player->fighter->con = 10;
     player->fighter->setHp(45);
-    player->glow = new Glow(player, colors::fire, 8);
+    player->glow = new Glow(player, colors::fire, 15);
     map->entityList.push_back(player);
     
     Animation* arrow = new Animation();

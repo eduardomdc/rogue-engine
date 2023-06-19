@@ -39,6 +39,9 @@ std::tuple<int,int> Entity::getPos(){
 void Entity::render(){
     Map* map = game->map;
     Tile* tile;
+
+    if (this->fighter && !this->player) if (this->fighter->stealth) return; // dont render fighters under stealth
+
     if (game->map->inMap(this->posX, this->posY)){
         if ( 
             (this->posY >= map->topSide && this->posY < map->bottomSide) && 

@@ -1,6 +1,6 @@
 #include "item_factory.hpp"
 
-Entity* makeLongsword(){
+Entity* makeLongsword(int x, int y){
     Entity* sword = new Entity();
     sword->ch = "\\";
     sword->name = "Longsword";
@@ -12,10 +12,12 @@ Entity* makeLongsword(){
     sword->item->dieAmount = 1;
     sword->item->weight = 1;
     sword->item->pickable = true;
+    sword->posX = x;
+    sword->posY = y;
     return sword;
 }
 
-Entity* makeFireplace(){
+Entity* makeFireplace(int x, int y){
     Entity * redFire;
     redFire = new Entity();
     redFire->ch = "*";
@@ -36,5 +38,7 @@ Entity* makeFireplace(){
     redFire->particleEmitter = pemit;
     redFire->glow = new Glow(redFire, colors::fire, 10);
     redFire->item = new Item();
+    redFire->posX = x;
+    redFire->posY = y;
     return redFire;
 }

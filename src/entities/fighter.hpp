@@ -34,6 +34,7 @@ public:
     int luck = 0;
     // combat attributes
     int armorClass = 10;
+    bool stealth;
 };
 
 #endif
