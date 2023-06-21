@@ -19,6 +19,7 @@ public:
     int dieAmount = 0;
     int damageMod = 0; // damage given is: dieAmount d damageDie + damageMod + other mods
     float weight = 0; // Kg
+    short type = 0;
 
 private:
 };

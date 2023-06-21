@@ -39,7 +39,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         }
         renderer = SDL_CreateRenderer(window, -1, 0);
         SDL_RenderSetLogicalSize(renderer, 960, 540);
-        SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
+        //SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             std::cout << "Renderer Created" << std::endl;
@@ -125,7 +125,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->fighter->agi = 10;
     player->fighter->con = 10;
     player->fighter->setHp(45);
-    player->glow = new Glow(player, colors::fire, 15);
+    player->glow = new Glow(player, colors::fire, 35);
     map->entityList.push_back(player);
     
     Animation* arrow = new Animation();

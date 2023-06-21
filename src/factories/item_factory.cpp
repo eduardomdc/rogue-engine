@@ -6,11 +6,12 @@ Entity* makeLongsword(int x, int y){
     sword->name = "Longsword";
     sword->item = new Item();
     sword->foreRgb = colors::white;
+    sword->item->type = itemType::WEAPON;
     sword->item->equipSlot=equipSlots::HAND1;
     sword->item->damageDie = 8;
     sword->item->damageMod = 0;
     sword->item->dieAmount = 1;
-    sword->item->weight = 1;
+    sword->item->weight = 0.9;
     sword->item->pickable = true;
     sword->posX = x;
     sword->posY = y;

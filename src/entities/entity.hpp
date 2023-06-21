@@ -45,6 +45,7 @@ public:
 
     lightColor illumination = {0,0,0};
 
+    bool visible;
     void shineLight(short red, short green, short blue); // increase illumination values of entity
 
     std::vector<Entity*> inventory = {};

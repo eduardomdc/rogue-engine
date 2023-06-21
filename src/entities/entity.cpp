@@ -12,6 +12,7 @@
 Entity::Entity(){
     this->foreRgb = colors::white;
     this->backRgb = colors::black;
+    this->visible = true;
 };
 
 Entity::~Entity(){
@@ -39,7 +40,8 @@ std::tuple<int,int> Entity::getPos(){
 void Entity::render(){
     Map* map = game->map;
     Tile* tile;
-
+    
+    if (!this->visible) return;
     if (this->fighter && !this->player) if (this->fighter->stealth) return; // dont render fighters under stealth
 
     if (game->map->inMap(this->posX, this->posY)){
@@ -157,6 +159,9 @@ void Entity::update(){
         // list of light sources of the tile = list of light sources of entity
         //this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
         this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+        if (this->illumination.blue+this->illumination.red+this->illumination.green < 60)
+            this->visible = false;
+        else this->visible = true;
         /*
         short max_color = 0;
         if (illumination.red > max_color){

@@ -60,15 +60,6 @@ void moveAction(Entity *self, int x, int y){
     self->posY = y;
     //std::cout<<self->name<<" used "<<turnsNeeded<<" to walk"<<std::endl;
     self->ai->turns -= turnsNeeded;
-    int lightLevel = game->map->tileMap[x][y].illumination.red
-        +game->map->tileMap[x][y].illumination.green
-        +game->map->tileMap[x][y].illumination.blue;
-    if (lightLevel<50){
-        self->fighter->stealth = true;
-    } else {
-        self->fighter->stealth = false;
-    }
-
 }
 
 int returnSmallestAction(Entity* self){

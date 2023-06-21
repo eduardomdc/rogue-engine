@@ -132,7 +132,7 @@ std::list<position> straightPathToWall(position orig, position dest){
     return path;
 }
 
-std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius) {
+std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius){
     // need to implement Symmetric Shadowcasting Algorithm by Albert Ford
     // really bad algorithm by me!
     // init array[radius][radius] filled with false

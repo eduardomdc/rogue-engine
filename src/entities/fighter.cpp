@@ -10,7 +10,7 @@
 Fighter::Fighter(Entity* owner){
     this->owner = owner;
     this->equipments = new std::vector<Entity*>(9); 
-    this->stealth = true;
+    this->stealth = false;
 }
 
 void Fighter::getHit(int damage){

@@ -86,7 +86,7 @@ void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int end
 
 
 void makeDungeon(Map* map){
-    map->ambientLight = {0,0,0};
+    map->ambientLight = {0,0,20};
 
     fillMap(map, CAVE_WALL);
     int nRooms = 10;//rand()%5+5; // number of rooms
@@ -110,6 +110,7 @@ void makeDungeon(Map* map){
             Entity* sword = makeLongsword(x+width/3, y+height/3);
             map->entityList.push_back(sword);
             Entity* rat = makeRat(x+width/2, y+height/2);
+            //rat->glow = new Glow(rat, colors::white, 10);
             map->entityList.push_back(rat);
         }
         

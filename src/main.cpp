@@ -6,7 +6,7 @@ Game* game;
 
 int main(int argc, char *argv[]){
     // get random seed
-    srand((unsigned int)time(NULL));
+    //srand((unsigned int)time(NULL));
 
     const int FPS = 60;
     const int frameDelay = 1000 / FPS;

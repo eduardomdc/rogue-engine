@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeTestChamber(this);
+    makeDungeon(this);
 }
 
 void Map::drawMap(){
