@@ -182,7 +182,7 @@ bool isBlocking(position position){
     if (!(position.x >= 0 && position.y>= 0 && position.x < game->map->mapWidth && position.y < game->map->mapHeight)){
         return true;
     }
-    return !(game->map->tileMap[position.x][position.y].transparent);
+    return (!game->map->tileMap[position.x][position.y].transparent);
 }
 
 // SYMMETRIC SHADOWCASTING

@@ -5,6 +5,7 @@
 
 void makeTestChamber(Map* map);
 void makeSnowyMountain(Map* map);
+void makeForest(Map* map);
 void makeDungeon(Map* map);
 
 #endif

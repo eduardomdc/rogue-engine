@@ -48,6 +48,8 @@ namespace colors {
 	extern const color rusty;
 	extern const color rocky;
 	extern const color snow;
+    extern const color grassyGreen;
+    extern const color darkGrassy;
 }
 
 class colorManager {

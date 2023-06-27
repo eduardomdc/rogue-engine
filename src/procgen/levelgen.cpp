@@ -28,6 +28,24 @@ void makeTestChamber(Map *map){
     map->entityList.push_back(sword);
 }
 
+void makeForest(Map *map){
+    map->ambientLight = {0, 0, 158};
+
+    Perlin* tallGrass = new Perlin(250);
+    Perlin* rocks = new Perlin(250);
+    fillMap(map, GRASS);
+    for (int i = 0; i<map->mapWidth; i++){
+        for (int j = 0; j<map->mapHeight; j++){
+            if (rocks->value(i*0.1, j*0.1) > 0.5){
+                map->tileMap[i][j] = *tileFactory::makeTile(CAVE_WALL, i, j);
+            }
+            else if (tallGrass->value(i*0.1, j*0.1) > 0.2){
+                map->tileMap[i][j] = *tileFactory::makeTile(TALL_GRASS, i, j);
+            }
+        }
+    }
+}
+
 void makeSnowyMountain(Map* map){
     //generate perlin map
     map->ambientLight = {100,100,150};

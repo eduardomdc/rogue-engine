@@ -126,7 +126,7 @@ void Entity::render(){
             map->dest,
             this->ch,
             this->foreRgb, // lightColored for light affected characters
-            //lightColoredBg,
+            lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
         }  
@@ -143,7 +143,7 @@ void Entity::render(){
             map->dest,
             this->ch,
             this->glow->glowColor,
-            //lightColoredBg,
+            lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
     }

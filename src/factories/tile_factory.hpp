@@ -24,7 +24,8 @@ enum tileType {
     CAVE_FLOOR,
     CAVE_WALL,
     CAVE_MOSSY_FLOOR,
-
+    GRASS,
+    TALL_GRASS,
     NUMBER_OF_TILES
 };//thanks brogue!
 

@@ -1,4 +1,6 @@
 #include "game.hpp"
+#include "colors.hpp"
+#include "entities/entity.hpp"
 #include "map.hpp"
 #include "factories/monster_factory.hpp"
 #include "inputManager/game_window.hpp"
@@ -9,6 +11,7 @@
 
 
 #include <iostream>
+#include <vector>
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -56,7 +59,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     codepageSmall = tileManager->LoadTexture("assets/10x10cp437.png");
     codepageBig = tileManager->LoadTexture("assets/20x20cp437.png");
 
-    map = new Map(50,50);
+    map = new Map(160,90);
     map->genMap();
 
     inputManager = new GameWindow();
@@ -160,86 +163,52 @@ void Game::handleEvents(){
     }
 }
 
+void zeroingLight(std::vector<Entity*> entityList){
+    for (int i=0; i<entityList.size(); i++){
+        entityList[i]->illumination = {0,0,0};
+    }
+}
+
+void updateGlows(std::vector<Entity*> entityList){
+    for (int i=0; i<entityList.size(); i++){
+        if (entityList[i]->glow != nullptr){
+            entityList[i]->glow->update(entityList[i]);
+            if (entityList[i]->glow->glowColor.colorDances){
+                if (rand()%10 == 0) {
+                    entityList[i]->glow->glowColor = colorManager::randomize(entityList[i]->glow->glowOrigColor);
+                }
+            }
+        }
+    }
+}
+
+void updateLightReceivers(std::vector<Entity*> entityList){
+    for (int i=0; i<entityList.size(); i++){
+        entityList[i]->update();
+       
+        if (entityList[i]->foreRgb.colorDances){
+            if (rand()%10 == 0){
+                entityList[i]->foreRgb = colorManager::randomize(entityList[i]->origRgb);
+            }
+        }
+
+    }
+}
+
 void Game::update(){
     map->update();
     tileManager->update();
-    for (Entity* ent : map->entityList.bottom){
-        ent->illumination = {0, 0, 0};
-    }
-    for (Entity* ent : map->entityList.mid){
-        ent->illumination = {0, 0, 0};
-    }
-    for (Entity* ent : map->entityList.top){
-        ent->illumination = {0, 0, 0};
-    }
+    zeroingLight(map->entityList.bottom);
+    zeroingLight(map->entityList.mid);
+    zeroingLight(map->entityList.top);
     // first update all glowing entities
-    for (Entity* ent : map->entityList.bottom){
-        if (ent->glow != nullptr){
-            ent->glow->update(ent);
-        }   
-    }
-    for (Entity* ent : map->entityList.mid){
-        if (ent->glow != nullptr){
-            ent->glow->update(ent);
-        }   
-    }
-    for (Entity* ent : map->entityList.top){
-        if (ent->glow != nullptr){
-            ent->glow->update(ent);
-        }   
-    }
+    updateGlows(map->entityList.bottom);
+    updateGlows(map->entityList.mid);
+    updateGlows(map->entityList.top);
     // only then update light-receivers
-    for (Entity* ent : map->entityList.bottom){
-        ent->update();
-       
-        if (ent->foreRgb.colorDances){
-            if (rand()%10 == 0){
-                ent->foreRgb = colorManager::randomize(ent->origRgb);
-            }
-        }
-        if (ent->glow){
-            if (ent->glow->glowColor.colorDances){
-                if (rand()%10 == 0) {
-                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
-                }
-            }
-        }
-        
-    }
-    for (Entity* ent : map->entityList.mid){
-        ent->update();
-       
-        if (ent->foreRgb.colorDances){
-            if (rand()%10 == 0){
-                ent->foreRgb = colorManager::randomize(ent->origRgb);
-            }
-        }
-        if (ent->glow){
-            if (ent->glow->glowColor.colorDances){
-                if (rand()%10 == 0) {
-                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
-                }
-            }
-        }
-        
-    }
-    for (Entity* ent : map->entityList.top){
-        ent->update();
-       
-        if (ent->foreRgb.colorDances){
-            if (rand()%10 == 0){
-                ent->foreRgb = colorManager::randomize(ent->origRgb);
-            }
-        }
-        if (ent->glow){
-            if (ent->glow->glowColor.colorDances){
-                if (rand()%10 == 0) {
-                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
-                }
-            }
-        }
-        
-    }
+    updateLightReceivers(map->entityList.bottom);
+    updateLightReceivers(map->entityList.mid);
+    updateLightReceivers(map->entityList.top);
 }
 
 void Game::render(){

@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeDungeon(this);
+    makeForest(this);
 }
 
 void Map::drawMap(){

@@ -13,7 +13,7 @@ Tile* tileFactory::caveWall(){
 
 Tile* tileFactory::makeTile(int tileEnum, int x, int y){
     TileData tile = tileCatalog[tileEnum]; 
-    Tile* tileObj = new Tile(tile.ch, tile.foreRgb, tile.backRgb, tile.walkable, tile.walkable);
+    Tile* tileObj = new Tile(tile.ch, tile.foreRgb, tile.backRgb, tile.walkable, tile.transparent);
     tileObj->posX = x;
     tileObj->posY = y;
     return tileObj;
@@ -24,4 +24,6 @@ TileData tileCatalog[NUMBER_OF_TILES] = {
     {".", colors::caveBlue, colors::dark, true, true},
     {"#", colors::dark, colors::white, false, false},
     {"\"", colors::mossyGreen, colors::dark, true, true},
+    {"\"", colors::grassyGreen, colors::darkGrassy, true, true},
+    {"⌠", colors::grassyGreen, colors::darkGrassy, true, false},
 };
