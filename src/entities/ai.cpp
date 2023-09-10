@@ -67,6 +67,9 @@ void PlayerAi::update(){
                 case SDLK_g:
                         PlayerAi::pickUp();
                         break;
+                case SDLK_o:
+                        PlayerAi::openDoor();
+                        break;
             }
             break;
         default:
@@ -92,7 +95,7 @@ void PlayerAi::pickUp(){
 void PlayerAi::moveOrAttack(int targetX, int targetY){
         this->turns = 0;
         if (game->map->inMap(targetX, targetY)){// if target is inside map
-            if ((game->map->tileMap[targetX][targetY].walkable) 
+            if ((game->map->tileMap[targetX][targetY]->walkable) 
                 && (targetX != owner->posX || targetY != owner->posY)){// if target is walkable floor
             Entity* targetEntity = game->map->getFighterAt(targetX, targetY);
             if (targetEntity){
@@ -113,6 +116,18 @@ void PlayerAi::moveOrAttack(int targetX, int targetY){
 
 void PlayerAi::rest(){
     game->turns = 10;
+}
+
+void PlayerAi::openDoor(){
+    // search for doors in players neighborhood
+    for (int i=owner->posX-1; i<=owner->posX+1; i++){
+        for (int j=owner->posY-1; j<=owner->posY+1; j++){
+            if (game->map->tileMap[i][j]->door != nullptr){
+                openDoorAction(owner, i, j);
+                return;
+            }
+        }
+    }
 }
 
 float euclideanDistance(int x1, int y1, int x2, int y2){
@@ -151,7 +166,7 @@ void CritterAi::update(){
 void CritterAi::moveOrAttack(int targetX, int targetY){
     Entity* targetEntity;
     if (game->map->inMap(targetX, targetY)){
-        if (game->map->tileMap[targetX][targetY].walkable && (targetX != owner->posX || targetY != owner->posY)){
+        if (game->map->tileMap[targetX][targetY]->walkable && (targetX != owner->posX || targetY != owner->posY)){
             targetEntity = game->map->getFighterAt(targetX, targetY);
             if (targetEntity){
                 if (targetEntity == game->player){

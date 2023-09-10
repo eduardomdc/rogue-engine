@@ -33,6 +33,7 @@ public:
     void moveOrAttack(int targetX, int targetY);
     void pickUp();
     void rest();
+    void openDoor();
 };
 
 #endif

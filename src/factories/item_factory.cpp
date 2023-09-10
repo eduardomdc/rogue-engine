@@ -1,4 +1,5 @@
 #include "item_factory.hpp"
+#include "../map.hpp"
 
 Entity* makeLongsword(int x, int y){
     Entity* sword = new Entity();
@@ -37,7 +38,7 @@ Entity* makeFireplace(int x, int y){
     pemit->angleSpread = M_PI/6;
     pemit->duration = 2000;
     redFire->particleEmitter = pemit;
-    redFire->glow = new Glow(redFire, colors::fire, 10);
+    redFire->glow = new Glow(redFire, colors::fire, 20);
     redFire->item = new Item();
     redFire->posX = x;
     redFire->posY = y;

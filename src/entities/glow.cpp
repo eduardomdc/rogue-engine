@@ -30,7 +30,7 @@ void Glow::update(Entity* owner){
                 if (visible[i+radius][j+radius] == 1){
                     brightValue = std::min(float(1), 1/(5*abs(1+i*i+j*j)/intensity) );
 
-                    lightColor* light = &game->map->tileMap[x+i][y+j].illumination;
+                    lightColor* light = &game->map->tileMap[x+i][y+j]->illumination;
                     light->red += short(std::min(float(255-light->red), float(brightValue*this->glowColor.red)));
                     light->green += short(std::min(float(255-light->green), float(brightValue*this->glowColor.green)));
                     light->blue += short(std::min(float(255-light->blue), float(brightValue*this->glowColor.blue) ));

@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeForest(this);
+    makeBigHouse(this);
 }
 
 void Map::drawMap(){
@@ -52,7 +52,7 @@ void Map::drawMap(){
         // FASTER
         for (int i = 0; i < mapWidth; i++){
             for (int j = 0; j < mapHeight; j++){
-                tileMap[i][j].render();
+                tileMap[i][j]->render();
             }
         }
     }
@@ -73,7 +73,7 @@ void Map::moveCamera(int x, int y){
 void Map::update(){
     for (int i = 0; i<this->mapWidth; i++){
         for (int j = 0; j<this->mapHeight; j++){
-            tileMap[i][j].illumination = ambientLight; // ambient light
+            tileMap[i][j]->illumination = ambientLight; // ambient light
         }
     }
 }

@@ -58,7 +58,7 @@ public:
 
     SDL_Rect src, dest;
     SDL_Texture* codepage;
-    std::vector< std::vector< Tile > > tileMap;// array of tiles on map
+    std::vector< std::vector< Tile* > > tileMap;// array of tiles on map
 
     Tile* tile = new Tile((const char*)"0", colors::white, colors::black, true, true); //temp variable tile for operations
 

@@ -10,6 +10,15 @@ Tile* tileFactory::caveWall(){
     return tile;
 }**/
 
+Tile* makeWoodenDoor(int x, int y){
+    Tile* door;
+    door = new Tile("+", colors::grey, colors::yellow, false, false);
+    door->name = "Wooden Door";
+    door->posX = x;
+    door->posY = y;
+    door->door = new Door(door, nullptr);
+    return door;
+}
 
 Tile* tileFactory::makeTile(int tileEnum, int x, int y){
     TileData tile = tileCatalog[tileEnum]; 
@@ -26,4 +35,6 @@ TileData tileCatalog[NUMBER_OF_TILES] = {
     {"\"", colors::mossyGreen, colors::dark, true, true},
     {"\"", colors::grassyGreen, colors::darkGrassy, true, true},
     {"⌠", colors::grassyGreen, colors::darkGrassy, true, false},
+    {".", colors::white, colors::grey, true, true},
+    {"#", colors::dark, colors::white, false, false},
 };

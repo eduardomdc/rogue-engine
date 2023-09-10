@@ -30,4 +30,4 @@ const color colors::rusty = 				{85,   30,   30, 50,   0,	0, 0, false};
 const color colors::rocky =                 {55,55,55, 10, 10 , 20, 0, false};
 const color colors::snow =                  {165,165,165, 30, 30 , 30, 0, false};
 const color colors::grassyGreen =           {120, 190, 20, 50, 30, 0, 0, false};
-const color colors::darkGrassy =            {20,20,20,5,10,5,0,false};
+const color colors::darkGrassy =            {50,50,50,5,10,5,0,false};

@@ -41,7 +41,7 @@ void Entity::render(){
     Map* map = game->map;
     Tile* tile;
     
-    if (!this->visible) return;
+    // if (!this->visible) return;
     if (this->fighter && !this->player) if (this->fighter->stealth) return; // dont render fighters under stealth
 
     if (game->map->inMap(this->posX, this->posY)){
@@ -49,7 +49,7 @@ void Entity::render(){
             (this->posY >= map->topSide && this->posY < map->bottomSide) && 
             (this->posX >= map->leftSide && this->posX < map->rightSide)
             ){
-            tile = &map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
+            tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
         } else return; // out of render area
     } else return; // out of map
     
@@ -125,7 +125,7 @@ void Entity::render(){
             map->src,
             map->dest,
             this->ch,
-            this->foreRgb, // lightColored for light affected characters
+            lightColored, // lightColored for light affected characters
             lightColoredBg,
             map->tileHeight, 
             map->tileWidth, 16, 16);
@@ -158,7 +158,7 @@ void Entity::update(){
     if (!this->glow){
         // list of light sources of the tile = list of light sources of entity
         //this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
-        this->illumination = game->map->tileMap[this->posX][this->posY].illumination;
+        this->illumination = game->map->tileMap[this->posX][this->posY]->illumination;
         if (this->illumination.blue+this->illumination.red+this->illumination.green < 60)
             this->visible = false;
         else this->visible = true;

@@ -59,6 +59,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     codepageSmall = tileManager->LoadTexture("assets/10x10cp437.png");
     codepageBig = tileManager->LoadTexture("assets/20x20cp437.png");
 
+    
+
     map = new Map(160,90);
     map->genMap();
 
@@ -112,7 +114,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     blueFire->glow = new Glow(blueFire, colors::blue, 20);
     map->entityList.push_back(blueFire);
 
-
     player = new Entity();
     player->ch = "☺";
     player->name = "Player";
@@ -123,12 +124,12 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
-    player->fighter->maxHp = 45;
+    player->fighter->maxHp = 10;
     player->fighter->str = 10;
     player->fighter->agi = 10;
     player->fighter->con = 10;
     player->fighter->setHp(45);
-    player->glow = new Glow(player, colors::fire, 35);
+
     map->entityList.push_back(player);
     
     Animation* arrow = new Animation();

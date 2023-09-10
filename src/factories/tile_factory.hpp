@@ -19,6 +19,8 @@ public:
     static Tile* makeTile(int tileEnum, int x, int y);
 };
 
+Tile* makeWoodenDoor(int x, int y);
+
 enum tileType {
     NOTHING = 0,
     CAVE_FLOOR,
@@ -26,6 +28,8 @@ enum tileType {
     CAVE_MOSSY_FLOOR,
     GRASS,
     TALL_GRASS,
+    STONE_FLOOR,
+    STONE_WALL,
     NUMBER_OF_TILES
 };//thanks brogue!
 

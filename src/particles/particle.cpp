@@ -19,8 +19,8 @@ void Particle::render(){
             (y >= map->topSide && y < map->bottomSide) && 
             (x >= map->leftSide && x < map->rightSide)
             ){
-            Tile tile = map->tileMap[x][y]; // get tile at entity location for background color matching
-            this->illumination = tile.illumination;
+            Tile* tile = map->tileMap[x][y]; // get tile at entity location for background color matching
+            this->illumination = tile->illumination;
         } else{
             this->done = true;
             return; // out of render area

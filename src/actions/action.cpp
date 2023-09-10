@@ -62,6 +62,13 @@ void moveAction(Entity *self, int x, int y){
     self->ai->turns -= turnsNeeded;
 }
 
+void openDoorAction(Entity *self, int x, int y){
+    if (game->map->tileMap[x][y]->door != nullptr){
+        game->map->tileMap[x][y]->door->OpenClose();
+        self->ai->turns -= 2*returnSmallestAction(self);
+    }
+}
+
 int returnSmallestAction(Entity* self){
     return std::max(1, 21-(self->fighter->agi-10)/2);
 }

@@ -77,7 +77,7 @@ std::list<position> straightPath(position orig, position dest){
     bool hasPath = true;
     while ((it != line.end()) and hasPath){
         if (game->map->inMap(it->x, it->y)){
-            if (game->map->tileMap[it->x][it->y].walkable ){
+            if (game->map->tileMap[it->x][it->y]->walkable ){
                 path.push_back(*it);
             }
             else {
@@ -107,7 +107,7 @@ std::list<position> straightPathToWall(position orig, position dest){
     it = line.begin();
     while ((it != line.end())){
         if (game->map->inMap(it->x, it->y)){
-            if (game->map->tileMap[it->x][it->y].walkable){
+            if (game->map->tileMap[it->x][it->y]->walkable){
                 path.push_back(*it);
             }
             else {
@@ -165,7 +165,7 @@ std::vector< std::vector < bool > > getVisibleRadius(int x, int y, int radius){
                 int mapY = it->y - radius + y;
                 if (mapX >= 0 && mapX < game->map->mapWidth
                 &&  mapY >= 0 && mapY < game->map->mapHeight){
-                    if (game->map->tileMap[mapX][mapY].transparent)
+                    if (game->map->tileMap[mapX][mapY]->transparent)
                         visible[it->x][it->y] = true;
                     else{
                         visible[it->x][it->y] = true;
@@ -182,7 +182,7 @@ bool isBlocking(position position){
     if (!(position.x >= 0 && position.y>= 0 && position.x < game->map->mapWidth && position.y < game->map->mapHeight)){
         return true;
     }
-    return (!game->map->tileMap[position.x][position.y].transparent);
+    return (!game->map->tileMap[position.x][position.y]->transparent);
 }
 
 // SYMMETRIC SHADOWCASTING

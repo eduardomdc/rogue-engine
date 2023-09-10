@@ -37,8 +37,8 @@ void Animation::render(){
 
             if (map->inCamera(this->posX, this->posY)){
                 if (game->player->player->canSee(this->posX, this->posY)){
-                    Tile tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
-                    this->illumination = tile.illumination;
+                    Tile* tile = map->tileMap[this->posX][this->posY]; // get tile at entity location for background color matching
+                    this->illumination = tile->illumination;
                 }
                 else {
                     return;
@@ -113,7 +113,7 @@ void Animation::render(){
 
 void bipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rightStep){
     Animation* step = new Animation();
-    step->foreRgb = colors::grey;
+    step->foreRgb = colors::white;
     step->setFrames({
             {
                 {"#"},
