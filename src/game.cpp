@@ -10,6 +10,7 @@
 #include "draw/tile_manager.hpp"
 
 
+#include <SDL_render.h>
 #include <iostream>
 #include <vector>
 
@@ -40,7 +41,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         if (window){
             std::cout << "Window Created" << std::endl;
         }
-        renderer = SDL_CreateRenderer(window, -1, 0);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
         SDL_RenderSetLogicalSize(renderer, 960, 540);
         //SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
