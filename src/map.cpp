@@ -25,8 +25,8 @@ Map::Map(int mapWidth, int mapHeight){
     // set variables
     this->mapWidth = mapWidth;
     this->mapHeight = mapHeight;
-    mapRenderWidth = 49; //49
-    mapRenderHeight = 26;
+    mapRenderWidth = game->screenW/20+1; //49
+    mapRenderHeight = game->screenH/20;
 
     // set tileset used
     codepage = game->codepageBig;
@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeDungeon(this);
+    makeSnowyMountain(this);
 }
 
 void Map::drawMap(){

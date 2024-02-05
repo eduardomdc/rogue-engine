@@ -7,6 +7,7 @@
 
 Player::Player(Entity* owner){
     this->owner = owner;
+    this->fovRadius = game->screenW/10;
     owner->inventory = std::vector<Entity*>();
     updateFov();
     std::vector<std::vector <short>> fov (fovRadius*2+1, std::vector <short>(fovRadius*2+1, 0));

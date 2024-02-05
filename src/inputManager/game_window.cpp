@@ -151,7 +151,7 @@ void GameWindow::render(){
         }
     }
 
-    drawBorder(1,1,94,52,colors::dark,colors::black);
+    drawBorder(1,1,game->screenW/10-1,game->screenH/10-1,colors::dark,colors::black);
 
     /** mouse support!!
     int screenX = this->mouseX/20;
@@ -170,5 +170,5 @@ void GameWindow::render(){
     **/
 
     // draw health
-    drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, 53, 15, colors::red);
+    drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, game->screenH/10, 15, colors::red);
 }

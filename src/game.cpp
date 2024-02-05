@@ -11,6 +11,7 @@
 
 
 #include <SDL_render.h>
+#include <SDL_video.h>
 #include <iostream>
 #include <vector>
 
@@ -26,23 +27,19 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     int flags = 0;
     
     if (fullscreen){
-        //flags = SDL_WINDOW_FULLSCREEN;
+        flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
         std::cout << "Subsystems Initialized" << std::endl;
         
         SDL_Window *window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-        if (fullscreen){
-            //flags = SDL_WINDOW_FULLSCREEN;
-            SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-        }
         
         if (window){
             std::cout << "Window Created" << std::endl;
         }
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-        SDL_RenderSetLogicalSize(renderer, 960, 540);
+        //SDL_RenderSetLogicalSize(renderer, 960, 540);
         //SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
         if (renderer){
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -54,7 +51,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         std::cout << "SDL_INIT error" << std::endl;
         isRunning = false;
     }
-
+    //get window resolution
+    SDL_GetRendererOutputSize(renderer, &screenW, &screenH);
+    std::cout<<screenW<<"x"<<screenH<<std::endl;
     this->tileManager = new TileManager();
 
     codepageSmall = tileManager->LoadTexture("assets/10x10cp437.png");

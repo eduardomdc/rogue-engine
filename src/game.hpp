@@ -24,6 +24,8 @@ public:
     SDL_Texture* codepageSmall;
     SDL_Texture* codepageBig;
 
+    int screenW, screenH; //screen resolution at fullscreen
+
     class Map* map;
 
     class TileManager* tileManager;
