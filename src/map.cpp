@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeBigHouse(this);
+    makeDungeon(this);
 }
 
 void Map::drawMap(){

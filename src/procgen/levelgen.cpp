@@ -78,9 +78,8 @@ void makeSnowyMountain(Map* map){
         for (int j = 0; j<map->mapHeight; j++){
             if (rand()%100==0){
                 if (map->tileMap[i][j]->walkable){
-                    //count++;
-                    //Entity* monster = makeMonster(GOBLIN, i, j);
-                    //map->entityList.push_back(monster);
+                    Entity* monster = makeGoblin(i,j);
+                    map->entityList.push_back(monster);
                 }
             }
         }
@@ -132,7 +131,7 @@ void makeDungeon(Map* map){
             Entity* sword = makeLongsword(x+width/3, y+height/3);
             map->entityList.push_back(sword);
             Entity* rat = makeRat(x+width/2, y+height/2);
-            rat->glow = new Glow(rat, colors::white, 10);
+            //rat->glow = new Glow(rat, colors::white, 10);
             map->entityList.push_back(rat);
         }
         

@@ -2,12 +2,14 @@
 #define MAP_HPP
 
 #include "entities/entity.hpp"
+#include <SDL_rect.h>
 #pragma once
 #include <vector>
 #include "draw/tile_manager.hpp"
 #include "factories/tile_factory.hpp"
 #include "entities/tile.hpp"
 #include "algorithms/perlin.hpp"
+#include <map>
 //#include "entities/object.hpp"
 //#include "entities/entity.hpp"
 
@@ -18,6 +20,12 @@ public:
     std::vector< Entity* > mid; // holds items and things you can interact with
     std::vector< Entity* > top; // holds you and things that can kill you
     void push_back(Entity*);
+};
+
+class EntityMap {
+public:
+    EntityMap();
+    std::multimap<SDL_Point, Entity*> map;
 };
 
 class Map{

@@ -18,10 +18,11 @@ void Ai::update(){};
 
 void PlayerAi::update(){
     SDL_Event ev = game->currentEvent;
+    /*
     if (owner->player->walkQueue.size() > 0){
         PlayerAi::moveFromWalkQueue();
         return; // if player has queued up moves he can't play
-    }
+    }*/
     switch (ev.type){
         /** mouse support!!
         case SDL_MOUSEBUTTONDOWN:
@@ -86,36 +87,34 @@ void PlayerAi::moveFromWalkQueue(){
 void PlayerAi::pickUp(){
     int turns = 0;
     if (owner->pickUp()){
-        turns = 10;
+        turns = 1;
     }
     game->turns = turns;
     return;
 }
 
 void PlayerAi::moveOrAttack(int targetX, int targetY){
-        this->turns = 0;
         if (game->map->inMap(targetX, targetY)){// if target is inside map
             if ((game->map->tileMap[targetX][targetY]->walkable) 
                 && (targetX != owner->posX || targetY != owner->posY)){// if target is walkable floor
             Entity* targetEntity = game->map->getFighterAt(targetX, targetY);
             if (targetEntity){
                 attackAction(this->owner, targetEntity);
-                this->turns = -this->turns;
+                game->turns = 1; //takes one action to attack
             } else if (targetEntity==nullptr) { // only go if there are no fighters there
                 bipedalStepAnimation(this->owner->posX, owner->posY, targetX, targetY, this->rightStep);
                 this->rightStep = !this->rightStep;
                 moveAction(this->owner, targetX, targetY);
-                this->turns = -this->turns;
                 this->owner->player->updateFov();
                 game->map->moveCamera(targetX, targetY);
+                game->turns = 1; //takes one action to move
             }
-            game->turns = this->turns;
             } 
         }
 }
 
 void PlayerAi::rest(){
-    game->turns = 10;
+    game->turns = 1;
 }
 
 void PlayerAi::openDoor(){
@@ -141,23 +140,23 @@ void CritterAi::update(){
     if (euclideanDistance(this->owner->posX, this->owner->posY, game->player->posX, game->player->posY) < 10){
         path = straightPath({this->owner->posX,owner->posY},{game->player->posX, game->player->posY});
     }
-    //std::cout << "critterAi has "<<this->turns<<" avaible"<<std::endl;
-    while ( this->turns >= returnSmallestAction(this->owner)){
-        if (path.size() == 0){
-            int dx = rand()%3-1;
-            int dy = rand()%3-1;
-            if (std::abs(owner->posX-game->player->posX) <= 1 && std::abs(owner->posY-game->player->posY) <= 1){
-                CritterAi::moveOrAttack(game->player->posX, game->player->posY);
-            } else {
-                CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
-            }
-        }
-        else {
-            position* step = &path.front();
-            CritterAi::moveOrAttack(step->x, step->y);
-            path.pop_front();
+
+    if (path.size() == 0){
+        //if there is no path to player
+        int dx = rand()%3-1;
+        int dy = rand()%3-1;
+        if (std::abs(owner->posX-game->player->posX) <= 1 && std::abs(owner->posY-game->player->posY) <= 1){
+            CritterAi::moveOrAttack(game->player->posX, game->player->posY);
+        } else {
+            CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
         }
     }
+    else {
+        position* step = &path.front();
+        CritterAi::moveOrAttack(step->x, step->y);
+        path.pop_front();
+    }
+    
 
     }
     catch (...){std::cout<<"Critter AI error" << std::endl;}

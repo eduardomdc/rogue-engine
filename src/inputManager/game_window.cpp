@@ -13,8 +13,7 @@ GameWindow::GameWindow(){
 }
 
 void GameWindow::handleInput(SDL_Event currentEvent) {
-    game->turns = 0; //after every event turns taken are set to 0 again
-
+    game->turns = 0;
     switch (currentEvent.type){
     case SDL_QUIT:
         std::cout << "Quit game from game window Pressed" << std::endl;
@@ -55,7 +54,6 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
             if (ent != game->player){
                 if (ent->ai != nullptr){
                     //increment turns
-                    ent->ai->turns += game->turns;
                     ent->ai->update();
                 }
             }
@@ -73,7 +71,6 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
                 if (ent != game->player){
                     if (ent->ai != nullptr){
                         //increment turns
-                        ent->ai->turns += game->turns;
                         ent->ai->update();
                     }
                 }

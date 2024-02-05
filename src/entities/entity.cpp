@@ -86,9 +86,9 @@ void Entity::render(){
         
         color lightColored = this->foreRgb;
 
-        lightColored.red *= this->illumination.red/255.0;
-        lightColored.blue *= this->illumination.blue/255.0;
-        lightColored.green *= this->illumination.green/255.0;
+        lightColored.red *= std::min(0.3+this->illumination.red/255.0,1.0);
+        lightColored.blue *= std::min(0.3+this->illumination.blue/255.0, 1.0);
+        lightColored.green *= std::min(0.3+this->illumination.green/255.0, 1.0);
 
         
         if (this->hasBackground){
@@ -113,7 +113,9 @@ void Entity::render(){
                 map->tileHeight, 
                 map->tileWidth, 16, 16
             );
-        } else {
+        } 
+        // items, enemies
+        else {
             color lightColoredBg = tile->backRgb; // current tile background color
             
             lightColoredBg.red *= this->illumination.red/255.0;
@@ -130,6 +132,7 @@ void Entity::render(){
             map->tileHeight, 
             map->tileWidth, 16, 16);
         }  
+    // things which glow:
     } else {
         color lightColoredBg = tile->backRgb; // current tile background color
             

@@ -10,7 +10,6 @@ class Entity;
 class Ai {
 public:
     Ai(Entity* owner);
-    int turns = 0;
     Entity* owner;
     std::list<position> path;
     virtual void update();

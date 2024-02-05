@@ -7,9 +7,9 @@
 
 typedef void (*aiConstructor)();
 
-Entity* makeMonster(int monsterEnum, int posX, int posY);
-
 Entity* makeRat(int posX, int posY);
+Entity* makeGoblin(int posX, int posY);
+
 
 typedef struct Monster {
     std::string name; // name

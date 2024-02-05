@@ -13,14 +13,9 @@ void attackAction(Entity *attacker, Entity *target){
     // agility and current weapon modifiers
     int dmgMod = 0;
     int dmg = 0;
-    int turnsNeeded = std::max(1, 21-int(fighter->agi-10/2));
     Entity* weapon = fighter->getWeapon();
     dmgMod += fighter->str-10;
     if (weapon){
-        // add weight penalty
-        turnsNeeded += std::max(0,
-                2*int(weapon->item->weight*10-fighter->str)
-                );
         dmgMod += weapon->item->damageMod;
         dmg = roll(weapon->item->dieAmount, weapon->item->damageDie);
         slashAnimation(target->posX, target->posY); 
@@ -51,24 +46,16 @@ void attackAction(Entity *attacker, Entity *target){
         victim->dodge();
     }
     //std::cout<<attacker->name<<" used "<<turnsNeeded<<" turns"<<std::endl;
-    attacker->ai->turns -= turnsNeeded;
 }
 
 void moveAction(Entity *self, int x, int y){
-    int turnsNeeded = std::max(1, 21-(self->fighter->agi-10)/2);
     self->posX = x;
     self->posY = y;
     //std::cout<<self->name<<" used "<<turnsNeeded<<" to walk"<<std::endl;
-    self->ai->turns -= turnsNeeded;
 }
 
 void openDoorAction(Entity *self, int x, int y){
     if (game->map->tileMap[x][y]->door != nullptr){
         game->map->tileMap[x][y]->door->OpenClose();
-        self->ai->turns -= 2*returnSmallestAction(self);
     }
-}
-
-int returnSmallestAction(Entity* self){
-    return std::max(1, 21-(self->fighter->agi-10)/2);
 }
