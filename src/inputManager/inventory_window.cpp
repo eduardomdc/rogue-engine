@@ -41,9 +41,10 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
 
 void InventoryWindow::render(){
     std::vector<Entity*> inventory = game->player->inventory;
-    int positionx = 69;
-    int positiony = 20;
-    drawWindowAndTitle("Inventory",positionx,positiony,25,game->player->inventory.size(),colors::grey, colors::black);
+    int positionx = (game->map->mapRenderWidth/3)*4-2;
+    int positiony = 2;
+    int width = 2*game->map->mapRenderWidth/3;
+    drawWindowAndTitle("Inventory",positionx,positiony,width,game->player->inventory.size(),colors::grey, colors::black);
     std::vector<Entity*>::iterator item;
     item = inventory.begin();
     char ascii = 97;

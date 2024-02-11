@@ -45,8 +45,8 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
 }
 
 void ItemWindow::render(){
-    int posX = 5;
-    int posY = 15;
+    int posX = 2;
+    int posY = 2;
     int width = 16;
     int height = 22;
     drawWindowAndTitle(this->item->name, posX, posY, width, height, colors::grey, colors::black);
