@@ -73,6 +73,7 @@ void ItemWindow::render(){
     weight<<(this->item->item->weight);
     weight<<"Kg";
     renderText(weight.str(), posX, posY+6, colors::grey, false);
-    renderText("[e] to equip", posX, posY+20, colors::grey, false);
+    if (item->item->equipable)
+        renderText("[e] to equip", posX, posY+20, colors::grey, false);
     renderText("[d] to drop", posX, posY+21, colors::grey, false);
 }

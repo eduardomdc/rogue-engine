@@ -84,6 +84,8 @@ Entity* Fighter::getWeapon(){
 }
 
 void Fighter::equipItem(Entity *item){
+    if (!item->item->equipable) return;
+    if (item->item->equipSlot == equipSlots::NONE) return; 
     if ( (*this->equipments)[item->item->equipSlot] ){
         this->owner->inventory.push_back((*this->equipments)[item->item->equipSlot]);
     }
