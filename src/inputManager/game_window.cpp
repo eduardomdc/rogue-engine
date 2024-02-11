@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <iostream>
 #include "character_sheet.hpp"
+#include "equipment_window.hpp"
 #include "menu_window.hpp"
 #include "inventory_window.hpp"
 #include "../draw/draw_ui.hpp"
@@ -34,6 +35,10 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
         case SDLK_TAB:
             std::cout<<"Open character window"<<std::endl;
             game->windows.push_back(new CharacterSheet());
+            break;
+        case SDLK_o:
+            std::cout<<"equipment window"<<std::endl;
+            game->windows.push_back(new EquipmentWindow());
             break;
         default:
             game->player->ai->update();
