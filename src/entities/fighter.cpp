@@ -9,7 +9,7 @@
 
 Fighter::Fighter(Entity* owner){
     this->owner = owner;
-    this->equipments = new std::vector<Entity*>(9); 
+    this->equipments = new std::vector<Entity*>(10); 
     this->stealth = false;
 }
 

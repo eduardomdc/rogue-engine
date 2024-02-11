@@ -1,6 +1,9 @@
 #include "equipment_window.hpp"
 #include "../game.hpp"
+#include "../map.hpp"
 #include "equipped_item_window.hpp"
+#include "../draw/draw_ui.hpp"
+
 
 EquipmentWindow::EquipmentWindow(){
     return;
@@ -52,6 +55,28 @@ void EquipmentWindow::handleInput(SDL_Event currentEvent){
     }
 }
 
+void renderSlot(equipSlots::equipSlots slot, int px, int py){
+    std::vector<Entity*>* equipments = game->player->fighter->equipments;
+    game->tileManager->drawSmallAsciiUI(px-1,py, "[", colors::grey);
+    if ((*equipments)[slot] != nullptr)
+        game->tileManager->drawSmallAsciiUI(px,py, (*equipments)[slot]->ch, (*equipments)[slot]->foreRgb);
+    game->tileManager->drawSmallAsciiUI(px+1,py, "]", colors::grey);
+}
+
 void EquipmentWindow::render(){
-    return;
+    std::vector<Entity*>* equipments = game->player->fighter->equipments;
+    int px = (game->map->mapRenderWidth/3)*2-2;
+    int py = 2;
+    int width = 25;
+    int height = 25;
+    drawWindowAndTitle("Equipment",px,py,width,height,colors::grey, colors::black);
+    renderSlot(equipSlots::HEAD, px+width/2, py+2);
+    renderSlot(equipSlots::NECK, px+width/2, py+4);
+    renderSlot(equipSlots::BODY, px+width/2, py+7);
+    renderSlot(equipSlots::HAND1, px+width/3, py+8);
+    renderSlot(equipSlots::HAND2, px+2*width/3, py+8);
+    renderSlot(equipSlots::RING1, px+width/3, py+5);
+    renderSlot(equipSlots::RING2, px+2*width/3, py+5);
+    renderSlot(equipSlots::LEG, px+width/2, py+10);
+    renderSlot(equipSlots::FEET, px+width/2, py+12);
 }
