@@ -153,8 +153,14 @@ void GameWindow::render(){
     }
     // printf("%d game->map->mapRenderWidth*2\n", game->map->mapRenderWidth*2);
     // printf("%d game->screenW/10\n", game->screenW/10);
+    int tileH;
+    if ((game->screenH/10)%2==0){
+        tileH = game->screenH/10-2;
+    } else  {
+        tileH = game->screenH/10;
+    }
 
-    drawBorder(1,1,(game->map->mapRenderWidth-2)*2,(game->map->mapRenderHeight-1)*2,colors::dark,colors::black);
+    drawBorder(1,1,(game->map->mapRenderWidth-2)*2,tileH,colors::dark,colors::black);
 
     /** mouse support!!
     int screenX = this->mouseX/20;
@@ -173,5 +179,5 @@ void GameWindow::render(){
     **/
 
     // draw health
-    drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, game->screenH/10, 15, colors::red);
+    drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, tileH+1, 15, colors::red);
 }
