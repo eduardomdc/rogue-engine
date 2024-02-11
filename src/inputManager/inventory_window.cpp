@@ -41,19 +41,20 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
 
 void InventoryWindow::render(){
     std::vector<Entity*> inventory = game->player->inventory;
-
-    drawWindowAndTitle("Inventory",69,20,25,game->player->inventory.size(),colors::grey, colors::black);
+    int positionx = 69;
+    int positiony = 20;
+    drawWindowAndTitle("Inventory",positionx,positiony,25,game->player->inventory.size(),colors::grey, colors::black);
     std::vector<Entity*>::iterator item;
     item = inventory.begin();
-    int line = 20;
     char ascii = 97;
+    int line = positiony;
     while (item != inventory.end()){
         std::string letter(1,ascii);
-        game->tileManager->drawSmallAsciiUI(69,line, letter,(*item)->foreRgb);
-        game->tileManager->drawSmallAsciiUI(70,line, "[", colors::grey);
-        game->tileManager->drawSmallAsciiUI(71,line,(*item)->ch,(*item)->foreRgb);
-        game->tileManager->drawSmallAsciiUI(72,line, "]", colors::grey);
-        renderText((*item)->name,73, line, colors::grey, false);
+        game->tileManager->drawSmallAsciiUI(positionx,line, letter,(*item)->foreRgb);
+        game->tileManager->drawSmallAsciiUI(positionx+1,line, "[", colors::grey);
+        game->tileManager->drawSmallAsciiUI(positionx+2,line,(*item)->ch,(*item)->foreRgb);
+        game->tileManager->drawSmallAsciiUI(positionx+3,line, "]", colors::grey);
+        renderText((*item)->name,positionx+4, line, colors::grey, false);
         line++;
         item++;
         ascii++;

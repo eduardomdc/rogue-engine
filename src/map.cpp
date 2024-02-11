@@ -37,7 +37,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeSnowyMountain(this);
+    makeDungeon(this);
 }
 
 void Map::drawMap(){

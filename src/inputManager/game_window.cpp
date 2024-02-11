@@ -2,6 +2,7 @@
 #include "../game.hpp"
 #include "../map.hpp"
 #include <SDL_keycode.h>
+#include <cstdio>
 #include <iostream>
 #include "character_sheet.hpp"
 #include "menu_window.hpp"
@@ -150,8 +151,10 @@ void GameWindow::render(){
             it++;
         }
     }
+    // printf("%d game->map->mapRenderWidth*2\n", game->map->mapRenderWidth*2);
+    // printf("%d game->screenW/10\n", game->screenW/10);
 
-    drawBorder(1,1,game->screenW/10-1,game->screenH/10-1,colors::dark,colors::black);
+    drawBorder(1,1,(game->map->mapRenderWidth-2)*2,(game->map->mapRenderHeight-1)*2,colors::dark,colors::black);
 
     /** mouse support!!
     int screenX = this->mouseX/20;
