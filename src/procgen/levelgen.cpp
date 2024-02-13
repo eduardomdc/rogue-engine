@@ -135,7 +135,7 @@ void makeDungeon(Map* map){
             map->entityList.push_back(rat);
         }
         
-        if (i!=0) makeCorridor(map, CAVE_MOSSY_FLOOR, x, y, lastx, lasty);
+        if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
         lastx = x+width/2;
         lasty = y+height/2;
         i++;

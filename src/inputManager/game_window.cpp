@@ -54,35 +54,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
     default:
         break;
     }
-
-    if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
-        for (Entity* ent : game->map->entityList.top){
-            if (ent != game->player){
-                if (ent->ai != nullptr){
-                    //increment turns
-                    ent->ai->update();
-                }
-            }
-        }
-    }
-    else if (game->player->player->walkQueue.size() > 0){
-        while (game->player->player->walkQueue.size() > 0){
-            lastMoveTick = SDL_GetTicks();
-            while(SDL_GetTicks()-lastMoveTick < 10){
-                game->update();
-                game->render();
-            }
-            game->player->ai->update();
-            for (Entity* ent : game->map->entityList.top){
-                if (ent != game->player){
-                    if (ent->ai != nullptr){
-                        //increment turns
-                        ent->ai->update();
-                    }
-                }
-            }
-        }
-    }
+    game->turn();
 }
 
 void GameWindow::render(){
@@ -179,4 +151,10 @@ void GameWindow::render(){
 
     // draw health
     drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, game->screenH/10-1, 2*game->map->mapRenderWidth/3, colors::red);
+
+    int texty = 2;
+    for (int i=0; i<game->log.size(); i++){
+        renderText(game->log[i], 2, texty, colors::grey, false);
+        texty++;
+    }
 }

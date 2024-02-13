@@ -17,7 +17,9 @@
 
 SDL_Renderer* Game::renderer = nullptr;
 
-Game::Game(){}
+Game::Game(){
+    log = {};
+}
 
 Game::~Game(){}
 
@@ -210,6 +212,41 @@ void Game::update(){
     updateLightReceivers(map->entityList.bottom);
     updateLightReceivers(map->entityList.mid);
     updateLightReceivers(map->entityList.top);
+    
+    
+}
+
+void Game::turn(){
+    // game turns
+    if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
+        for (Entity* ent : game->map->entityList.top){
+            if (ent != game->player){
+                if (ent->ai != nullptr){
+                    //increment turns
+                    ent->ai->update();
+                }
+            }
+        }
+    }
+    game->turns = 0;
+    // else if (game->player->player->walkQueue.size() > 0){
+    //     while (game->player->player->walkQueue.size() > 0){
+    //         lastMoveTick = SDL_GetTicks();
+    //         while(SDL_GetTicks()-lastMoveTick < 10){
+    //             game->update();
+    //             game->render();
+    //         }
+    //         game->player->ai->update();
+    //         for (Entity* ent : game->map->entityList.top){
+    //             if (ent != game->player){
+    //                 if (ent->ai != nullptr){
+    //                     //increment turns
+    //                     ent->ai->update();
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 void Game::render(){

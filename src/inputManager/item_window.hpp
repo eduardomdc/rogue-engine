@@ -4,6 +4,8 @@
 #include "../entities/entity.hpp"
 #include "input_manager.hpp"
 
+void renderItemInfo(Entity* item, int posX, int posY, int width, int height);
+
 class ItemWindow : public InputManager {
 public:
     ItemWindow(Entity* item);

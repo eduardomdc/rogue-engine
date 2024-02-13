@@ -26,9 +26,12 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 break;
             case SDLK_e:
                 std::cout << "Equip item!"<<std::endl;
-                game->player->fighter->equipItem(this->item);
-                close();
-                delete this;
+                if (game->player->fighter->equipItem(this->item)){
+                    game->turns = 1;
+                    game->turn();
+                    close();
+                    delete this;
+                }
                 break;
             case SDLK_d:
                 std::cout << "Drop item!"<<std::endl;
@@ -44,35 +47,46 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
     }
 }
 
-void ItemWindow::render(){
-    int posX = 2;
-    int posY = 2;
-    int width = 16;
-    int height = 22;
-    drawWindowAndTitle(this->item->name, posX, posY, width, height, colors::grey, colors::black);
+void renderItemInfo(Entity* item, int posX, int posY, int width, int height){
+    drawWindowAndTitle(item->name, posX, posY, width, height, colors::grey, colors::black);
     SDL_Texture* codepage = game->codepageBig;
     SDL_Rect src;
     SDL_Rect dest;
     dest.x = (posX+width/2-1)*10;
     dest.y = (posY+1)*10;
-    game->tileManager->drawAscii(codepage,src,dest,this->item->ch,this->item->foreRgb,20,20,16, 16);
-    if (this->item->item->type == itemType::WEAPON){
+    game->tileManager->drawAscii(codepage,src,dest,item->ch,item->foreRgb,20,20,16, 16);
+    if (item->item->type == itemType::NONE){
+        std::string type = "[Object]";
+        renderText(type, posX+width/2, posY+4, colors::grey, true);
+    }
+    if (item->item->type == itemType::WEAPON){
+        std::string type = "[Weapon]";
+        renderText(type, posX+width/2, posY+4, colors::grey, true);
         std::string damage = "Damage "; 
-        damage.append(std::to_string(this->item->item->dieAmount));
+        damage.append(std::to_string(item->item->dieAmount));
         damage.append("d");
-        damage.append(std::to_string(this->item->item->damageDie));
-        if (this->item->item->damageMod){
+        damage.append(std::to_string(item->item->damageDie));
+        if (item->item->damageMod){
             damage.append("+");
-            damage.append(std::to_string(this->item->item->damageMod));
+            damage.append(std::to_string(item->item->damageMod));
         }
         renderText(damage, posX, posY+5, colors::red, false);
     }
     std::ostringstream weight;
     weight<<"W";
     weight.precision(2);
-    weight<<(this->item->item->weight);
+    weight<<(item->item->weight);
     weight<<"Kg";
     renderText(weight.str(), posX, posY+6, colors::grey, false);
+}
+
+
+void ItemWindow::render(){
+    int posX = 2;
+    int posY = 2;
+    int width = 16;
+    int height = 22;
+    renderItemInfo(item, posX, posY, width, height);
     if (item->item->equipable)
         renderText("[e] to equip", posX, posY+20, colors::grey, false);
     renderText("[d] to drop", posX, posY+21, colors::grey, false);

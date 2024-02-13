@@ -2,6 +2,7 @@
 #define FIGHTER_HPP
 
 #include <vector>
+#include "item.hpp"
 
 class Entity;
 
@@ -16,7 +17,8 @@ public:
     void setHp(int newHp);
     int getHp();
     Entity* getWeapon();
-    void equipItem(Entity* item);
+    bool equipItem(Entity* item);
+    bool unequipItem(equipSlots::equipSlots slot);
 
     // equipments
     std::vector<Entity*>* equipments;// items are allocated according to equipSlot enum index

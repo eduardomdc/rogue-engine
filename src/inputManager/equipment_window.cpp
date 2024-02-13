@@ -41,10 +41,53 @@ void EquipmentWindow::handleInput(SDL_Event currentEvent){
                 game->windows.push_back(new EquippedItemWindow(item));
             }
             break;
+        case SDLK_r:
+            if ((*equipments)[equipSlots::NECK] != nullptr){
+                Entity* item = (*equipments)[equipSlots::NECK];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_s:
+            if ((*equipments)[equipSlots::BODY] != nullptr){
+                Entity* item = (*equipments)[equipSlots::BODY];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_x:
+            if ((*equipments)[equipSlots::LEG] != nullptr){
+                Entity* item = (*equipments)[equipSlots::LEG];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
         case SDLK_a:
             if ((*equipments)[equipSlots::HAND1] != nullptr){
                 std::cout << "Hand1 equipment selected" << std::endl;
                 Entity* item = (*equipments)[equipSlots::HAND1];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_d:
+            if ((*equipments)[equipSlots::HAND2] != nullptr){
+                std::cout << "Hand1 equipment selected" << std::endl;
+                Entity* item = (*equipments)[equipSlots::HAND2];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_z:
+            if ((*equipments)[equipSlots::FEET] != nullptr){
+                Entity* item = (*equipments)[equipSlots::FEET];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_q:
+            if ((*equipments)[equipSlots::RING1] != nullptr){
+                Entity* item = (*equipments)[equipSlots::RING1];
+                game->windows.push_back(new EquippedItemWindow(item));
+            }
+            break;
+        case SDLK_e:
+            if ((*equipments)[equipSlots::RING2] != nullptr){
+                Entity* item = (*equipments)[equipSlots::RING2];
                 game->windows.push_back(new EquippedItemWindow(item));
             }
             break;
@@ -70,13 +113,22 @@ void EquipmentWindow::render(){
     int width = 25;
     int height = 25;
     drawWindowAndTitle("Equipment",px,py,width,height,colors::grey, colors::black);
+    game->tileManager->drawSmallAsciiUI(px+width/2-2,py+2, "w", colors::white);
     renderSlot(equipSlots::HEAD, px+width/2, py+2);
+    game->tileManager->drawSmallAsciiUI(px+width/2-2,py+4, "r", colors::white);
     renderSlot(equipSlots::NECK, px+width/2, py+4);
+    game->tileManager->drawSmallAsciiUI(px+width/2-2,py+7, "s", colors::white);
     renderSlot(equipSlots::BODY, px+width/2, py+7);
+    game->tileManager->drawSmallAsciiUI(px+width/3-2,py+8, "a", colors::white);
     renderSlot(equipSlots::HAND1, px+width/3, py+8);
+    game->tileManager->drawSmallAsciiUI(px+2*width/3-2,py+8, "d", colors::white);
     renderSlot(equipSlots::HAND2, px+2*width/3, py+8);
+    game->tileManager->drawSmallAsciiUI(px+width/3-2,py+5, "q", colors::white);
     renderSlot(equipSlots::RING1, px+width/3, py+5);
+    game->tileManager->drawSmallAsciiUI(px+2*width/3-2,py+5, "e", colors::white);
     renderSlot(equipSlots::RING2, px+2*width/3, py+5);
+    game->tileManager->drawSmallAsciiUI(px+width/2-2,py+10, "x", colors::white);
     renderSlot(equipSlots::LEG, px+width/2, py+10);
+    game->tileManager->drawSmallAsciiUI(px+width/2-2,py+12, "z", colors::white);
     renderSlot(equipSlots::FEET, px+width/2, py+12);
 }

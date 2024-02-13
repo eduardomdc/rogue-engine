@@ -4,6 +4,7 @@
 #include "../game.hpp"
 #include "item.hpp"
 #include <algorithm>
+#include <cstddef>
 #include <cstdlib>
 #include <string>
 
@@ -83,9 +84,9 @@ Entity* Fighter::getWeapon(){
     return (*this->equipments)[equipSlots::HAND1];
 }
 
-void Fighter::equipItem(Entity *item){
-    if (!item->item->equipable) return;
-    if (item->item->equipSlot == equipSlots::NONE) return; 
+bool Fighter::equipItem(Entity *item){
+    if (!item->item->equipable) return false;
+    if (item->item->equipSlot == equipSlots::NONE) return false; 
     if ( (*this->equipments)[item->item->equipSlot] ){
         this->owner->inventory.push_back((*this->equipments)[item->item->equipSlot]);
     }
@@ -96,4 +97,16 @@ void Fighter::equipItem(Entity *item){
                 item)
             );
     (*this->equipments)[item->item->equipSlot] = item;
+    return true;
+}
+
+bool Fighter::unequipItem(equipSlots::equipSlots slot){
+    if (slot == equipSlots::NONE) return false;
+    if ( (*this->equipments)[slot] == nullptr) return false;
+    else {
+        Entity* item = (*this->equipments)[slot];
+        this->owner->inventory.push_back(item);
+        (*this->equipments)[slot] = nullptr;
+    }
+    return true;
 }

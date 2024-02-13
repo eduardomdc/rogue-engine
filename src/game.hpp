@@ -34,6 +34,8 @@ public:
 
     std::vector<InputManager*> windows = {}; // last item is current active window, rendered from first to last
 
+    std::vector<std::string> log; // game's text log
+
     InputManager* activeWindow();
 
     static SDL_Event currentEvent;
@@ -45,6 +47,7 @@ public:
     void handleEvents();
     void update();
     void render();
+    void turn();
     void clean();
 
     bool running(){return isRunning;}

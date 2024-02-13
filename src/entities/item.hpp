@@ -6,24 +6,6 @@
 #include <string.h>
 #include <iostream>
 
-class Item {
-public:
-    Item();
-    bool pickable = true;
-    bool equipable = false;
-    int equipSlot = 0;//enum head, body, ring etc...
-    
-    // attributes
-    int armorClassBonus = 0;
-    int damageDie = 0;
-    int dieAmount = 0;
-    int damageMod = 0; // damage given is: dieAmount d damageDie + damageMod + other mods
-    float weight = 0; // Kg
-    short type = 0;
-
-private:
-};
-
 namespace material{
 enum material{
     NONE,
@@ -73,5 +55,25 @@ enum equipSlots{
     RING2,
 };
 }
+
+class Item {
+public:
+    Item();
+    bool pickable = true;
+    bool equipable = false;
+    equipSlots::equipSlots equipSlot = equipSlots::NONE;//enum head, body, ring etc...
+    
+    // attributes
+    int armorClassBonus = 0;
+    int damageDie = 0;
+    int dieAmount = 0;
+    int damageMod = 0; // damage given is: dieAmount d damageDie + damageMod + other mods
+    float weight = 0; // Kg
+    short type = 0;
+
+private:
+};
+
+
 
 #endif

@@ -1,6 +1,8 @@
 #include "action.hpp"
 #include "../entities/item.hpp"
 #include <algorithm>
+#include <string>
+#include <sstream>
 #include "../procgen/dice.hpp"
 #include "../animations/animation.hpp"
 #include "../game.hpp"
@@ -32,17 +34,29 @@ void attackAction(Entity *attacker, Entity *target){
         dmg = dmg * 2; // CRITICAL!
         victim->getHitCritically(dmg);
         //std::cout<<attacker->name<<" hits "<<target->name<<" for "<<dmg<<std::endl;
+        std::ostringstream mesg;
+        mesg<<attacker->name<<" hits "<<target->name<<" luckly for "<<dmg;
+        game->log.push_back(mesg.str());
     } else if (rolled > 1){
         if (rolled + (fighter->str-10) < victim->armorClass){
             //std::cout<<target->name<<" dodges "<<attacker->name<<"'s attack"<<std::endl;
             victim->dodge();
+            std::ostringstream mesg;
+            mesg<<target->name<<" dodges "<<attacker->name<<"'s attack";
+            game->log.push_back(mesg.str());
         } else {
             //std::cout << attacker->name << " hits "<< target->name << " for " << dmg << std::endl;
             dmg = std::max(0, dmg);
             victim->getHit(dmg);
+            std::ostringstream mesg;
+            mesg<<attacker->name<<" hits "<<target->name<<" for "<<dmg;
+            game->log.push_back(mesg.str());
         }
     } else {
         // swoooosh
+        std::ostringstream mesg;
+        mesg<<target->name<<" is greatly missed by "<<attacker->name<<"'s attack";
+        game->log.push_back(mesg.str());
         victim->dodge();
     }
     //std::cout<<attacker->name<<" used "<<turnsNeeded<<" turns"<<std::endl;
