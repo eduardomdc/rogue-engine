@@ -8,7 +8,7 @@
 #include "draw/draw_ui.hpp"
 #include "algorithms/fov.hpp"
 #include "draw/tile_manager.hpp"
-
+#include "particles/effect.hpp"
 
 #include <SDL_render.h>
 #include <SDL_video.h>
@@ -97,7 +97,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Entity * greenFire = new Entity();
     greenFire->ch = "o";
     greenFire->name = "The Green Ring";
-    greenFire->item = new Item();
+    greenFire->item = new Item(greenFire);
     greenFire->origRgb = colors::green;
     greenFire->foreRgb = colors::green;
     greenFire->posX = 31;
@@ -108,7 +108,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     Entity * blueFire = new Entity();
     blueFire->ch = "/";
     blueFire->name = "Aqua Wand of Menehor";
-    blueFire->item = new Item();
+    blueFire->item = new Item(blueFire);
     blueFire->origRgb = colors::blue;
     blueFire->foreRgb = colors::blue;
     blueFire->posX = 32;
@@ -185,6 +185,19 @@ void updateGlows(std::vector<Entity*> entityList){
     }
 }
 
+void updateEffectGlows(std::vector<Effect*> effects){
+    for (int i=0; i<effects.size(); i++){
+        if (effects[i]->ent->glow != nullptr){
+            effects[i]->ent->glow->update(effects[i]->ent);
+            if (effects[i]->ent->glow->glowColor.colorDances){
+                if (rand()%10 == 0) {
+                    effects[i]->ent->glow->glowColor = colorManager::randomize(effects[i]->ent->glow->glowOrigColor);
+                }
+            }
+        }
+    }
+}
+
 void updateLightReceivers(std::vector<Entity*> entityList){
     for (int i=0; i<entityList.size(); i++){
         entityList[i]->update();
@@ -208,12 +221,11 @@ void Game::update(){
     updateGlows(map->entityList.bottom);
     updateGlows(map->entityList.mid);
     updateGlows(map->entityList.top);
+    updateEffectGlows(map->effects);
     // only then update light-receivers
     updateLightReceivers(map->entityList.bottom);
     updateLightReceivers(map->entityList.mid);
     updateLightReceivers(map->entityList.top);
-    
-    
 }
 
 void Game::turn(){

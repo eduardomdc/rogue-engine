@@ -39,6 +39,14 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 close();
                 delete this;
                 break;
+            case SDLK_u:
+                if (item->item->type==itemType::USABLE){
+                    item->item->use(game->player, item);
+                    game->turns = 1;
+                    game->turn();
+                    close();
+                    delete this;
+                }
             default:
                 break;
         }
@@ -72,6 +80,10 @@ void renderItemInfo(Entity* item, int posX, int posY, int width, int height){
         }
         renderText(damage, posX, posY+5, colors::red, false);
     }
+    if (item->item->type == itemType::USABLE){
+        std::string type = "[Usable]";
+        renderText(type, posX+width/2, posY+4, colors::grey, true);
+    }
     std::ostringstream weight;
     weight<<"W";
     weight.precision(2);
@@ -87,7 +99,10 @@ void ItemWindow::render(){
     int width = 16;
     int height = 22;
     renderItemInfo(item, posX, posY, width, height);
+
     if (item->item->equipable)
         renderText("[e] to equip", posX, posY+20, colors::grey, false);
+    if (item->item->type == itemType::USABLE)
+        renderText("[u] to use", posX, posY+19, colors::grey, false);
     renderText("[d] to drop", posX, posY+21, colors::grey, false);
 }

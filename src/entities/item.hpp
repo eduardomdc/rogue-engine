@@ -6,6 +6,9 @@
 #include <string.h>
 #include <iostream>
 
+class Entity;
+class Game;
+
 namespace material{
 enum material{
     NONE,
@@ -58,11 +61,11 @@ enum equipSlots{
 
 class Item {
 public:
-    Item();
+    Item(Entity* owner);
     bool pickable = true;
     bool equipable = false;
     equipSlots::equipSlots equipSlot = equipSlots::NONE;//enum head, body, ring etc...
-    
+    Entity* owner;
     // attributes
     int armorClassBonus = 0;
     int damageDie = 0;
@@ -71,9 +74,11 @@ public:
     float weight = 0; // Kg
     short type = 0;
 
+    // usable item function
+    void (* use)(Entity* user, Entity* item);
 private:
 };
 
-
+void HealingPotion(Entity* user, Entity* item);
 
 #endif

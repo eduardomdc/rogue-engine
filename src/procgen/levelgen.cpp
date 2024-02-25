@@ -22,7 +22,7 @@ void fillMap(Map* map, int floorTile){
 }
 
 void makeTestChamber(Map *map){
-    map->ambientLight = {0,0,0};
+    map->ambientLight = {20,20,50};
     fillMap(map, CAVE_MOSSY_FLOOR);
     map->entityList.push_back(makeRat(20,20));
     map->entityList.push_back(makeRat(21, 21));
@@ -31,6 +31,8 @@ void makeTestChamber(Map *map){
     map->entityList.push_back(makeRat(20, 21));
     Entity* sword = makeLongsword(11, 8);
     map->entityList.push_back(sword);
+    Entity* potion = makeHealingPotion(12, 9);
+    map->entityList.push_back(potion);
 }
 
 void makeForest(Map *map){

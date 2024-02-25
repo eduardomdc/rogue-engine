@@ -43,6 +43,7 @@ set(MY_SOURCES
     src/inputManager/equipped_item_window.cpp
     src/particles/particle.cpp
     src/particles/particle_emitter.cpp
+    src/particles/effect.cpp
     src/procgen/dice.cpp
     src/procgen/levelgen.cpp
     src/colors.cpp

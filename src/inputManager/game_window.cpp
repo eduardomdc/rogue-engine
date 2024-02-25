@@ -106,6 +106,11 @@ void GameWindow::render(){
             }
         }
     }
+    
+    for (int i=0; i<game->map->effects.size(); i++){
+        game->map->effects[i]->render();
+    }
+
     std::vector<Animation*>::iterator it;
 
     it = game->animationList.begin();

@@ -30,6 +30,7 @@ Map::Map(int mapWidth, int mapHeight){
 
     // set tileset used
     codepage = game->codepageBig;
+    effects = {};
 }
 
 void Map::loadMap(){
@@ -37,7 +38,7 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeDungeon(this);
+    makeTestChamber(this);
 }
 
 void Map::drawMap(){

@@ -267,3 +267,13 @@ void Entity::drop(Entity* item){
     item->posY = this->posY;
     game->map->entityList.push_back(item);
 }
+
+void Entity::destroyItem(Entity* item){
+    this->inventory.erase(
+        std::remove(
+                this->inventory.begin(),
+                this->inventory.end(),
+                item
+            )        
+    );
+}

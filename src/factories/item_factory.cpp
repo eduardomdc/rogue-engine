@@ -5,7 +5,7 @@ Entity* makeLongsword(int x, int y){
     Entity* sword = new Entity();
     sword->ch = "\\";
     sword->name = "Longsword";
-    sword->item = new Item();
+    sword->item = new Item(sword);
     sword->foreRgb = colors::white;
     sword->item->type = itemType::WEAPON;
     sword->item->equipSlot=equipSlots::HAND1;
@@ -18,6 +18,20 @@ Entity* makeLongsword(int x, int y){
     sword->posX = x;
     sword->posY = y;
     return sword;
+}
+
+Entity* makeHealingPotion(int x, int y){
+    Entity* potion = new Entity();
+    potion->ch = "¡";
+    potion->name = "Healing Potion";
+    potion->foreRgb = colors::red;
+    potion->item = new Item(potion);
+    potion->item->type = itemType::USABLE;
+    potion->item->pickable = true;
+    potion->posX = x;
+    potion->posY = y;
+    potion->item->use = &HealingPotion;
+    return potion;
 }
 
 Entity* makeFireplace(int x, int y){
@@ -40,7 +54,7 @@ Entity* makeFireplace(int x, int y){
     pemit->duration = 2000;
     redFire->particleEmitter = pemit;
     redFire->glow = new Glow(redFire, colors::fire, 20);
-    redFire->item = new Item();
+    redFire->item = new Item(redFire);
     redFire->posX = x;
     redFire->posY = y;
     return redFire;

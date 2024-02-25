@@ -2,6 +2,7 @@
 #define MAP_HPP
 
 #include "entities/entity.hpp"
+#include "particles/effect.hpp"
 #include <SDL_rect.h>
 #pragma once
 #include <vector>
@@ -35,6 +36,8 @@ public:
 
     //std::vector< Entity* > entityList; // array of entities on the map;
     EntityList entityList;
+    //list of active effects
+    std::vector<Effect*> effects;
 
     int mapWidth; // map size
     int mapHeight;
