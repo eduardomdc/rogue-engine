@@ -8,10 +8,15 @@
 class Effect {
 public:
     Effect();
-    void render(); // update checks if the time ran out
+    void render(); //renders and calls checkEnd
+    void update();
+    void end();
+    void setup();
     Uint32 lifetime; // duration of effect in ms
     Uint32 start; // start of the effect
     Entity* ent;
+    Uint32 initialIntensity; // beginning intensity
+    Uint32 initialSpawnrate;
 };
 
 #endif

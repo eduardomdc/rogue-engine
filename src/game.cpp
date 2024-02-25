@@ -185,8 +185,9 @@ void updateGlows(std::vector<Entity*> entityList){
     }
 }
 
-void updateEffectGlows(std::vector<Effect*> effects){
+void updateEffects(std::vector<Effect*> effects){
     for (int i=0; i<effects.size(); i++){
+        effects[i]->ent->update();
         if (effects[i]->ent->glow != nullptr){
             effects[i]->ent->glow->update(effects[i]->ent);
             if (effects[i]->ent->glow->glowColor.colorDances){
@@ -221,7 +222,7 @@ void Game::update(){
     updateGlows(map->entityList.bottom);
     updateGlows(map->entityList.mid);
     updateGlows(map->entityList.top);
-    updateEffectGlows(map->effects);
+    updateEffects(map->effects);
     // only then update light-receivers
     updateLightReceivers(map->entityList.bottom);
     updateLightReceivers(map->entityList.mid);
