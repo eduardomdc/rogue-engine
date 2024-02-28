@@ -36,7 +36,7 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
             std::cout<<"Open character window"<<std::endl;
             game->windows.push_back(new CharacterSheet());
             break;
-        case SDLK_o:
+        case SDLK_b:
             std::cout<<"equipment window"<<std::endl;
             game->windows.push_back(new EquipmentWindow());
             break;
@@ -55,6 +55,26 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
         break;
     }
     game->turn();
+}
+
+void renderLog(){
+    int posy = 1;
+    int maxWidth = 20; //characters in one line
+    int maxHeight = 10; // amount of log lines rendered
+    int startTextY = posy+1; // where text starts
+    int endTextY = startTextY+maxHeight; // where text ends
+    int currentLine = endTextY;
+    int currentMsg = game->log.size()-1;
+    while (currentLine > posy){
+        if (currentMsg >= 0){
+            if (currentMsg == game->log.size()-1)
+            renderText(game->log[currentMsg], 2, currentLine, colors::yellow, false);
+            else
+            renderText(game->log[currentMsg], 2, currentLine, colors::grey, false);
+        }
+        currentLine--;
+        currentMsg--;
+    }
 }
 
 void GameWindow::render(){
@@ -156,10 +176,5 @@ void GameWindow::render(){
 
     // draw health
     drawQuantityBar("HP", game->player->fighter->getHp(), game->player->fighter->maxHp, 1, game->screenH/10-1, 2*game->map->mapRenderWidth/3, colors::red);
-
-    int texty = 2;
-    for (int i=0; i<game->log.size(); i++){
-        renderText(game->log[i], 2, texty, colors::grey, false);
-        texty++;
-    }
+    renderLog();
 }

@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include "../game.hpp"
+#include "../map.hpp"
 #include "../colors.hpp"
 #include "../draw/draw_ui.hpp"
 #include "../draw/tile_manager.hpp"
@@ -44,6 +45,8 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                     item->item->use(game->player, item);
                     game->turns = 1;
                     close();
+                    //close also inventory window
+                    game->activeWindow()->close();
                     delete this;
                 }
             default:
@@ -94,10 +97,10 @@ void renderItemInfo(Entity* item, int posX, int posY, int width, int height){
 
 
 void ItemWindow::render(){
-    int posX = 2;
-    int posY = 2;
     int width = 16;
     int height = 22;
+    int posX = game->map->mapRenderWidth-width/2;
+    int posY = game->map->mapRenderHeight-height/2;
     renderItemInfo(item, posX, posY, width, height);
 
     if (item->item->equipable)

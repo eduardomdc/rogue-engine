@@ -18,6 +18,7 @@ void EquipmentWindow::handleInput(SDL_Event currentEvent){
     case SDL_KEYDOWN:
         switch (currentEvent.key.keysym.sym){
         case SDLK_ESCAPE:
+        case SDLK_b:
             std::cout << "Close equipment window" << std::endl;
             close();
             delete this;
