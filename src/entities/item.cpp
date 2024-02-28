@@ -14,7 +14,7 @@ Item::Item(Entity* owner){
 
 void HealingPotion(Entity *user, Entity* item){
     if (user->fighter == nullptr) return;
-    user->fighter->setHp(user->fighter->maxHp);
+    int amountHealed = user->fighter->getHealed(user->fighter->maxHp);
     // healing effect
     Effect* ef = new Effect();
     ef->lifetime = 400;
@@ -26,7 +26,7 @@ void HealingPotion(Entity *user, Entity* item){
     pemit->angle = -M_PI/2;
     pemit->speed = 0.1;
     pemit->speedSpread = 0.005;
-    pemit->angleSpread = M_PI/6;
+    pemit->angleSpread = M_PI;
     pemit->duration = 2000;
     ef->ent->glow = new Glow(ef->ent, colors::red, 50);
     ef->ent->particleEmitter = pemit;
@@ -34,5 +34,8 @@ void HealingPotion(Entity *user, Entity* item){
     ef->ent->posY = user->posY;
     ef->setup();
     game->map->effects.push_back(ef);
+    std::ostringstream mesg;
+    mesg<<user->name<<" drinks "<<item->name<<" and is healed by "<<amountHealed;
+    game->log.push_back(mesg.str());
     user->destroyItem(item);
 }

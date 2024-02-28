@@ -28,7 +28,6 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 std::cout << "Equip item!"<<std::endl;
                 if (game->player->fighter->equipItem(this->item)){
                     game->turns = 1;
-                    game->turn();
                     close();
                     delete this;
                 }
@@ -36,6 +35,7 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
             case SDLK_d:
                 std::cout << "Drop item!"<<std::endl;
                 game->player->drop(this->item);
+                game->turns = 1;
                 close();
                 delete this;
                 break;
@@ -43,7 +43,6 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 if (item->item->type==itemType::USABLE){
                     item->item->use(game->player, item);
                     game->turns = 1;
-                    game->turn();
                     close();
                     delete this;
                 }
@@ -53,6 +52,7 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
     default:
         break;
     }
+    game->turn();
 }
 
 void renderItemInfo(Entity* item, int posX, int posY, int width, int height){

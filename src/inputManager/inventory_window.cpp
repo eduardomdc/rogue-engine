@@ -17,15 +17,20 @@ void InventoryWindow::handleInput(SDL_Event currentEvent){
     case SDL_KEYDOWN:
         switch (currentEvent.key.keysym.sym){
         case SDLK_ESCAPE:
+        case SDLK_i:
             std::cout << "Close inventory window" << std::endl;
             close();
             delete this;
             break;
         default:
             if (currentEvent.key.keysym.sym >= 97
-                && currentEvent.key.keysym.sym <= 122){
+                && currentEvent.key.keysym.sym <= 122
+                && currentEvent.key.keysym.sym != 105){
                 std::vector<Entity*> inventory = game->player->inventory;
                 int selected = currentEvent.key.keysym.sym-97;
+                if (currentEvent.key.keysym.sym > 105){
+                    selected--; // skip one if selected key is after 'i'
+                }
                 if (inventory.size()>selected){
                     Entity* item=inventory[selected]; 
                     game->windows.push_back(new ItemWindow(item));
@@ -50,6 +55,7 @@ void InventoryWindow::render(){
     char ascii = 97;
     int line = positiony;
     while (item != inventory.end()){
+        if (ascii == 105) ascii++;
         std::string letter(1,ascii);
         game->tileManager->drawSmallAsciiUI(positionx,line, letter,(*item)->foreRgb);
         game->tileManager->drawSmallAsciiUI(positionx+1,line, "[", colors::grey);

@@ -13,6 +13,7 @@ public:
     bool alive = true;
     void getHit(int damage);
     void getHitCritically(int damage);
+    int getHealed(int amount);
     void dodge();
     void setHp(int newHp);
     int getHp();

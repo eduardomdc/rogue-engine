@@ -31,8 +31,10 @@ void makeTestChamber(Map *map){
     map->entityList.push_back(makeRat(20, 21));
     Entity* sword = makeLongsword(11, 8);
     map->entityList.push_back(sword);
-    Entity* potion = makeHealingPotion(12, 9);
-    map->entityList.push_back(potion);
+    for (int i=0; i<40; i++){
+        Entity* potion = makeHealingPotion(12, 9);
+        map->entityList.push_back(potion);
+    }
 }
 
 void makeForest(Map *map){

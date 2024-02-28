@@ -33,6 +33,21 @@ void Fighter::getHit(int damage){
     game->animationList.push_back(dmg); 
 }
 
+int Fighter::getHealed(int amount){
+    int amountHealed = std::min(amount, maxHp-getHp());
+    setHp(getHp()+amountHealed);
+    Animation* heal = new Animation();
+    heal->foreRgb = colors::green;
+    std::string healString = std::to_string(amountHealed);
+    heal->setFrames({{healString}});
+    heal->posX = this->owner->posX;
+    heal->speed = 100;
+    heal->posY = this->owner->posY;
+    heal->damageNumber = true;
+    game->animationList.push_back(heal); 
+    return amountHealed;
+}
+
 void Fighter::getHitCritically(int damage){
     setHp(getHp() - damage);
     Animation* dmg = new Animation();
