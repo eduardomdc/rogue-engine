@@ -25,7 +25,7 @@ Map::Map(int mapWidth, int mapHeight){
     // set variables
     this->mapWidth = mapWidth;
     this->mapHeight = mapHeight;
-    mapRenderWidth = game->screenW/20+1; //49
+    mapRenderWidth = (game->screenW)/20; //49
     mapRenderHeight = game->screenH/20;
 
     // set tileset used
@@ -66,9 +66,9 @@ void Map::moveCamera(int x, int y){
     this->mapPositionX = x;
     this->mapPositionY = y;
     this->leftSide = this->mapPositionX-((this->mapRenderWidth)/2);
-    this->rightSide = this->mapPositionX+((this->mapRenderWidth-1)/2) + 1;
+    this->rightSide = this->mapPositionX+((this->mapRenderWidth +1)/2);
     this->topSide = this->mapPositionY-((this->mapRenderHeight)/2);
-    this->bottomSide = this->mapPositionY+((this->mapRenderHeight)/2) + 1;
+    this->bottomSide = this->mapPositionY+((this->mapRenderHeight+1)/2);
 }
 
 void Map::update(){
