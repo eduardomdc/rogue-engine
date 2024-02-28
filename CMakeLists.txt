@@ -37,6 +37,7 @@ set(MY_SOURCES
     src/inputManager/game_window.cpp
     src/inputManager/input_manager.cpp
     src/inputManager/inventory_window.cpp
+    src/inputManager/pickup_inventory_window.cpp
     src/inputManager/item_window.cpp
     src/inputManager/menu_window.cpp
     src/inputManager/equipment_window.cpp

@@ -20,6 +20,7 @@ public:
     Entity* getWeapon();
     bool equipItem(Entity* item);
     bool unequipItem(equipSlots::equipSlots slot);
+    void die();
 
     // equipments
     std::vector<Entity*>* equipments;// items are allocated according to equipSlot enum index

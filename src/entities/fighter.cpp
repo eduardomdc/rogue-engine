@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdlib>
+#include <sstream>
 #include <string>
 
 Fighter::Fighter(Entity* owner){
@@ -84,11 +85,18 @@ void Fighter::setHp(int newHp){
             this->hp = maxHp;
         } else this->hp = newHp;
         if ( this->hp <= 0){
-            this->hp = 0;
-            alive = false;
-            this->owner->destroy();
+            die();
         }
     }
+}
+
+void Fighter::die(){
+    this->hp = 0;
+    alive = false;
+    std::ostringstream mesg;
+    mesg<<"The "<<owner->name<<" dies";
+    game->log.push_back(mesg.str());
+    this->owner->destroy();
 }
 
 int Fighter::getHp(){

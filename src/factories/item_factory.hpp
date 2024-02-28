@@ -7,6 +7,7 @@
 Entity* makeLongsword(int x, int y);
 Entity* makeHealingPotion(int x, int y);
 Entity* makeFireplace(int x, int y);
+Entity* makeChest(int x, int y);
 
 #endif
 

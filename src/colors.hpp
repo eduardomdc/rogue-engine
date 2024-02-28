@@ -34,6 +34,7 @@ namespace colors {
 	extern const color blue;
     extern const color lightBlue;
 	extern const color yellow;
+    extern const color brown;
 	extern const color black;
 	extern const color grey;
 	extern const color pearly;

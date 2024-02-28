@@ -59,3 +59,14 @@ Entity* makeFireplace(int x, int y){
     redFire->posY = y;
     return redFire;
 }
+
+Entity* makeChest(int x, int y){
+    Entity* chest;
+    chest = new Entity();
+    chest->ch = "▄";
+    chest->name = "Wooden Chest";
+    chest->foreRgb = colors::brown;
+    chest->posX = x;
+    chest->posY = y;
+    return chest;
+}

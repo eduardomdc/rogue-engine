@@ -47,10 +47,10 @@ void attackAction(Entity *attacker, Entity *target){
         } else {
             //std::cout << attacker->name << " hits "<< target->name << " for " << dmg << std::endl;
             dmg = std::max(0, dmg);
-            victim->getHit(dmg);
             std::ostringstream mesg;
             mesg<<attacker->name<<" hits "<<target->name<<" for "<<dmg;
             game->log.push_back(mesg.str());
+            victim->getHit(dmg);
         }
     } else {
         // swoooosh

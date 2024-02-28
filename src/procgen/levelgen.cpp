@@ -35,6 +35,9 @@ void makeTestChamber(Map *map){
         Entity* potion = makeHealingPotion(12, 9);
         map->entityList.push_back(potion);
     }
+    Entity* chest = makeChest(15, 15);
+    chest->inventory.push_back(makeLongsword(0, 0));
+    map->entityList.push_back(chest);
 }
 
 void makeForest(Map *map){

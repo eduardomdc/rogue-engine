@@ -15,6 +15,7 @@ const color colors::green =					{0,   255,   0, 0,   0,	0, 0, false};
 const color colors::blue =					{0,   0,   255, 0,   0,	0, 0, false};
 const color colors::lightBlue =				{100,   100,   255, 0,   0,	0, 0, false};
 const color colors::yellow =                {255, 255, 0, 0, 0, 0, 0, false};
+const color colors::brown =                 {139, 39, 19, 0, 0, 0, 0, false};
 const color colors::black = 				{0, 0, 0, 0, 0,	0,	0,	false};
 const color colors::grey =					{95, 95, 95, 0, 0, 0, 0, false};
 const color colors::pearly =				{155, 155, 155, 100, 100, 100, 0, false};
