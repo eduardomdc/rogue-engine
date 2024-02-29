@@ -71,7 +71,6 @@ public:
     int damageDie = 0;
     int dieAmount = 0;
     int damageMod = 0; // damage given is: dieAmount d damageDie + damageMod + other mods
-    float weight = 0; // Kg
     short type = 0;
 
     // usable item function

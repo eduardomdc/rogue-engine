@@ -91,12 +91,6 @@ void renderItemInfo(Entity* item, int posX, int posY, int width, int height){
         std::string type = "[Usable]";
         renderText(type, posX+width/2, posY+4, colors::grey, true);
     }
-    std::ostringstream weight;
-    weight<<"W";
-    weight.precision(2);
-    weight<<(item->item->weight);
-    weight<<"Kg";
-    renderText(weight.str(), posX, posY+6, colors::grey, false);
 }
 
 

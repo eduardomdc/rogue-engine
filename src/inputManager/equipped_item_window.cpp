@@ -31,6 +31,8 @@ void EquippedItemWindow::handleInput(SDL_Event currentEvent){
                     game->turns = 1;
                     game->turn();
                     close();
+                    // close inventory too
+                    game->activeWindow()->close();
                     delete this;
                 }
                 break;

@@ -12,7 +12,6 @@ Entity* makeLongsword(int x, int y){
     sword->item->damageDie = 8;
     sword->item->damageMod = 0;
     sword->item->dieAmount = 1;
-    sword->item->weight = 0.9;
     sword->item->pickable = true;
     sword->item->equipable = true;
     sword->posX = x;
