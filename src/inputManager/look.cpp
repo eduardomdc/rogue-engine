@@ -71,21 +71,27 @@ void Look::render(){
     for (int i=0; i<game->map->entityList.top.size(); i++){
         Entity* ent = game->map->entityList.top[i];
         if (ent->posX == cursorX && ent->posY == cursorY){
-            renderTextAndBg(ent->name, 2*(screen.x+1), 2*screen.y+things, ent->foreRgb, colors::black, false);
+            renderTextAndBg(" ", 2*(screen.x+1), 2*screen.y+things, colors::black, colors::black, false);
+            game->tileManager->drawSmallAsciiUI(2*(screen.x+1),2*screen.y+things,ent->ch,ent->foreRgb);
+            renderTextAndBg(ent->name, 2*(screen.x+1)+1, 2*screen.y+things, ent->foreRgb, colors::black, false);
             things++;
         }
     } 
     for (int i=0; i<game->map->entityList.mid.size(); i++){
         Entity* ent = game->map->entityList.mid[i];
         if (ent->posX == cursorX && ent->posY == cursorY){
-            renderTextAndBg(ent->name, 2*(screen.x+1), 2*screen.y+things, ent->foreRgb, colors::black, false);
+            renderTextAndBg(" ", 2*(screen.x+1), 2*screen.y+things, colors::black, colors::black, false);
+            game->tileManager->drawSmallAsciiUI(2*(screen.x+1),2*screen.y+things,ent->ch,ent->foreRgb);
+            renderTextAndBg(ent->name, 2*(screen.x+1)+1, 2*screen.y+things, ent->foreRgb, colors::black, false);
             things++;
         }
     } 
     for (int i=0; i<game->map->entityList.bottom.size(); i++){
         Entity* ent = game->map->entityList.bottom[i];
         if (ent->posX == cursorX && ent->posY == cursorY){
-            renderTextAndBg(ent->name, 2*(screen.x+1), 2*screen.y+things, ent->foreRgb, colors::black, false);
+            renderTextAndBg(" ", 2*(screen.x+1), 2*screen.y+things, colors::black, colors::black, false);
+            game->tileManager->drawSmallAsciiUI(2*(screen.x+1),2*screen.y+things,ent->ch,ent->foreRgb);
+            renderTextAndBg(ent->name, 2*(screen.x+1)+1, 2*screen.y+things, ent->foreRgb, colors::black, false);
             things++;
         }
     } 
