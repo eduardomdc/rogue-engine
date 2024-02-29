@@ -49,4 +49,5 @@ void bipedalStepAnimation(int posX, int posY, int targetX, int targetY, bool rig
 void punchAnimation(int posX, int posY, int dirX, int dirY);
 void slashAnimation(int posX, int posY);
 void pickUpAnimation(Entity* item);
+void receiveAnimation(Entity* receiver, Entity* item);
 #endif

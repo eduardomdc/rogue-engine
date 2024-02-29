@@ -3,7 +3,9 @@
 #include "../map.hpp"
 #include "../draw/draw_ui.hpp"
 #include <iostream>
+#include <sstream>
 #include "item_window.hpp"
+#include "../animations/animation.hpp"
 
 PickupInventoryWindow::PickupInventoryWindow(Entity* holder){
     std::cout<< "PickupInventory Window created" << std::endl;
@@ -29,7 +31,9 @@ void PickupInventoryWindow::handleInput(SDL_Event currentEvent){
                 if (inventory.size()>selected){
                     Entity* item=inventory[selected]; 
                     game->player->inventory.push_back(item);
-                    holder->destroyItem(item);
+                    receiveAnimation(game->player, item);
+                    holder->removeItem(item);
+                    game->turns = 1;
                 }
             } 
             break;
@@ -38,6 +42,7 @@ void PickupInventoryWindow::handleInput(SDL_Event currentEvent){
     default:
         break;
     }
+    game->turn();
 }
 
 void PickupInventoryWindow::render(){
@@ -45,7 +50,9 @@ void PickupInventoryWindow::render(){
     int positionx = (game->map->mapRenderWidth/3)*2-2;
     int positiony = 2;
     int width = 2*game->map->mapRenderWidth/3;
-    drawWindowAndTitle("Inventory",positionx,positiony,width,game->player->inventory.size(),colors::grey, colors::black);
+    std::ostringstream title; 
+    title<<"Items in "<<holder->name;
+    drawWindowAndTitle(title.str(),positionx,positiony,width,inventory.size(),colors::grey, colors::black);
     std::vector<Entity*>::iterator item;
     item = inventory.begin();
     char ascii = 97;

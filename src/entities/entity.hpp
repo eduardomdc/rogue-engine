@@ -51,7 +51,8 @@ public:
     std::vector<Entity*> inventory = {};
     bool pickUp();
     void drop(Entity* item);
-    void destroyItem(Entity* item);
+    void removeItem(Entity* item);
+    void deleteItem(Entity* item);
     
     void destroy(); // entity is destroyed
     void update();

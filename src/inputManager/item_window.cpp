@@ -30,6 +30,8 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 if (game->player->fighter->equipItem(this->item)){
                     game->turns = 1;
                     close();
+                    // close also inventory
+                    game->activeWindow()->close();
                     delete this;
                 }
                 break;
@@ -38,6 +40,8 @@ void ItemWindow::handleInput(SDL_Event currentEvent){
                 game->player->drop(this->item);
                 game->turns = 1;
                 close();
+                //close also inventory
+                game->activeWindow()->close();
                 delete this;
                 break;
             case SDLK_u:

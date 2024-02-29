@@ -37,5 +37,5 @@ void HealingPotion(Entity *user, Entity* item){
     std::ostringstream mesg;
     mesg<<user->name<<" drinks "<<item->name<<" and is healed by "<<amountHealed;
     game->log.push_back(mesg.str());
-    user->destroyItem(item);
+    user->deleteItem(item);
 }

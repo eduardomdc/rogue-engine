@@ -164,12 +164,12 @@ void punchAnimation(int posX, int posY, int dirX, int dirY){
     punch->foreRgb = colors::white;
     punch->setFrames({
             {
-                "","/","\n",
+                "","*","\n",
                 "","",
             },
             {
                 "","","\n",
-                "/","",
+                "*","",
             },
             {}
             });
@@ -240,6 +240,41 @@ void pickUpAnimation(Entity *item){
             });
     pick->posX = item->posX;
     pick->posY = item->posY;
+    pick->subPosY = -1;
+    pick->speed = 100;
+    pick->onMap = true;
+    game->animationList.push_back(pick);
+}
+
+void receiveAnimation(Entity* receiver, Entity *item){
+/* same as pickup animation but uses the receiver's position for effects 
+ * user for items in chests and bodies*/
+    Animation* pick = new Animation();
+    pick->foreRgb = item->foreRgb;
+    const char* ch = item->ch;
+    pick->setFrames({
+            {
+                "","","\n",
+                "","","\n",
+                ch,"",
+            },
+            {
+                "","","\n",
+                "",ch,"\n",
+                "","",
+            },
+            {
+                ch,"","\n",
+                "","","\n",
+            },
+            {
+                "",ch,"\n",
+                "","","\n",
+            },{}
+
+            });
+    pick->posX = receiver->posX;
+    pick->posY = receiver->posY;
     pick->subPosY = -1;
     pick->speed = 100;
     pick->onMap = true;

@@ -276,7 +276,8 @@ void Entity::drop(Entity* item){
     game->map->entityList.push_back(item);
 }
 
-void Entity::destroyItem(Entity* item){
+void Entity::removeItem(Entity* item){
+    //removes from inventory, leaves hanging pointer
     this->inventory.erase(
         std::remove(
                 this->inventory.begin(),
@@ -284,4 +285,16 @@ void Entity::destroyItem(Entity* item){
                 item
             )        
     );
+}
+
+void Entity::deleteItem(Entity* item){
+    //deletes item data and removes from inventory
+    this->inventory.erase(
+        std::remove(
+                this->inventory.begin(),
+                this->inventory.end(),
+                item
+            )        
+    );
+    delete item;
 }

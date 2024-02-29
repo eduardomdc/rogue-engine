@@ -5,6 +5,7 @@
 #include "../game.hpp"
 #include <iostream>
 #include "../actions/action.hpp"
+#include "../inputManager/pickup_inventory_window.hpp"
 
 Ai::Ai(Entity* owner){
     this->owner = owner;
@@ -87,9 +88,25 @@ void PlayerAi::moveFromWalkQueue(){
 void PlayerAi::pickUp(){
     int turns = 0;
     if (owner->pickUp()){
+        std::cout<<"player picks up"<<std::endl;
         turns = 1;
+        game->turns = turns;
+        return;
     }
-    game->turns = turns;
+    std::vector<Entity*>::iterator item;
+    item = game->map->entityList.bottom.begin();
+    while(item != game->map->entityList.bottom.end()){
+        if ((*item)->posX == this->owner->posX 
+            && (*item)->posY == this->owner->posY){
+            std::cout<<"entity"<<std::endl;
+            if((*item)->inventory.size()>0){
+                std::cout << "open inventory window for chest" << std::endl;
+                game->windows.push_back(new PickupInventoryWindow(*item));
+                return;
+            }
+        }
+        item++;
+    }
     return;
 }
 
