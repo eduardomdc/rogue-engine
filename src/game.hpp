@@ -50,6 +50,8 @@ public:
     void turn();
     void clean();
 
+    SDL_Point mapToScreenCoords(int posX, int posY);
+
     bool running(){return isRunning;}
     bool isRunning;
 

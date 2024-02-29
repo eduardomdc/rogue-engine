@@ -97,6 +97,9 @@ void Fighter::die(){
     mesg<<"The "<<owner->name<<" dies";
     game->log.push_back(mesg.str());
     this->owner->destroy();
+    std::ostringstream newName;
+    newName<<this->owner->name<<" corpse";
+    this->owner->name = newName.str();
 }
 
 int Fighter::getHp(){

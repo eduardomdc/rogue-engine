@@ -8,6 +8,7 @@
 #include "equipment_window.hpp"
 #include "menu_window.hpp"
 #include "inventory_window.hpp"
+#include "look.hpp"
 #include "../draw/draw_ui.hpp"
 
 GameWindow::GameWindow(){
@@ -39,6 +40,9 @@ void GameWindow::handleInput(SDL_Event currentEvent) {
         case SDLK_b:
             std::cout<<"equipment window"<<std::endl;
             game->windows.push_back(new EquipmentWindow());
+            break;
+        case SDLK_l:
+            game->windows.push_back(new Look());
             break;
         default:
             game->player->ai->update();

@@ -10,6 +10,7 @@
 #include "draw/tile_manager.hpp"
 #include "particles/effect.hpp"
 
+#include <SDL_rect.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
 #include <iostream>
@@ -210,6 +211,13 @@ void updateLightReceivers(std::vector<Entity*> entityList){
         }
 
     }
+}
+
+SDL_Point Game::mapToScreenCoords(int posX, int posY){
+    SDL_Point screen;
+    screen.x = posX - map->leftSide + map->mapOffsetX;
+    screen.y = posY - map->topSide + map->mapOffsetY;
+    return screen;
 }
 
 void Game::update(){

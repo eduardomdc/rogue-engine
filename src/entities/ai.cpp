@@ -94,8 +94,8 @@ void PlayerAi::pickUp(){
         return;
     }
     std::vector<Entity*>::iterator item;
-    item = game->map->entityList.bottom.begin();
-    while(item != game->map->entityList.bottom.end()){
+    item = game->map->entityList.mid.begin();
+    while(item != game->map->entityList.mid.end()){
         if ((*item)->posX == this->owner->posX 
             && (*item)->posY == this->owner->posY){
             std::cout<<"entity"<<std::endl;

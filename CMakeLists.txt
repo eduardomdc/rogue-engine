@@ -42,6 +42,7 @@ set(MY_SOURCES
     src/inputManager/menu_window.cpp
     src/inputManager/equipment_window.cpp
     src/inputManager/equipped_item_window.cpp
+    src/inputManager/look.cpp
     src/particles/particle.cpp
     src/particles/particle_emitter.cpp
     src/particles/effect.cpp

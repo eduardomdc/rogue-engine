@@ -12,7 +12,7 @@ EntityList::EntityList(){
 void EntityList::push_back(Entity* ent){
     if (ent->fighter){
         this->top.push_back(ent);
-    } else if (ent->item){
+    } else if (ent->item or ent->inventory.size()>0){
         this->mid.push_back(ent);
     }
     else {
