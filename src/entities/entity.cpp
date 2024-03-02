@@ -20,7 +20,6 @@ Entity::Entity(){
 Entity::~Entity(){
     if (item != nullptr) delete item;
     if (ai != nullptr) delete ai;
-    if (creature != nullptr) delete creature;
     if (fighter != nullptr) delete fighter;
     if (glow != nullptr) delete glow;
     if (particleEmitter != nullptr) delete particleEmitter;
@@ -159,10 +158,6 @@ void Entity::render(){
 };
 
 void Entity::update(){
-    if (this->ai){
-        //this->ai->update(this);
-    }
-    
     if (!this->glow){
         // list of light sources of the tile = list of light sources of entity
         //this->lightSources = game->map->tileMap[this->posX][this->posY].lightSources;
@@ -215,15 +210,6 @@ void Entity::shineLight(short red, short green, short blue){
 void Entity::destroy(){
     this->ch = this->chDestroyed;
     this->foreRgb = this->foreRgbDestroyed;
-    if (this->creature){
-        delete this->creature;
-        this->creature = nullptr; // death...;
-        
-    }
-    if (this->ai){
-        delete this->ai;
-        this->ai = nullptr;
-    }
     if (this->fighter){
         //is in top layer
         game->map->entityList.top.erase(

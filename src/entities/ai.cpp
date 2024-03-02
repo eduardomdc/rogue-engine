@@ -9,6 +9,7 @@
 
 Ai::Ai(Entity* owner){
     this->owner = owner;
+    alive = true;
 }
 
 Ai::~Ai(){
@@ -152,6 +153,7 @@ float euclideanDistance(int x1, int y1, int x2, int y2){
 
 void CritterAi::update(){
     // look for player
+    if (!alive) return;
     try 
     {
     if (euclideanDistance(this->owner->posX, this->owner->posY, game->player->posX, game->player->posY) < 10){
@@ -190,10 +192,7 @@ void CritterAi::moveOrAttack(int targetX, int targetY){
                 }
             } else if (targetEntity==nullptr) { // only go if there are no fighters there
                 bipedalStepAnimation(this->owner->posX, this->owner->posY, targetX, targetY, rand()%2);
-                moveAction(this->owner, targetX, targetY); 
-                if (this->owner->creature){
-                    //do things for creatures
-                }
+                moveAction(this->owner, targetX, targetY);
             } else {
                 // wait
                 //this->turns -= 10;

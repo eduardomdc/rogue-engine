@@ -14,6 +14,7 @@ public:
     std::list<position> path;
     virtual void update();
     virtual ~Ai();
+    bool alive;
 };
 
 class CritterAi : public Ai {

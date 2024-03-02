@@ -11,6 +11,7 @@ public:
     Fighter(Entity* owner);
     Entity* owner;
     bool alive = true;
+    void update(); // update for debuff effects, check for step on traps etc
     void getHit(int damage);
     void getHitCritically(int damage);
     int getHealed(int amount);

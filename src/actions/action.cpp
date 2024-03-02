@@ -66,12 +66,6 @@ void attackAction(Entity *attacker, Entity *target){
 void moveAction(Entity *self, int x, int y){
     self->posX = x;
     self->posY = y;
-    std::vector<Entity*> ents = game->map->entityList.entitiesAt(x, y);
-    for(int i=0; i<ents.size(); i++){
-        if (ents[i]->stepOn!=nullptr){
-            ents[i]->stepOn(self);
-        }
-    }
 }
 
 void openDoorAction(Entity *self, int x, int y){
@@ -83,6 +77,8 @@ void openDoorAction(Entity *self, int x, int y){
 void stepOnFire(Entity *stepper){
     if (stepper->fighter==nullptr) return;
     int dmg = roll(1, 4);
-    std::cout << stepper->name <<std::endl;
+    std::ostringstream mesg;
+    mesg << stepper->name<<" steps on fire and gets burned by "<<dmg<<" damage";
+    game->log.push_back(mesg.str());
     stepper->fighter->getHit(dmg);
 }

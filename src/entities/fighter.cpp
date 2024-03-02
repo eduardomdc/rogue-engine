@@ -2,6 +2,7 @@
 #include "entity.hpp"
 #include "../animations/animation.hpp"
 #include "../game.hpp"
+#include "../map.hpp"
 #include "item.hpp"
 #include <algorithm>
 #include <cstddef>
@@ -13,6 +14,18 @@ Fighter::Fighter(Entity* owner){
     this->owner = owner;
     this->equipments = new std::vector<Entity*>(10); 
     this->stealth = false;
+}
+
+void Fighter::update(){
+    // step on checks
+    if (alive){
+        std::vector<Entity*> ents = game->map->entityList.entitiesAt(this->owner->posX, this->owner->posY);
+        for(int i=0; i<ents.size(); i++){
+            if (ents[i]->stepOn!=nullptr){
+                ents[i]->stepOn(this->owner);
+            }
+        }
+    }
 }
 
 void Fighter::getHit(int damage){
@@ -100,6 +113,7 @@ void Fighter::die(){
     std::ostringstream newName;
     newName<<this->owner->name<<" corpse";
     this->owner->name = newName.str();
+    if (this->owner->ai != nullptr) this->owner->ai->alive = false;
 }
 
 int Fighter::getHp(){

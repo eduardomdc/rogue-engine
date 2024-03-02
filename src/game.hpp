@@ -2,6 +2,7 @@
 #define game_hpp
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL_stdinc.h>
 #include <iostream>
 #include <vector>
 #include "entities/entity.hpp"
@@ -16,6 +17,7 @@ public:
 
     Entity* player;
     int turns = 0; // turns used by the player
+    Uint64 totalTurns = 0;  // total turns passed
 
     std::vector < Animation* > animationList;
     

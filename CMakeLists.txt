@@ -23,7 +23,6 @@ set(MY_SOURCES
     src/draw/draw_ui.cpp
     src/draw/tile_manager.cpp
     src/entities/ai.cpp
-    src/entities/creature.cpp
     src/entities/entity.cpp
     src/entities/fighter.cpp
     src/entities/glow.cpp

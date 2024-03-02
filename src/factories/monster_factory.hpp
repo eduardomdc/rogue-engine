@@ -27,10 +27,6 @@ typedef struct Monster {
 
     // Ai* ai; // entity can do things
     int ai;
-
-    Creature* creature; // entity is a living creature with needs and organs
-
-
 } Monster;
 
 enum ai {

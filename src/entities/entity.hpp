@@ -5,7 +5,6 @@
 #include "../colors.hpp"
 #include "item.hpp"
 #include "ai.hpp"
-#include "creature.hpp"
 #include "fighter.hpp"
 #include "glow.hpp"
 #include "player.hpp"
@@ -26,7 +25,6 @@ public:
     int posY;
     Item* item = NULL; // entity is physical object
     Ai* ai = NULL; // entity can do things
-    Creature* creature = NULL; // entity is a living creature with needs and organs
     Fighter* fighter = NULL; // entity can attack and be attacked
     Glow* glow = NULL;
     ParticleEmitter* particleEmitter = NULL; // entity emits particles

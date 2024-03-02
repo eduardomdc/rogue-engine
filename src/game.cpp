@@ -14,6 +14,8 @@
 #include <SDL_render.h>
 #include <SDL_video.h>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -240,13 +242,19 @@ void Game::update(){
 void Game::turn(){
     // game turns
     if (game->turns && game->player->player->walkQueue.size() == 0){//if player took action
-        for (Entity* ent : game->map->entityList.top){
-            if (ent != game->player){
-                if (ent->ai != nullptr){
+        game->totalTurns++;
+        auto ent = game->map->entityList.top.begin();
+        while (ent != game->map->entityList.top.end()){
+            if (*ent != game->player){
+                if ((*ent)->ai != nullptr){
                     //increment turns
-                    ent->ai->update();
+                    (*ent)->ai->update();
                 }
             }
+            if ((*ent)->fighter != nullptr){
+                (*ent)->fighter->update();
+            }
+            ent++;
         }
     }
     game->turns = 0;
@@ -281,7 +289,10 @@ void Game::render(){
     uint32_t tickd = SDL_GetTicks()-lastTick;
     int fps = 1000/(tickd+1);
     std::string fpsString = std::to_string(fps);
-    renderText("FPS "+fpsString, 88, 0, colors::grey, false);
+    renderText("FPS "+fpsString, 2*map->mapRenderWidth-20, 0, colors::yellow, false);
+    std::ostringstream turnsstring;
+    turnsstring << "TURN "<<totalTurns;
+    renderText(turnsstring.str(), 2*map->mapRenderWidth-40, 0, colors::yellow, false);
     lastTick = SDL_GetTicks();
     
     SDL_RenderPresent(renderer);
