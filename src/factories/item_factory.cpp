@@ -1,5 +1,6 @@
 #include "item_factory.hpp"
 #include "../map.hpp"
+#include "../actions/action.hpp"
 
 Entity* makeLongsword(int x, int y){
     Entity* sword = new Entity();
@@ -40,6 +41,7 @@ Entity* makeFireplace(int x, int y){
     redFire->name = "Fireplace";
     redFire->origRgb = colors::fire;
     redFire->foreRgb = colors::fire;
+    redFire->stepOn = &stepOnFire;
     ParticleEmitter* pemit;
     pemit = new ParticleEmitter(redFire);
     pemit->chs = {".", ",","*","`"};

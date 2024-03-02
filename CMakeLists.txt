@@ -7,7 +7,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #for clang
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(SDL2 REQUIRED)
+find_package(SDL2 2.3 REQUIRED)
 
 set(SDL2_IMAGE_INCLUDE_DIRS "/usr/include/SDL2")
 set(SDL2_IMAGE_LIBRARIES "/usr/lib/libSDL2_image.so")

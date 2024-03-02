@@ -21,6 +21,7 @@ public:
     std::vector< Entity* > mid; // holds items and things you can interact with
     std::vector< Entity* > top; // holds you and things that can kill you
     void push_back(Entity*);
+    std::vector< Entity* > entitiesAt(int x, int y); // returns entities at location
 };
 
 class EntityMap {

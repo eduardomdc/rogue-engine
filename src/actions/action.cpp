@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "../procgen/dice.hpp"
 #include "../animations/animation.hpp"
 #include "../game.hpp"
@@ -32,11 +33,11 @@ void attackAction(Entity *attacker, Entity *target){
     int rolled = roll(1, 20);
     if (rolled >= 20 - fighter->luck){
         dmg = dmg * 2; // CRITICAL!
-        victim->getHitCritically(dmg);
         //std::cout<<attacker->name<<" hits "<<target->name<<" for "<<dmg<<std::endl;
         std::ostringstream mesg;
         mesg<<attacker->name<<" hits "<<target->name<<" luckly for "<<dmg;
         game->log.push_back(mesg.str());
+        victim->getHitCritically(dmg);
     } else if (rolled > 1){
         if (rolled + (fighter->str-10) < victim->armorClass){
             //std::cout<<target->name<<" dodges "<<attacker->name<<"'s attack"<<std::endl;
@@ -65,11 +66,23 @@ void attackAction(Entity *attacker, Entity *target){
 void moveAction(Entity *self, int x, int y){
     self->posX = x;
     self->posY = y;
-    //std::cout<<self->name<<" used "<<turnsNeeded<<" to walk"<<std::endl;
+    std::vector<Entity*> ents = game->map->entityList.entitiesAt(x, y);
+    for(int i=0; i<ents.size(); i++){
+        if (ents[i]->stepOn!=nullptr){
+            ents[i]->stepOn(self);
+        }
+    }
 }
 
 void openDoorAction(Entity *self, int x, int y){
     if (game->map->tileMap[x][y]->door != nullptr){
         game->map->tileMap[x][y]->door->OpenClose();
     }
+}
+
+void stepOnFire(Entity *stepper){
+    if (stepper->fighter==nullptr) return;
+    int dmg = roll(1, 4);
+    std::cout << stepper->name <<std::endl;
+    stepper->fighter->getHit(dmg);
 }

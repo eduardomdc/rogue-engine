@@ -58,6 +58,7 @@ public:
     void update();
     void render();
     
+    void (* stepOn)(Entity* stepper); // function activated when you step on this entity
 private:
 };
 

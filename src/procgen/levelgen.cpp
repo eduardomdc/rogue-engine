@@ -60,7 +60,7 @@ void makeForest(Map *map){
 
 void makeSnowyMountain(Map* map){
     //generate perlin map
-    map->ambientLight = {100,100,150};
+    map->ambientLight = {50,50,150};
 
     Perlin* wallPerlin = new Perlin(250);
     Perlin* mossPerlin = new Perlin(250);
@@ -114,12 +114,21 @@ void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int end
 }
 
 
-
+bool squareInMap(int x, int y, int width, int height){
+    if (  game->map->inMap(x+width/2, y+height/2)
+        &&game->map->inMap(x+width/2, y-height/2)
+        &&game->map->inMap(x-width/2, y-height/2)
+        &&game->map->inMap(x-width/2, y+height/2)
+        )
+        return true;
+    else
+        return false;
+}
 void makeDungeon(Map* map){
     map->ambientLight = {0,0,80};
 
     fillMap(map, CAVE_WALL);
-    int nRooms = 10;//rand()%5+5; // number of rooms
+    int nRooms = 100;//rand()%5+5; // number of rooms
     int i = 0;
     int lastx, lasty; // last room position
     while (i < nRooms){
@@ -131,21 +140,19 @@ void makeDungeon(Map* map){
             x = 9;
             y = 9;
         }
-        makeRoom(map, CAVE_FLOOR, x, y, width, height); 
-        if (map->inMap(x+width/2, y+height/2)){
+        if (squareInMap(x, y, width+1, height+1)){
+            makeRoom(map, CAVE_FLOOR, x, y, width, height); 
             Entity* fireplace = makeFireplace(x+width/2, y+height/2);
             map->entityList.push_back(fireplace);
             Entity* sword = makeLongsword(x+width/3, y+height/3);
             map->entityList.push_back(sword);
             Entity* rat = makeRat(x+width/2, y+height/2);
-            //rat->glow = new Glow(rat, colors::white, 10);
             map->entityList.push_back(rat);
+            if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
+            lastx = x+width/2;
+            lasty = y+height/2;
+            i++;
         }
-        
-        if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
-        lastx = x+width/2;
-        lasty = y+height/2;
-        i++;
     }
 }
 

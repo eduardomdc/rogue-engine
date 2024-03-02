@@ -22,5 +22,5 @@ void attackAction(Entity* attacker, Entity* target);
 void moveAction(Entity* self, int x, int y);
 void openDoorAction(Entity* self, int x, int y);
 int returnSmallestAction(Entity* self);
-
+void stepOnFire(Entity* stepper);
 #endif

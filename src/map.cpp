@@ -4,6 +4,7 @@
 #include "game.hpp"
 #include "procgen/levelgen.hpp"
 #include <iostream>
+#include <vector>
 
 EntityList::EntityList(){
 
@@ -18,6 +19,26 @@ void EntityList::push_back(Entity* ent){
     else {
         this->bottom.push_back(ent);
     }
+}
+
+std::vector<Entity*> EntityList::entitiesAt(int x, int y){
+    std::vector<Entity*> ents;
+    for(int i=0; i<this->bottom.size(); i++){
+        if (bottom[i]->posX == x && bottom[i]->posY == y){
+            ents.push_back(bottom[i]);
+        }
+    }
+    for(int i=0; i<this->mid.size(); i++){
+        if (mid[i]->posX == x && mid[i]->posY == y){
+            ents.push_back(mid[i]);
+        }
+    }
+    for(int i=0; i<this->top.size(); i++){
+        if (top[i]->posX == x && top[i]->posY == y){
+            ents.push_back(top[i]);
+        }
+    }
+    return ents;
 }
 
 Map::Map(int mapWidth, int mapHeight){
@@ -38,7 +59,8 @@ void Map::loadMap(){
 }
 
 void Map::genMap(){
-    makeTestChamber(this);
+    //makeTestChamber(this);
+    makeDungeon(this);
 }
 
 void Map::drawMap(){
