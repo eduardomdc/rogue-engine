@@ -128,7 +128,7 @@ void makeDungeon(Map* map){
     map->ambientLight = {0,0,80};
 
     fillMap(map, CAVE_WALL);
-    int nRooms = 100;//rand()%5+5; // number of rooms
+    int nRooms = 1;//rand()%5+5; // number of rooms
     int i = 0;
     int lastx, lasty; // last room position
     while (i < nRooms){
@@ -146,7 +146,7 @@ void makeDungeon(Map* map){
             map->entityList.push_back(fireplace);
             Entity* sword = makeLongsword(x+width/3, y+height/3);
             map->entityList.push_back(sword);
-            Entity* rat = makeRat(x+width/2, y+height/2);
+            Entity* rat = makeGoblin(x+width/2, y+height/2);
             map->entityList.push_back(rat);
             if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
             lastx = x+width/2;

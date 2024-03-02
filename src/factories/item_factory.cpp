@@ -20,6 +20,25 @@ Entity* makeLongsword(int x, int y){
     return sword;
 }
 
+Entity* makeShortsword(int x, int y){
+    Entity* sword = new Entity();
+    sword->ch = "\\";
+    sword->name = "Shortsword";
+    sword->item = new Item(sword);
+    sword->foreRgb = colors::white;
+    sword->item->type = itemType::WEAPON;
+    sword->item->equipSlot=equipSlots::HAND1;
+    sword->item->damageDie = 6;
+    sword->item->damageMod = 0;
+    sword->item->dieAmount = 1;
+    sword->item->pickable = true;
+    sword->item->equipable = true;
+    sword->posX = x;
+    sword->posY = y;
+    return sword;
+}
+
+
 Entity* makeHealingPotion(int x, int y){
     Entity* potion = new Entity();
     potion->ch = "¡";

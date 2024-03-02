@@ -20,7 +20,8 @@ public:
     int getHp();
     Entity* getWeapon();
     bool equipItem(Entity* item);
-    bool unequipItem(equipSlots::equipSlots slot);
+    void giveEquipment(Entity* item);
+    bool unequipItem(int slot);
     void die();
 
     // equipments

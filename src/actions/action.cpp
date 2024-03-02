@@ -78,7 +78,7 @@ void stepOnFire(Entity *stepper){
     if (stepper->fighter==nullptr) return;
     int dmg = roll(1, 4);
     std::ostringstream mesg;
-    mesg << stepper->name<<" steps on fire and gets burned by "<<dmg<<" damage";
+    mesg << stepper->name<<" steps on fire and gets burned for "<<dmg;
     game->log.push_back(mesg.str());
     stepper->fighter->getHit(dmg);
 }

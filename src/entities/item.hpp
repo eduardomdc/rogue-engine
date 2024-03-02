@@ -59,12 +59,20 @@ enum equipSlots{
 };
 }
 
+namespace rarity{
+enum rarity{
+    COMMON,
+    RARE,
+    LEGENDARY,
+};
+}
+
 class Item {
 public:
     Item(Entity* owner);
     bool pickable = true;
     bool equipable = false;
-    equipSlots::equipSlots equipSlot = equipSlots::NONE;//enum head, body, ring etc...
+    int equipSlot = equipSlots::NONE;//enum head, body, ring etc...
     Entity* owner;
     // attributes
     int armorClassBonus = 0;
@@ -72,6 +80,7 @@ public:
     int dieAmount = 0;
     int damageMod = 0; // damage given is: dieAmount d damageDie + damageMod + other mods
     short type = 0;
+    short rarity = rarity::COMMON;
 
     // usable item function
     void (* use)(Entity* user, Entity* item);

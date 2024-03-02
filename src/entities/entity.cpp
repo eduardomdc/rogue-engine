@@ -15,6 +15,7 @@ Entity::Entity(){
     this->backRgb = colors::black;
     this->visible = true;
     this->stepOn = nullptr;
+    this->inventory = {};
 };
 
 Entity::~Entity(){
@@ -219,7 +220,11 @@ void Entity::destroy(){
                     this
                     )
                 );
+        
+        if (this->inventory.size()==0)
         game->map->entityList.bottom.push_back(this);
+        else
+        game->map->entityList.mid.push_back(this);
     }
 }
 

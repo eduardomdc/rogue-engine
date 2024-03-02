@@ -46,7 +46,7 @@ public:
     bool visible;
     void shineLight(short red, short green, short blue); // increase illumination values of entity
 
-    std::vector<Entity*> inventory = {};
+    std::vector<Entity*> inventory;
     bool pickUp();
     void drop(Entity* item);
     void removeItem(Entity* item);

@@ -106,6 +106,12 @@ void Fighter::setHp(int newHp){
 void Fighter::die(){
     this->hp = 0;
     alive = false;
+    // push all equipment to inventory
+    if (this->owner != game->player){
+        for(int i=0; i<this->equipments->size(); i++){
+            unequipItem(i);
+        }
+    }
     std::ostringstream mesg;
     mesg<<"The "<<owner->name<<" dies";
     game->log.push_back(mesg.str());
@@ -127,7 +133,7 @@ Entity* Fighter::getWeapon(){
 bool Fighter::equipItem(Entity *item){
     if (!item->item->equipable) return false;
     if (item->item->equipSlot == equipSlots::NONE) return false; 
-    if ( (*this->equipments)[item->item->equipSlot] ){
+    if ( (*this->equipments)[item->item->equipSlot] != nullptr){
         this->owner->inventory.push_back((*this->equipments)[item->item->equipSlot]);
     }
     this->owner->inventory.erase(
@@ -140,7 +146,7 @@ bool Fighter::equipItem(Entity *item){
     return true;
 }
 
-bool Fighter::unequipItem(equipSlots::equipSlots slot){
+bool Fighter::unequipItem(int slot){
     if (slot == equipSlots::NONE) return false;
     if ( (*this->equipments)[slot] == nullptr) return false;
     else {
@@ -149,4 +155,11 @@ bool Fighter::unequipItem(equipSlots::equipSlots slot){
         (*this->equipments)[slot] = nullptr;
     }
     return true;
+}
+
+void Fighter::giveEquipment(Entity* item){
+    //equips item without removing from inventory
+    if (!item->item->equipable) return;
+    if (item->item->equipSlot == equipSlots::NONE) return;
+    (*this->equipments)[item->item->equipSlot] = item;
 }

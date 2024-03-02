@@ -129,7 +129,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
-    player->fighter->maxHp = 30;
+    player->fighter->maxHp = 100;
     player->fighter->str = 10;
     player->fighter->agi = 10;
     player->fighter->con = 10;

@@ -99,7 +99,6 @@ void PlayerAi::pickUp(){
     while(item != game->map->entityList.mid.end()){
         if ((*item)->posX == this->owner->posX 
             && (*item)->posY == this->owner->posY){
-            std::cout<<"entity"<<std::endl;
             if((*item)->inventory.size()>0){
                 std::cout << "open inventory window for chest" << std::endl;
                 game->windows.push_back(new PickupInventoryWindow(*item));

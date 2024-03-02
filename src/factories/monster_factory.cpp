@@ -1,5 +1,6 @@
 #include "monster_factory.hpp"
 #include "../procgen/dice.hpp"
+#include "item_factory.hpp"
 /*
 Entity* makeMonster(int monsterEnum, int posX, int posY){
     Monster monster = monsterCatalog[monsterEnum];
@@ -99,8 +100,7 @@ Entity* makeGoblin(int posX, int posY){
     goblin->fighter = new Fighter(goblin);
     goblin->fighter->maxHp = roll(1,8);
     goblin->fighter->setHp(goblin->fighter->maxHp);
-
-
+    goblin->fighter->giveEquipment(makeShortsword(posX, posY));
     goblin->fighter->str = 11;
     goblin->fighter->agi = 10;
     goblin->fighter->dex = 10;
@@ -108,7 +108,7 @@ Entity* makeGoblin(int posX, int posY){
     goblin->fighter->itl = 6;
     goblin->fighter->wis = 4;
     goblin->fighter->cha = 1;
-    goblin->fighter->luck = 3;
+    goblin->fighter->luck = 0;
 
     return goblin;
 }
