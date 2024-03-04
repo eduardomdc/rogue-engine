@@ -5,11 +5,23 @@
 #include "../entities/glow.hpp"
 #include "../entities/entity.hpp"
 #include <iostream>
+#include <vector>
 
-struct rect {
-    int w;
-    int h;
-} typedef rect;
+bool inside(Room room, rect pos){
+    if (pos.w < room.pos.w)
+        return false;
+    return true;
+}
+
+std::vector<Room> Generator::isInRooms(rect pos){
+    std::vector<Room> inRooms = {};
+    for (int i=0; i<rooms.size(); i++){
+        if (inside(rooms[i], pos)){
+            
+        }
+    }
+    return inRooms;
+}
 
 void fillMap(Map* map, int floorTile){
     for (int i = 0; i<map->mapWidth; i++){
@@ -93,51 +105,39 @@ void makeSnowyMountain(Map* map){
     }
 }
 
-void makeRoom(Map* map, int floorTile, int posx, int posy, int width, int height){
+void makeRoom(Map* map, int floorTile, Room room){
     // make floor
-    for (int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++){
-            if (map->inMap(i+posx, j+posy)){
-                map->tileMap[i+posx][j+posy] = tileFactory::makeTile(floorTile, i+posx, j+posy);
+    for (int i = 0; i < room.size.w; i++){
+        for (int j = 0; j < room.size.h; j++){
+            if (map->inMap(i+room.pos.w, j+room.pos.h)){
+                map->tileMap[i+room.pos.w][j+room.pos.h] = tileFactory::makeTile(floorTile, i+room.pos.w, j+room.pos.h);
             }
         }
     }
 }
 
-void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int endy){
-    int dx = endx - posx;
-    int dy = endy - posy;
-    if (dx >= 0) makeRoom(map, floorTile, posx, posy, dx+1, 1);
-    else makeRoom(map, floorTile, endx, posy, -dx, 1);
-    if (dy >= 0) makeRoom(map, floorTile, endx, posy, 1, dy+1);
-    else makeRoom(map, floorTile, endx, endy, 1, -dy);
+void makeCorridor(Map* map, int floorTile, Room start, Room end){
+    rect startc = roomCenter(start);
+    rect endc = roomCenter(end);
+    int dx = endc.w - startc.w;
+    int dy = endc.h - startc.h;
+    if (dx >= 0) makeRoom(map, floorTile, {{startc.w, startc.h}, {dx+1, 1}});
+    else makeRoom(map, floorTile, {{endc.w, startc.h},{-dx, 1}});
+    if (dy >= 0) makeRoom(map, floorTile, {{endc.w, startc.h}, {1, dy+1}});
+    else makeRoom(map, floorTile, {{endc.w, endc.h},{1, -dy}});
 }
 
-void makeCorridorDoor(Map* map, int floorTile, int posx, int posy, int endx, int endy){
-    int dx = endx - posx;
-    int dy = endy - posy;
-    if (dy >= 0) makeRoom(map, floorTile, endx, posy, 1, dy+1);
-    else makeRoom(map, floorTile, endx, endy, 1, -dy);
-    if(dx>=0){
-        bool walkable = true;
-        //makeRoom(map, floorTile, posx, posy, dx+1, 1);
-        for(int i=0; i<dx; i++){
-            if (map->tileMap[posx+i][posy]->walkable!=walkable){
-                walkable=map->tileMap[posx+i][posy]->walkable;
-                map->tileMap[posx+i][posy] = makeWoodenDoor(posx+i, posy);
-            }
-        }
-    }
-    else{
-        //makeRoom(map, floorTile, endx, posy, -dx, 1);
-        bool walkable = true;
-        for(int i=dx; i>0; i++){
-            if (map->tileMap[posx+i][posy]->walkable!=walkable){
-                walkable=map->tileMap[posx+i][posy]->walkable;
-                map->tileMap[posx+i][posy] = makeWoodenDoor(posx+i, posy);
-            }
-        }
-    }
+void makeCorridorwithDoors(Map* map, int floorTile, Room start, Room end){
+    rect startc = roomCenter(start);
+    rect endc = roomCenter(end);
+    int dx = endc.w - startc.w;
+    int dy = endc.h - startc.h;
+    if (dx >= 0) makeRoom(map, floorTile, {{startc.w, startc.h}, {dx+1, 1}});
+    else makeRoom(map, floorTile, {{endc.w, startc.h},{-dx, 1}});
+    if (dy >= 0) makeRoom(map, floorTile, {{endc.w, startc.h}, {1, dy+1}});
+    else makeRoom(map, floorTile, {{endc.w, endc.h},{1, -dy}});
+    //doors
+    if (dx >= 0) map->tileMap[startc.w+start.size.w/2][startc.h] = makeWoodenDoor(startc.w+start.size.w/2,startc.h);
 }
 
 bool squareInMap(int x, int y, int width, int height){
@@ -151,48 +151,66 @@ bool squareInMap(int x, int y, int width, int height){
     else
         return false;
 }
+
+bool roomInMap(Room room){
+    //check if square with corner x,y is in map
+    if (  game->map->inMap(room.pos.w-1, room.pos.h-1)
+        &&game->map->inMap(room.pos.w+room.size.w+1, room.pos.h-1)
+        &&game->map->inMap(room.pos.w-1, room.pos.h+room.size.h+1)
+        &&game->map->inMap(room.pos.w+room.size.w+1, room.pos.h+room.size.h+1)
+        )
+        return true;
+    else
+        return false;
+}
+
+rect roomCenter(Room room){
+    return {room.pos.w+room.size.w/2, room.pos.h+room.size.h/2};
+}
+
 void makeDungeon(Map* map){
     map->ambientLight = {0,0,80};
-
     fillMap(map, CAVE_WALL);
-    int nRooms = 1;//rand()%5+5; // number of rooms
+    Generator dungeon;
+    dungeon.map = map;
+    dungeon.rooms = {};
+    int nRooms = 5;
     int i = 0;
-    int lastx, lasty; // last room position
     while (i < nRooms){
-        int x = rand()%map->mapWidth;
-        int y = rand()%map->mapHeight;
-        int width = rand()%10+3;
-        int height = rand()%10+3;
+        Room room;
+        room.pos.w = rand()%map->mapWidth;
+        room.pos.h = rand()%map->mapHeight;
+        room.size.w = rand()%10+3;
+        room.size.h = rand()%10+3;
         if (i == 0){
-            x = 9;
-            y = 9;
+            room.pos.w = 9;
+            room.pos.h = 9;
         }
-        if (squareInMap(x-1, y-1, width+1, height+1)){
-            makeRoom(map, CAVE_FLOOR, x, y, width, height); 
-            Entity* fireplace = makeFireplace(x+width/2, y+height/2);
+        if (roomInMap(room)){
+            makeRoom(map, CAVE_FLOOR, room);
+            Entity* fireplace = makeFireplace(roomCenter(room).w, roomCenter(room).h);
             map->entityList.push_back(fireplace);
-            Entity* sword = makeLongsword(x+width/3, y+height/3);
-            map->entityList.push_back(sword);
-            Entity* rat = makeGoblin(x+width/2, y+height/2);
-            map->entityList.push_back(rat);
-            if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
-            lastx = x+width/2;
-            lasty = y+height/2;
+            makeHorde(map, *makeRat, roomCenter(room), rand()%4);
+            if (i!=0){
+                Room lastRoom = dungeon.rooms.back();
+                makeCorridorwithDoors(map, CAVE_FLOOR, room, lastRoom);
+            }
+            dungeon.rooms.push_back(room);
             i++;
         }
     }
 }
 
-void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), SDL_Point pos, int quantity){
+void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), rect pos, int quantity){
     int monsters = 0;
-    SDL_Point newpos = pos;
+    rect newpos = pos;
     while(monsters<quantity){
-        newpos.x = pos.x+rand()%quantity;
-        newpos.y = pos.y+rand()%quantity;
-        if (!map->inMap(newpos.x, newpos.y)) continue;
-        if (!map->tileMap[newpos.x][newpos.y]->walkable) continue;
-        if (map->getFighterAt(newpos.x, newpos.y)!=nullptr) continue;
-        map->entityList.push_back(monster(newpos.x, newpos.y));
+        newpos.w = pos.w+rand()%quantity;
+        newpos.h = pos.h+rand()%quantity;
+        if (!map->inMap(newpos.w, newpos.h)) continue;
+        if (!map->tileMap[newpos.w][newpos.h]->walkable) continue;
+        if (map->getFighterAt(newpos.w, newpos.h)!=nullptr) continue;
+        map->entityList.push_back(monster(newpos.w, newpos.h));
         monsters++;
     }
 }
@@ -216,33 +234,6 @@ void houseRoom(Map* map, rect pos, rect size, rect door){
     map->tileMap[door.w][door.h] = makeWoodenDoor(door.w, door.h);
     Entity* fireplace = makeFireplace(pos.w+size.w/2, pos.h+size.h/2);
     map->entityList.push_back(fireplace);
-}
-void makeSewers(Map* map){
-    map->ambientLight={0, 80, 0};
-    fillMap(map, CAVE_WALL);
-    int nRooms = 20;//rand()%5+5; // number of rooms
-    int i = 0;
-    int lastx, lasty; // last room position
-    while (i < nRooms){
-        int x = rand()%map->mapWidth;
-        int y = rand()%map->mapHeight;
-        int width = rand()%10+3;
-        int height = rand()%10+3;
-        if (i == 0){
-            x = 9;
-            y = 9;
-        }
-        if (squareInMap(x-1, y-1, width+1, height+1)){
-            makeRoom(map, CAVE_FLOOR, x, y, width, height); 
-            Entity* fireplace = makeFireplace(x+width/2, y+height/2);
-            map->entityList.push_back(fireplace);
-            makeHorde(map, *makeRat, {x+width/2, y+height/2}, rand()%4);
-            if (i!=0) makeCorridorDoor(map, CAVE_FLOOR, x+width/2, y+height/2, lastx, lasty);
-            lastx = x+width/2;
-            lasty = y+height/2;
-            i++;
-        }
-    }
 }
 
 

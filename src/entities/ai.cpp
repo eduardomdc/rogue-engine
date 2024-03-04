@@ -160,12 +160,14 @@ void CritterAi::update(){
     }
 
     if (path.size() == 0){
-        //if there is no path to player
-        int dx = rand()%3-1;
-        int dy = rand()%3-1;
         if (std::abs(owner->posX-game->player->posX) <= 1 && std::abs(owner->posY-game->player->posY) <= 1){
+            //if adjacent to player
             CritterAi::moveOrAttack(game->player->posX, game->player->posY);
         } else {
+            //if there is no path to player
+            int dx = rand()%3-1;
+            int dy = rand()%3-1;
+            if (rand()%6!=0) return;
             CritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
         }
     }
