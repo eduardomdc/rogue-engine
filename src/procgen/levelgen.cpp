@@ -115,10 +115,11 @@ void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int end
 
 
 bool squareInMap(int x, int y, int width, int height){
-    if (  game->map->inMap(x+width/2, y+height/2)
-        &&game->map->inMap(x+width/2, y-height/2)
-        &&game->map->inMap(x-width/2, y-height/2)
-        &&game->map->inMap(x-width/2, y+height/2)
+    //check if square with corner x,y is in map
+    if (  game->map->inMap(x, y)
+        &&game->map->inMap(x+width, y)
+        &&game->map->inMap(x, y+height)
+        &&game->map->inMap(x+width, y+height)
         )
         return true;
     else
@@ -140,7 +141,7 @@ void makeDungeon(Map* map){
             x = 9;
             y = 9;
         }
-        if (squareInMap(x, y, width+1, height+1)){
+        if (squareInMap(x-1, y-1, width+1, height+1)){
             makeRoom(map, CAVE_FLOOR, x, y, width, height); 
             Entity* fireplace = makeFireplace(x+width/2, y+height/2);
             map->entityList.push_back(fireplace);
@@ -171,7 +172,7 @@ void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), SDL_Point pos, i
 }
 
 void makeSewers(Map* map){
-    map->ambientLight={30, 80, 30};
+    map->ambientLight={0, 80, 0};
     fillMap(map, CAVE_WALL);
     int nRooms = 10;//rand()%5+5; // number of rooms
     int i = 0;
@@ -185,7 +186,7 @@ void makeSewers(Map* map){
             x = 9;
             y = 9;
         }
-        if (squareInMap(x, y, width+1, height+1)){
+        if (squareInMap(x-1, y-1, width+1, height+1)){
             makeRoom(map, CAVE_FLOOR, x, y, width, height); 
             Entity* fireplace = makeFireplace(x+width/2, y+height/2);
             map->entityList.push_back(fireplace);

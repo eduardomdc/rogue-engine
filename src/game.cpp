@@ -66,7 +66,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
 
-    map = new Map(160,90);
+    map = new Map(50,50);
     
     map->genMap();
     player = new Entity();
