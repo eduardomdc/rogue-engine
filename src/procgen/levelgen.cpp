@@ -107,12 +107,38 @@ void makeRoom(Map* map, int floorTile, int posx, int posy, int width, int height
 void makeCorridor(Map* map, int floorTile, int posx, int posy, int endx, int endy){
     int dx = endx - posx;
     int dy = endy - posy;
-    if (dx >= 0) makeRoom(map, floorTile, posx, posy, dx, 1);
+    if (dx >= 0) makeRoom(map, floorTile, posx, posy, dx+1, 1);
     else makeRoom(map, floorTile, endx, posy, -dx, 1);
-    if (dy >= 0) makeRoom(map, floorTile, endx, posy, 1, dy);
+    if (dy >= 0) makeRoom(map, floorTile, endx, posy, 1, dy+1);
     else makeRoom(map, floorTile, endx, endy, 1, -dy);
 }
 
+void makeCorridorDoor(Map* map, int floorTile, int posx, int posy, int endx, int endy){
+    int dx = endx - posx;
+    int dy = endy - posy;
+    if (dy >= 0) makeRoom(map, floorTile, endx, posy, 1, dy+1);
+    else makeRoom(map, floorTile, endx, endy, 1, -dy);
+    if(dx>=0){
+        bool walkable = true;
+        //makeRoom(map, floorTile, posx, posy, dx+1, 1);
+        for(int i=0; i<dx; i++){
+            if (map->tileMap[posx+i][posy]->walkable!=walkable){
+                walkable=map->tileMap[posx+i][posy]->walkable;
+                map->tileMap[posx+i][posy] = makeWoodenDoor(posx+i, posy);
+            }
+        }
+    }
+    else{
+        //makeRoom(map, floorTile, endx, posy, -dx, 1);
+        bool walkable = true;
+        for(int i=dx; i>0; i++){
+            if (map->tileMap[posx+i][posy]->walkable!=walkable){
+                walkable=map->tileMap[posx+i][posy]->walkable;
+                map->tileMap[posx+i][posy] = makeWoodenDoor(posx+i, posy);
+            }
+        }
+    }
+}
 
 bool squareInMap(int x, int y, int width, int height){
     //check if square with corner x,y is in map
@@ -171,34 +197,6 @@ void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), SDL_Point pos, i
     }
 }
 
-void makeSewers(Map* map){
-    map->ambientLight={0, 80, 0};
-    fillMap(map, CAVE_WALL);
-    int nRooms = 10;//rand()%5+5; // number of rooms
-    int i = 0;
-    int lastx, lasty; // last room position
-    while (i < nRooms){
-        int x = rand()%map->mapWidth;
-        int y = rand()%map->mapHeight;
-        int width = rand()%10+3;
-        int height = rand()%10+3;
-        if (i == 0){
-            x = 9;
-            y = 9;
-        }
-        if (squareInMap(x-1, y-1, width+1, height+1)){
-            makeRoom(map, CAVE_FLOOR, x, y, width, height); 
-            Entity* fireplace = makeFireplace(x+width/2, y+height/2);
-            map->entityList.push_back(fireplace);
-            makeHorde(map, *makeRat, {x+width/2, y+height/2}, rand()%4);
-            if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
-            lastx = x+width/2;
-            lasty = y+height/2;
-            i++;
-        }
-    }
-}
-
 void houseRoom(Map* map, rect pos, rect size, rect door){
     for (int i=pos.w; i<size.w+pos.w; i++){
         for (int j=pos.h; j<size.h+pos.h; j++){
@@ -219,6 +217,34 @@ void houseRoom(Map* map, rect pos, rect size, rect door){
     Entity* fireplace = makeFireplace(pos.w+size.w/2, pos.h+size.h/2);
     map->entityList.push_back(fireplace);
 }
+void makeSewers(Map* map){
+    map->ambientLight={0, 80, 0};
+    fillMap(map, CAVE_WALL);
+    int nRooms = 20;//rand()%5+5; // number of rooms
+    int i = 0;
+    int lastx, lasty; // last room position
+    while (i < nRooms){
+        int x = rand()%map->mapWidth;
+        int y = rand()%map->mapHeight;
+        int width = rand()%10+3;
+        int height = rand()%10+3;
+        if (i == 0){
+            x = 9;
+            y = 9;
+        }
+        if (squareInMap(x-1, y-1, width+1, height+1)){
+            makeRoom(map, CAVE_FLOOR, x, y, width, height); 
+            Entity* fireplace = makeFireplace(x+width/2, y+height/2);
+            map->entityList.push_back(fireplace);
+            makeHorde(map, *makeRat, {x+width/2, y+height/2}, rand()%4);
+            if (i!=0) makeCorridorDoor(map, CAVE_FLOOR, x+width/2, y+height/2, lastx, lasty);
+            lastx = x+width/2;
+            lasty = y+height/2;
+            i++;
+        }
+    }
+}
+
 
 void makeBigHouse(Map* map){
     map->ambientLight = {0,0,80};
