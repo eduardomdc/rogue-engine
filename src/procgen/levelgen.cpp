@@ -156,17 +156,17 @@ void makeDungeon(Map* map){
     }
 }
 
-void makeRatGroup(Map* map, SDL_Point pos, int quantity){
-    int rats = 0;
+void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), SDL_Point pos, int quantity){
+    int monsters = 0;
     SDL_Point newpos = pos;
-    while(rats<quantity){
+    while(monsters<quantity){
         newpos.x = pos.x+rand()%quantity;
         newpos.y = pos.y+rand()%quantity;
         if (!map->inMap(newpos.x, newpos.y)) continue;
         if (!map->tileMap[newpos.x][newpos.y]->walkable) continue;
         if (map->getFighterAt(newpos.x, newpos.y)!=nullptr) continue;
-        map->entityList.push_back(makeRat(newpos.x, newpos.y));
-        rats++;
+        map->entityList.push_back(monster(newpos.x, newpos.y));
+        monsters++;
     }
 }
 
@@ -189,7 +189,7 @@ void makeSewers(Map* map){
             makeRoom(map, CAVE_FLOOR, x, y, width, height); 
             Entity* fireplace = makeFireplace(x+width/2, y+height/2);
             map->entityList.push_back(fireplace);
-            makeRatGroup(map, {x+width/2, y+height/2}, rand()%4);
+            makeHorde(map, *makeRat, {x+width/2, y+height/2}, rand()%4);
             if (i!=0) makeCorridor(map, CAVE_FLOOR, x, y, lastx, lasty);
             lastx = x+width/2;
             lasty = y+height/2;
