@@ -44,6 +44,7 @@ void Fighter::getHit(int damage){
     dmg->speed = 100;
     dmg->posY = this->owner->posY;
     dmg->damageNumber = true;
+    dmg->onMap = true;
     game->animationList.push_back(dmg); 
 }
 
@@ -58,6 +59,7 @@ int Fighter::getHealed(int amount){
     heal->speed = 100;
     heal->posY = this->owner->posY;
     heal->damageNumber = true;
+    heal->onMap = true;
     game->animationList.push_back(heal); 
     return amountHealed;
 }
@@ -78,6 +80,7 @@ void Fighter::getHitCritically(int damage){
     dmg->speed = 150;
     dmg->posY = this->owner->posY;
     dmg->damageNumber = true;
+    dmg->onMap = true;
     game->animationList.push_back(dmg); 
 }
 
@@ -89,6 +92,7 @@ void Fighter::dodge(){
     miss->posY = this->owner->posY;
     miss->speed = 50;
     miss->damageNumber = true;
+    miss->onMap = true;
     game->animationList.push_back(miss);
 }
 

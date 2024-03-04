@@ -67,58 +67,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     
 
     map = new Map(160,90);
-    map->genMap();
-
-    inputManager = new GameWindow();
-    windows.push_back(inputManager);
-
-    Entity * redFire;
-    redFire = new Entity();
-    redFire->ch = "*";
-    redFire->origRgb = colors::fire;
-    redFire->foreRgb = colors::fire;
-    redFire->posX = 30;
-    redFire->posY = 30;
-    ParticleEmitter* pemit;
-    pemit = new ParticleEmitter(redFire);
-    pemit->chs = {".", ",","*","`"};
-    pemit->foreRgb = colors::yellow;
-    pemit->x = 30;
-    pemit->y = 30;
-    pemit->maxParticles = 10;
-    pemit->spawnRate = 500;
-    pemit->angle = -M_PI/2;
-    pemit->speed = 0.01;
-    pemit->speedSpread = 0.005;
-    pemit->angleSpread = M_PI/6;
-    pemit->duration = 2000;
-    redFire->particleEmitter = pemit;
-    redFire->glow = new Glow(redFire, colors::fire, 60);
-    map->entityList.push_back(redFire);
     
-
-    Entity * greenFire = new Entity();
-    greenFire->ch = "o";
-    greenFire->name = "The Green Ring";
-    greenFire->item = new Item(greenFire);
-    greenFire->origRgb = colors::green;
-    greenFire->foreRgb = colors::green;
-    greenFire->posX = 31;
-    greenFire->posY = 35;
-    greenFire->glow = new Glow(greenFire, colors::green, 20);
-    map->entityList.push_back(greenFire);
-
-    Entity * blueFire = new Entity();
-    blueFire->ch = "/";
-    blueFire->name = "Aqua Wand of Menehor";
-    blueFire->item = new Item(blueFire);
-    blueFire->origRgb = colors::blue;
-    blueFire->foreRgb = colors::blue;
-    blueFire->posX = 32;
-    blueFire->posY = 30;
-    blueFire->glow = new Glow(blueFire, colors::blue, 20);
-    map->entityList.push_back(blueFire);
-
+    map->genMap();
     player = new Entity();
     player->ch = "☺";
     player->name = "Player";
@@ -133,18 +83,12 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->fighter->str = 10;
     player->fighter->agi = 10;
     player->fighter->con = 10;
-    player->fighter->setHp(45);
-
+    player->fighter->setHp(100);
     map->entityList.push_back(player);
+    inputManager = new GameWindow();
+    windows.push_back(inputManager);
+
     
-    Animation* arrow = new Animation();
-    arrow->foreRgb = colors::red;
-    arrow->backRgb = colors::blue;
-    //arrow->setFrames({"R","O","G","U","E","☺"});
-    arrow->posX = 1;
-    arrow->speed = 500;
-    arrow->posY = 1;
-    //animationList.push_back(arrow);
 }
 
 InputManager* Game::activeWindow(){

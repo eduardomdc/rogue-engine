@@ -87,14 +87,15 @@ void Entity::render(){
         
         
         color lightColored = this->foreRgb;
-        /* clearer but less mood
-        lightColored.red *= std::min(0.3+this->illumination.red/255.0,1.0);
-        lightColored.blue *= std::min(0.3+this->illumination.blue/255.0, 1.0);
-        lightColored.green *= std::min(0.3+this->illumination.green/255.0, 1.0);
-        */
+        /* clearer but less mood*/
+        lightColored.red *= std::min(0.4+this->illumination.red/255.0,1.0);
+        lightColored.blue *= std::min(0.4+this->illumination.blue/255.0, 1.0);
+        lightColored.green *= std::min(0.4+this->illumination.green/255.0, 1.0);
+        
+        /*
         lightColored.red *= this->illumination.red/255.0;
         lightColored.green *= this->illumination.green/255.0;
-        lightColored.blue *= this->illumination.blue/255.0;
+        lightColored.blue *= this->illumination.blue/255.0;*/
         
         if (this->hasBackground){
             color lightColoredBg = this->backRgb;
