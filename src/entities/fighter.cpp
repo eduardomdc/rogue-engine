@@ -14,6 +14,7 @@ Fighter::Fighter(Entity* owner){
     this->owner = owner;
     this->equipments = new std::vector<Entity*>(10); 
     this->stealth = false;
+    this->equipGlow = nullptr;
 }
 
 void Fighter::update(){

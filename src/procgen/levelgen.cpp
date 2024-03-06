@@ -245,6 +245,7 @@ void makeBigHouse(Map* map){
 }
 
 void makeCave(Map* map){
+    Perlin* floorPerlin = new Perlin(250);
     map->ambientLight = {0,0,60};
     fillMap(map, CAVE_WALL);
     rect pos;//position of drunk dwarf
@@ -276,6 +277,13 @@ void makeCave(Map* map){
             }
         }
         pos = newPos;
+    }
+    for (int i = 0; i<map->mapWidth; i++){
+        for (int j = 0; j<map->mapHeight; j++){
+            if (floorPerlin->value(i*0.2, j*0.2) > 0.2){
+                map->tileMap[i][j] = tileFactory::makeTile(CAVE_FLOOR, i, j);
+            }
+        }
     }
     map->entityList.push_back(makeMinersHat(game->map->mapWidth/2, game->map->mapHeight/2));
 }
