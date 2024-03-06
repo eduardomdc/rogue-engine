@@ -10,6 +10,7 @@
 bool inside(Room room, rect pos){
     if (pos.w < room.pos.w)
         return false;
+    
     return true;
 }
 

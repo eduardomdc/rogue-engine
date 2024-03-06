@@ -118,7 +118,7 @@ void Fighter::die(){
     }
     std::ostringstream mesg;
     mesg<<"The "<<owner->name<<" dies";
-    game->log.push_back(mesg.str());
+    localMsg({owner->posX, owner->posY}, mesg.str());
     this->owner->destroy();
     std::ostringstream newName;
     newName<<this->owner->name<<" corpse";

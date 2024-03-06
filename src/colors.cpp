@@ -2,9 +2,12 @@
 #include <random>
 
 color colorManager::randomize(color c){
-    c.red += rand() % (c.redRand + 1);
-    c.green += rand() % (c.greenRand + 1);
-    c.blue += rand() % (c.blueRand + 1);
+    if(c.redRand != 0)
+        c.red += rand() % (c.redRand + 1);
+    if(c.greenRand != 0)
+        c.green += rand() % (c.greenRand + 1);
+    if(c.blueRand != 0)
+        c.blue += rand() % (c.blueRand + 1);
     return c;
 }
 

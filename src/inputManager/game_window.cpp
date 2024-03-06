@@ -72,9 +72,9 @@ void renderLog(){
     while (currentLine > posy){
         if (currentMsg >= 0){
             if (currentMsg == game->log.size()-1)
-            renderText(game->log[currentMsg], 2, currentLine, colors::yellow, false);
+            renderText(game->log[currentMsg].text, 2, currentLine, colorManager::randomize(game->log[currentMsg].col), false);
             else
-            renderText(game->log[currentMsg], 2, currentLine, colors::grey, false);
+            renderText(game->log[currentMsg].text, 2, currentLine, colorManager::randomize(game->log[currentMsg].col), false);
         }
         currentLine--;
         currentMsg--;

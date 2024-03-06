@@ -51,6 +51,7 @@ set(MY_SOURCES
     src/game.cpp
     src/main.cpp
     src/map.cpp
+    src/log.cpp
 )
 
 message(STATUS "SDL2_image include dirs: ${SDL2_IMAGE_INCLUDE_DIRS}")

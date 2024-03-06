@@ -8,6 +8,7 @@
 #include "../animations/animation.hpp"
 #include "../game.hpp"
 #include "../map.hpp"
+#include "../log.hpp"
 
 void attackAction(Entity *attacker, Entity *target){
     Fighter* fighter = attacker->fighter;
@@ -36,7 +37,7 @@ void attackAction(Entity *attacker, Entity *target){
         //std::cout<<attacker->name<<" hits "<<target->name<<" for "<<dmg<<std::endl;
         std::ostringstream mesg;
         mesg<<attacker->name<<" hits "<<target->name<<" luckly for "<<dmg;
-        game->log.push_back(mesg.str());
+        localMsg({target->posX, target->posY}, mesg.str(), colors::yellow);
         victim->getHitCritically(dmg);
     } else if (rolled > 1){
         if (rolled + (fighter->str-10) < victim->armorClass){
@@ -44,20 +45,20 @@ void attackAction(Entity *attacker, Entity *target){
             victim->dodge();
             std::ostringstream mesg;
             mesg<<target->name<<" dodges "<<attacker->name<<"'s attack";
-            game->log.push_back(mesg.str());
+            localMsg({target->posX, target->posY}, mesg.str(), colors::lightBlue);
         } else {
             //std::cout << attacker->name << " hits "<< target->name << " for " << dmg << std::endl;
             dmg = std::max(0, dmg);
             std::ostringstream mesg;
             mesg<<attacker->name<<" hits "<<target->name<<" for "<<dmg;
-            game->log.push_back(mesg.str());
+            localMsg({target->posX, target->posY}, mesg.str(), colors::red);
             victim->getHit(dmg);
         }
     } else {
         // swoooosh
         std::ostringstream mesg;
         mesg<<target->name<<" is greatly missed by "<<attacker->name<<"'s attack";
-        game->log.push_back(mesg.str());
+        localMsg({target->posX, target->posY}, mesg.str(), colors::blue);
         victim->dodge();
     }
     //std::cout<<attacker->name<<" used "<<turnsNeeded<<" turns"<<std::endl;
@@ -79,6 +80,6 @@ void stepOnFire(Entity *stepper){
     int dmg = roll(1, 4);
     std::ostringstream mesg;
     mesg << stepper->name<<" steps on fire and gets burned for "<<dmg;
-    game->log.push_back(mesg.str());
+    localMsg({stepper->posX, stepper->posY}, mesg.str(), colors::fire);
     stepper->fighter->getHit(dmg);
 }

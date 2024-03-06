@@ -9,6 +9,7 @@
 #include "animations/animation.hpp"
 #include "inputManager/input_manager.hpp"
 #include "draw/tile_manager.hpp"
+#include "log.hpp"
 
 class Game {
 public:
@@ -36,7 +37,7 @@ public:
 
     std::vector<InputManager*> windows = {}; // last item is current active window, rendered from first to last
 
-    std::vector<std::string> log; // game's text log
+    std::vector<msg> log; // game's text log
 
     InputManager* activeWindow();
 
