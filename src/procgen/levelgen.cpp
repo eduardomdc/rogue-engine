@@ -189,7 +189,7 @@ void makeDungeon(Map* map){
         }
         if (roomInMap(room)){
             makeRoom(map, CAVE_FLOOR, room);
-            Entity* fireplace = makeFireplace(roomCenter(room).w, roomCenter(room).h);
+            Entity* fireplace = makeFireplace(room.pos.w-1, room.pos.h+2);
             map->entityList.push_back(fireplace);
             makeHorde(map, *makeRat, roomCenter(room), rand()%4);
             if (i!=0){
@@ -242,4 +242,40 @@ void makeBigHouse(Map* map){
     map->ambientLight = {0,0,80};
     fillMap(map, GRASS);
     houseRoom(map, {5,10}, {20,10}, {12, 20});
+}
+
+void makeCave(Map* map){
+    map->ambientLight = {0,0,60};
+    fillMap(map, CAVE_WALL);
+    rect pos;//position of drunk dwarf
+    pos.h = game->map->mapHeight/2;
+    pos.w = game->map->mapWidth/2;
+    rect dir;//direction of drunk dwarf
+    dir.h = 0;
+    dir.w = 1;
+    int steps = 1000; // steps taken by drunk dwarf
+    int turnRate = 2; // average steps taken between turning
+    for(int i=0; i<steps; i++){
+        rect newPos;
+        newPos.w = pos.w+dir.w;
+        newPos.h = pos.h+dir.h;
+        if(!map->inMap(newPos.w, newPos.h)){
+            newPos.w = game->map->mapWidth/2;
+            newPos.h = game->map->mapHeight/2;
+        }
+        map->tileMap[newPos.w][newPos.h] = tileFactory::makeTile(CAVE_FLOOR, newPos.w, newPos.h);
+        if (rand()%turnRate==0){
+            if(rand()%2==0){
+                //horizontal
+                dir.h = 0;
+                dir.w = rand()%3-1;
+            } else {
+                //vertical
+                dir.h = rand()%3-1;
+                dir.w = 0;
+            }
+        }
+        pos = newPos;
+    }
+    map->entityList.push_back(makeMinersHat(game->map->mapWidth/2, game->map->mapHeight/2));
 }

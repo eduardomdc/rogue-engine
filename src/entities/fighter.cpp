@@ -147,6 +147,7 @@ bool Fighter::equipItem(Entity *item){
                 item)
             );
     (*this->equipments)[item->item->equipSlot] = item;
+    checkGlow();
     return true;
 }
 
@@ -158,6 +159,7 @@ bool Fighter::unequipItem(int slot){
         this->owner->inventory.push_back(item);
         (*this->equipments)[slot] = nullptr;
     }
+    checkGlow();
     return true;
 }
 
@@ -166,4 +168,23 @@ void Fighter::giveEquipment(Entity* item){
     if (!item->item->equipable) return;
     if (item->item->equipSlot == equipSlots::NONE) return;
     (*this->equipments)[item->item->equipSlot] = item;
+    checkGlow();
+}
+
+void Fighter::checkGlow(){
+    //checks for change in glow from glowing equipments
+    bool noglow = true; // there are no glowing items
+    for (int i=0; i<this->equipments->size(); i++){
+        if ((*this->equipments)[i]==nullptr) continue;
+        if ((*this->equipments)[i]->glow==nullptr) continue;
+        //if equiped item glows more than the current equipGlow
+        noglow = false;
+        if(equipGlow==nullptr){
+            equipGlow = (*this->equipments)[i]->glow;
+        }
+        else if ((*this->equipments)[i]->glow->intensity>=equipGlow->intensity){
+            equipGlow = (*this->equipments)[i]->glow;
+        }
+    }
+    if (noglow) equipGlow = nullptr;
 }

@@ -28,9 +28,6 @@ Entity::~Entity(){
 };
 
 void Entity::setPos(int x, int y){
-    if (this->glow){
-
-    }
     this->posX = x;
     this->posY = y;
 }

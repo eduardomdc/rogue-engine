@@ -74,8 +74,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->name = "Player";
     player->origRgb = colors::white;
     player->foreRgb = colors::white;
-    player->posX = 10;
-    player->posY = 10;
+    player->posX = map->mapWidth/2;
+    player->posY = map->mapHeight/2;
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
@@ -121,11 +121,23 @@ void zeroingLight(std::vector<Entity*> entityList){
 
 void updateGlows(std::vector<Entity*> entityList){
     for (int i=0; i<entityList.size(); i++){
-        if (entityList[i]->glow != nullptr){
-            entityList[i]->glow->update(entityList[i]);
-            if (entityList[i]->glow->glowColor.colorDances){
+        Entity* ent=entityList[i];
+        if (ent->glow != nullptr){
+            ent->glow->update(ent);
+            if (ent->glow->glowColor.colorDances){
                 if (rand()%10 == 0) {
-                    entityList[i]->glow->glowColor = colorManager::randomize(entityList[i]->glow->glowOrigColor);
+                    ent->glow->glowColor = colorManager::randomize(ent->glow->glowOrigColor);
+                }
+            }
+        }
+        
+        if (ent->fighter != nullptr){
+            if (ent->fighter->equipGlow != nullptr){
+                ent->fighter->equipGlow->update(ent);
+                if (ent->fighter->equipGlow->glowColor.colorDances){
+                    if (rand()%10 == 0){
+                        ent->fighter->equipGlow->glowColor = colorManager::randomize(ent->fighter->equipGlow->glowOrigColor);
+                    }
                 }
             }
         }

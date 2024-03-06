@@ -38,6 +38,21 @@ Entity* makeShortsword(int x, int y){
     return sword;
 }
 
+Entity* makeMinersHat(int x, int y){
+    Entity* hat = new Entity();
+    hat->ch = "^";
+    hat->name = "Miner's Hat";
+    hat->item = new Item(hat);
+    hat->foreRgb = colors::yellow;
+    hat->glow = new Glow(hat, colors::yellow, 10);
+    hat->item->type = itemType::ARMOUR;
+    hat->item->equipSlot = equipSlots::HEAD;
+    hat->item->pickable = true;
+    hat->item->equipable = true;
+    hat->posX = x;
+    hat->posY = y;
+    return hat;
+}
 
 Entity* makeHealingPotion(int x, int y){
     Entity* potion = new Entity();

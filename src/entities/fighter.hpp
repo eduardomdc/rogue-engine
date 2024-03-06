@@ -5,11 +5,13 @@
 #include "item.hpp"
 
 class Entity;
+class Glow;
 
 class Fighter {
 public:
     Fighter(Entity* owner);
     Entity* owner;
+    Glow* equipGlow; // glow resulting from wearing glowing equips
     bool alive = true;
     void update(); // update for debuff effects, check for step on traps etc
     void getHit(int damage);
@@ -26,6 +28,7 @@ public:
 
     // equipments
     std::vector<Entity*>* equipments;// items are allocated according to equipSlot enum index
+    void checkGlow();//do this every time after modifying equipment 
 
     int hp = 1;
     int maxHp = 1;

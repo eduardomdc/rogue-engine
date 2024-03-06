@@ -10,6 +10,7 @@ void makeForest(Map* map);
 void makeDungeon(Map* map);
 void makeBigHouse(Map* map);
 void makeSewers(Map* map);
+void makeCave(Map* map);
 
 
 struct rect {
