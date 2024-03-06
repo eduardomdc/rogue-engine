@@ -38,6 +38,7 @@ namespace colors {
 	extern const color black;
 	extern const color grey;
 	extern const color pearly;
+	extern const color yellowFire; // Miner's Hat
 	extern const color fire;
 	extern const color playerFire;
 	extern const color blueMagic;

@@ -44,7 +44,7 @@ Entity* makeMinersHat(int x, int y){
     hat->name = "Miner's Hat";
     hat->item = new Item(hat);
     hat->foreRgb = colors::yellow;
-    hat->glow = new Glow(hat, colors::yellow, 10);
+    hat->glow = new Glow(hat, colors::yellowFire, 10);
     hat->item->type = itemType::ARMOUR;
     hat->item->equipSlot = equipSlots::HEAD;
     hat->item->pickable = true;

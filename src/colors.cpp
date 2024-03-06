@@ -22,6 +22,7 @@ const color colors::brown =                 {139, 39, 19, 0, 0, 0, 0, false};
 const color colors::black = 				{0, 0, 0, 0, 0,	0,	0,	false};
 const color colors::grey =					{95, 95, 95, 0, 0, 0, 0, false};
 const color colors::pearly =				{155, 155, 155, 100, 100, 100, 0, false};
+const color colors::yellowFire = 			{155,   105,   0, 60,   30,	0, 0, true};
 const color colors::fire = 					{155,   0,   0, 100,   60,	0, 0, true};
 const color colors::playerFire = 			{155,   30,   30, 100,   60,	0, 0, true};
 const color colors::blueMagic = 			{0,   100,   200, 0,   60,	55, 0, true};
