@@ -111,7 +111,7 @@ void spawnMonsters(int level, Map* map, rect pos){
         int choice = rand()%3;
         switch (choice){
             case 1:
-                makeHorde(map, *makeRat, pos, rand()%4+1);
+                makeHorde(map, *makeRat, pos, rand()%3+1);
                 break;
             case 2:
                 makeHorde(map, *makeZombie, pos, rand()%2+1);
@@ -270,7 +270,8 @@ void makeCave(Map* map){
     dir.w = 1;
     int steps = 1000; // steps taken by drunk dwarf
     int turnRate = 2; // average steps taken between turning
-    int stepsMonsterRate = 20; // steps taken between spawning monsters
+    int stepsMonsterRate = 60; // steps taken between spawning monsters
+    int torchRate = 100;
     for(int i=0; i<steps; i++){
         rect newPos;
         newPos.w = pos.w+dir.w;
@@ -295,6 +296,9 @@ void makeCave(Map* map){
         //spawn monsters
         if (rand()%stepsMonsterRate==0){
             spawnMonsters(1, map, pos);
+        }
+        if (rand()%torchRate==0){
+            map->entityList.push_back(makeTikiTorch(pos.w, pos.h));
         }
     }
     for (int i = 0; i<map->mapWidth; i++){

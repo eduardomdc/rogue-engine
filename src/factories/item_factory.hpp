@@ -12,6 +12,7 @@ Entity* makeMinersHat(int x, int y);
 Entity* makeHealingPotion(int x, int y);
 //ENVIROMENT
 Entity* makeFireplace(int x, int y);
+Entity* makeTikiTorch(int x, int y);
 Entity* makeChest(int x, int y);
 
 #endif

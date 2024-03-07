@@ -89,7 +89,31 @@ Entity* makeFireplace(int x, int y){
     pemit->duration = 2000;
     redFire->particleEmitter = pemit;
     redFire->glow = new Glow(redFire, colors::fire, 20);
-    redFire->item = new Item(redFire);
+    redFire->posX = x;
+    redFire->posY = y;
+    return redFire;
+}
+
+Entity* makeTikiTorch(int x, int y){
+    Entity * redFire;
+    redFire = new Entity();
+    redFire->ch = "î";
+    redFire->name = "Tiki Torch";
+    redFire->origRgb = colors::fire;
+    redFire->foreRgb = colors::fire;
+    ParticleEmitter* pemit;
+    pemit = new ParticleEmitter(redFire);
+    pemit->chs = {".", ",","*","`"};
+    pemit->foreRgb = colors::yellow;
+    pemit->maxParticles = 10;
+    pemit->spawnRate = 500;
+    pemit->angle = -M_PI/2;
+    pemit->speed = 0.02;
+    pemit->speedSpread = 0.005;
+    pemit->angleSpread = M_PI/6;
+    pemit->duration = 1000;
+    redFire->particleEmitter = pemit;
+    redFire->glow = new Glow(redFire, colors::fire, 20);
     redFire->posX = x;
     redFire->posY = y;
     return redFire;
