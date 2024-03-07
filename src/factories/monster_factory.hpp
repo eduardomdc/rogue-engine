@@ -8,6 +8,7 @@
 typedef void (*aiConstructor)();
 
 Entity* makeRat(int posX, int posY);
+Entity* makeZombie(int posX, int posY);
 Entity* makeGoblin(int posX, int posY);
 
 

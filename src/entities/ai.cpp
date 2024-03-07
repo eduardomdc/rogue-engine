@@ -202,3 +202,55 @@ void CritterAi::moveOrAttack(int targetX, int targetY){
         }//if there is entity attackable attack it else:
     }
 };
+
+
+
+void SlowCritterAi::update(){
+    // look for player
+    if (!alive) return;
+    try 
+    {
+    if (euclideanDistance(this->owner->posX, this->owner->posY, game->player->posX, game->player->posY) < 10){
+        path = straightPath({this->owner->posX,owner->posY},{game->player->posX, game->player->posY});
+    }
+
+    if (path.size() == 0){
+        if (std::abs(owner->posX-game->player->posX) <= 1 && std::abs(owner->posY-game->player->posY) <= 1){
+            //if adjacent to player
+            SlowCritterAi::moveOrAttack(game->player->posX, game->player->posY);
+        } else {
+            //if there is no path to player
+            int dx = rand()%3-1;
+            int dy = rand()%3-1;
+            if (rand()%20!=0) return;
+            SlowCritterAi::moveOrAttack(owner->posX + dx, owner->posY + dy);
+        }
+    }
+    else {
+        position* step = &path.front();
+        if (rand()%2==0) return; // only chase half of the time, makes it slow
+        SlowCritterAi::moveOrAttack(step->x, step->y);
+        path.pop_front();
+    }
+    
+
+    }
+    catch (...){std::cout<<"Critter AI error" << std::endl;}
+}
+
+void SlowCritterAi::moveOrAttack(int targetX, int targetY){
+    Entity* targetEntity;
+    if (game->map->inMap(targetX, targetY)){
+        if (game->map->tileMap[targetX][targetY]->walkable && (targetX != owner->posX || targetY != owner->posY)){
+            targetEntity = game->map->getFighterAt(targetX, targetY);
+            if (targetEntity){
+                if (targetEntity == game->player){
+                    attackAction(this->owner, game->player);
+                }
+            } else if (targetEntity==nullptr) { // only go if there are no fighters there
+                bipedalStepAnimation(this->owner->posX, this->owner->posY, targetX, targetY, rand()%2);
+                moveAction(this->owner, targetX, targetY);
+            }
+        }//if there is entity attackable attack it else:
+    }
+};

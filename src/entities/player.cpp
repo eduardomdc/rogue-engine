@@ -17,6 +17,16 @@ Player::Player(Entity* owner){
 void Player::updateFov(){
     // fov = getVisibleRadius(owner->posX, owner->posY, fovRadius);
     fov = computeFOV(owner->posX, owner->posY, fovRadius);
+    // update map fog
+    for (int x=0; x<game->map->mapWidth; x++){
+        for(int y=0; y<game->map->mapHeight; y++){
+            int dx = x - this->owner->posX + fovRadius;
+            int dy = y - this->owner->posY + fovRadius;
+            if (fov[dx][dy] == true && game->map->fog[x][y] == false){
+                game->map->fog[x][y] = true;
+            }
+        }
+    }
 }
 
 void Player::getWalkQueue(SDL_Event mouse){

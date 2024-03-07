@@ -33,5 +33,7 @@ public:
 bool inside(Room room, rect pos);
 rect roomCenter(Room room);
 void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), rect pos, int quantity);
+void spawnMonsters(int level, Map* map, rect pos);
+
 
 #endif

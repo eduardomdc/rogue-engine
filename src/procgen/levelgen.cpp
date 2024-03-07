@@ -106,6 +106,20 @@ void makeSnowyMountain(Map* map){
     }
 }
 
+void spawnMonsters(int level, Map* map, rect pos){
+    if (level == 1){
+        int choice = rand()%3;
+        switch (choice){
+            case 1:
+                makeHorde(map, *makeRat, pos, rand()%4+1);
+                break;
+            case 2:
+                makeHorde(map, *makeZombie, pos, rand()%2+1);
+                break;
+        }
+    }
+}
+
 void makeRoom(Map* map, int floorTile, Room room){
     // make floor
     for (int i = 0; i < room.size.w; i++){
@@ -206,11 +220,11 @@ void makeHorde(Map* map, Entity*(*monster)(int posx, int posy), rect pos, int qu
     int monsters = 0;
     rect newpos = pos;
     while(monsters<quantity){
-        newpos.w = pos.w+rand()%quantity;
-        newpos.h = pos.h+rand()%quantity;
+        newpos.w = pos.w+rand()%3;
+        newpos.h = pos.h+rand()%3;
         if (!map->inMap(newpos.w, newpos.h)) continue;
         if (!map->tileMap[newpos.w][newpos.h]->walkable) continue;
-        if (map->getFighterAt(newpos.w, newpos.h)!=nullptr) continue;
+        //if (map->getFighterAt(newpos.w, newpos.h)!=nullptr) continue;
         map->entityList.push_back(monster(newpos.w, newpos.h));
         monsters++;
     }
@@ -246,7 +260,7 @@ void makeBigHouse(Map* map){
 
 void makeCave(Map* map){
     Perlin* floorPerlin = new Perlin(250);
-    map->ambientLight = {0,0,60};
+    map->ambientLight = {0,30,60};
     fillMap(map, CAVE_WALL);
     rect pos;//position of drunk dwarf
     pos.h = game->map->mapHeight/2;
@@ -256,6 +270,7 @@ void makeCave(Map* map){
     dir.w = 1;
     int steps = 1000; // steps taken by drunk dwarf
     int turnRate = 2; // average steps taken between turning
+    int stepsMonsterRate = 20; // steps taken between spawning monsters
     for(int i=0; i<steps; i++){
         rect newPos;
         newPos.w = pos.w+dir.w;
@@ -277,6 +292,10 @@ void makeCave(Map* map){
             }
         }
         pos = newPos;
+        //spawn monsters
+        if (rand()%stepsMonsterRate==0){
+            spawnMonsters(1, map, pos);
+        }
     }
     for (int i = 0; i<map->mapWidth; i++){
         for (int j = 0; j<map->mapHeight; j++){

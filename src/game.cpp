@@ -66,7 +66,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     
 
-    map = new Map(60,40);
+    map = new Map(200,180);
     
     map->genMap();
     player = new Entity();
@@ -79,11 +79,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player->ai = new PlayerAi(player);
     player->player = new Player(player);
     player->fighter = new Fighter(player);
-    player->fighter->maxHp = 100;
+    player->fighter->maxHp = 15;
     player->fighter->str = 10;
     player->fighter->agi = 10;
     player->fighter->con = 10;
-    player->fighter->setHp(100);
+    player->fighter->setHp(player->fighter->maxHp);
     map->entityList.push_back(player);
     inputManager = new GameWindow();
     windows.push_back(inputManager);

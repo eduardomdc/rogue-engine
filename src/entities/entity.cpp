@@ -71,8 +71,14 @@ void Entity::render(){
     // }
     
     
-    if (!game->player->player->canSee(this->posX, this->posY)){
+    if (!game->player->player->canSee(this->posX, this->posY) && !game->map->fog[this->posX][this->posY]){
         return; // player can't see this entity
+    }
+    // only render things with background (hopefully only tiles) on fog of war
+    if (!game->player->player->canSee(this->posX, this->posY) 
+    && game->map->fog[this->posX][this->posY]
+    && !this->hasBackground){
+        return;
     }
 
     int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
@@ -100,6 +106,19 @@ void Entity::render(){
             lightColoredBg.red *= this->illumination.red/255.0;
             lightColoredBg.blue *= this->illumination.blue/255.0;
             lightColoredBg.green *= this->illumination.green/255.0;
+            //player can't see but it's in memory fog of war
+            if (!game->player->player->canSee(this->posX, this->posY)){
+                lightColoredBg = this->backRgb;
+                short avg = 0.05*(lightColoredBg.red+lightColoredBg.blue+lightColoredBg.green)/3;
+                lightColoredBg.red = avg;
+                lightColoredBg.blue = avg;
+                lightColoredBg.green = avg;
+                lightColored = this->foreRgb;
+                avg = 0.05*(lightColored.red+lightColored.blue+lightColored.green)/3;
+                lightColored.red = avg;
+                lightColored.blue = avg;
+                lightColored.green = avg;
+            }
 
             int screenPosX = this->posX - map->leftSide + map->mapOffsetX;
             int screenPosY = this->posY - map->topSide + map->mapOffsetY;

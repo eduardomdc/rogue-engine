@@ -24,6 +24,14 @@ public:
     void moveOrAttack(int targetX, int targetY);
 };
 
+class SlowCritterAi : public Ai {
+//zombies
+public:
+    SlowCritterAi(Entity* owner) : Ai(owner) {};
+    void update();
+    void moveOrAttack(int targetX, int targetY);
+};
+
 class PlayerAi : public Ai {
 public:
     PlayerAi(Entity* owner) : Ai(owner) {};

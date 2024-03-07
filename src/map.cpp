@@ -52,6 +52,12 @@ Map::Map(int mapWidth, int mapHeight){
     // set tileset used
     codepage = game->codepageBig;
     effects = {};
+    for (int i=0; i<mapWidth; i++){
+        fog.push_back(std::vector<bool>());
+        for(int j=0; j<mapHeight; j++){
+            fog[i].push_back(false);
+        }
+    }
 }
 
 void Map::loadMap(){
@@ -120,6 +126,7 @@ bool Map::inCamera(int x, int y){
 
 
 Entity* Map::getFighterAt(int x, int y){
+    //returns alive fighters
     for (long unsigned int i = 0; i<this->entityList.top.size(); i++){
         Entity* ent = this->entityList.top[i];
         if (ent->posX == x && ent->posY == y){
