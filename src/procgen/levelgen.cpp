@@ -303,7 +303,7 @@ void makeCave(Map* map){
     }
     for (int i = 0; i<map->mapWidth; i++){
         for (int j = 0; j<map->mapHeight; j++){
-            if (floorPerlin->value(i*0.2, j*0.2) > 0.2){
+            if (floorPerlin->value(i*0.1, j*0.1) > 0.2){
                 map->tileMap[i][j] = tileFactory::makeTile(CAVE_FLOOR, i, j);
             }
         }
