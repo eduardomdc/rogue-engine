@@ -2,7 +2,6 @@
 #include "../game.hpp"
 #include "../map.hpp"
 #include <iostream>
-#include <algorithm>
 
 std::list<position> bresenham(position orig, position dest) {
     std::list<position> line;

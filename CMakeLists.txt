@@ -19,6 +19,7 @@ set(MY_SOURCES
     src/actions/action.cpp
     src/algorithms/fov.cpp
     src/algorithms/perlin.cpp
+    src/algorithms/path.cpp
     src/animations/animation.cpp
     src/draw/draw_ui.cpp
     src/draw/tile_manager.cpp
